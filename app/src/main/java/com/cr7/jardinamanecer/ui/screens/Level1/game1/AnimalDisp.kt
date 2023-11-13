@@ -20,6 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,6 +64,26 @@ fun AnimalDisp(item: AnimalsItem, onClick: () -> Unit) {
                 .weight(40f)
                 .padding(bottom = 40.dp, top = 20.dp)
         )*/
+
+    }
+
+    @Composable
+    fun AnimalNow(animal: AnimalsItem) {
+        println("Entra a la funcion")
+
+        animal.imageUrl?.let {
+            val painter: Painter = rememberAsyncImagePainter(model = it)
+
+            Image(
+                painter = painter,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(MaterialTheme.shapes.medium),
+                contentScale = ContentScale.Crop
+            )
+
+        }
 
     }
 

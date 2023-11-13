@@ -164,7 +164,7 @@ fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
                             val currentAnimal = images.getOrNull(state.currentPage.toInt())
                             currentAnimal?.let { animal ->
                                 println("ANIMAL:$animal")
-                                AnimalNow(animal)
+                                AnimalDisp(animal){}
                             }
 
                         }
