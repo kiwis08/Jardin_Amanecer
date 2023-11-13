@@ -1,5 +1,6 @@
 package com.cr7.jardinamanecer.ui.screens.Level1.game1
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
 import androidx.lifecycle.ViewModel
@@ -26,6 +27,7 @@ class AnimalsViewModel(
             val items = getImageUrlsAndTitles(folderPath)
             _animalsItemList.value = items
             println("AnimalsItemList: $items")
+
         }
     }
 
@@ -56,11 +58,19 @@ class AnimalsViewModel(
 
     @OptIn(ExperimentalFoundationApi::class)
     fun onPreviousButtonClick() {
-        goToPreviousPage()
+        scope.launch {
+            state.scrollToPage(state.currentPage - 1)
+        }
+        Log.d("AnimalsViewModel", "Previous button clicked.")
+
     }
 
     fun onNextButtonClick() {
-        goToNextPage()
+        scope.launch {
+            state.scrollToPage(state.currentPage + 1)
+        }
+        Log.d("AnimalsViewModel", "Next button clicked.")
+
     }
 
     private fun goToPreviousPage() {

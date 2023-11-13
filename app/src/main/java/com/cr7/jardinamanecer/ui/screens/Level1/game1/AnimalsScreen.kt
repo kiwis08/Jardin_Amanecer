@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -55,6 +56,7 @@ fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
 
 
     val state = rememberPagerState(pageCount = { images.size })
+
     val scope = rememberCoroutineScope()
 
 
@@ -93,7 +95,7 @@ fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
                     ) {
                         //Boton hace pantalla anterior
                         Image(
-                            painter = painterResource(id = R.drawable.row_back),
+                            painter = painterResource(id = R.drawable.back),
                             contentDescription = null,
                             modifier = Modifier
                                 .width(100.dp)
@@ -137,17 +139,19 @@ fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
                         ) {
                             if (state.currentPage != 0) {
                                 Image(
-                                    painter = painterResource(id = R.drawable.back),
+                                    painter = painterResource(id = R.drawable.row_back),
                                     contentDescription = null,
                                     modifier = Modifier
                                         .width(160.dp)
                                         .height(160.dp)
                                         .padding(start = 40.dp)
                                         .clickable {
-                                            viewModel.onPreviousButtonClick()
+                                            scope.launch {
+                                                state.scrollToPage(state.currentPage - 1)
+                                            }
                                         }
                                 )
-                            }
+                           }
                         }
 
                         // Animales
@@ -186,7 +190,12 @@ fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
                                         .height(160.dp)
                                         .padding(end = 40.dp)
                                         .clickable {
-                                            viewModel.onNextButtonClick()
+                                            scope.launch {
+                                                state.scrollToPage(state.currentPage + 1)
+                                            }
+                                            println("Pagina:${state.currentPage}")
+
+
                                         }
                                 )
                             }
@@ -200,7 +209,7 @@ fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         //.weight(1f)
-                        .padding(top = 80.dp),
+                        .padding(top = 20.dp, bottom = 60.dp),
                     horizontalArrangement = Arrangement.Center
 
                 ) {

@@ -57,33 +57,13 @@ fun AnimalDisp(item: AnimalsItem, onClick: () -> Unit) {
                 }
         )
 
-        /*Text(
+        Text(
             text = item.title,
             style = MaterialTheme.typography.bodyLarge.copy(fontSize = 30.sp),
             modifier = Modifier
                 .weight(40f)
                 .padding(bottom = 40.dp, top = 20.dp)
-        )*/
-
-    }
-
-    @Composable
-    fun AnimalNow(animal: AnimalsItem) {
-        println("Entra a la funcion")
-
-        animal.imageUrl?.let {
-            val painter: Painter = rememberAsyncImagePainter(model = it)
-
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(MaterialTheme.shapes.medium),
-                contentScale = ContentScale.Crop
-            )
-
-        }
+        )
 
     }
 
