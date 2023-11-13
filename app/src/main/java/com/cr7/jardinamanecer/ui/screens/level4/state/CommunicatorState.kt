@@ -1,7 +1,5 @@
 package com.cr7.jardinamanecer.ui.screens.level4.state
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import com.cr7.jardinamanecer.model.level4.ComunicatorItem
 
 data class CommunicatorState(

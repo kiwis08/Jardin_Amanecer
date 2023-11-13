@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import com.cr7.jardinamanecer.ui.screens.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.StudentSignIn
-import com.cr7.jardinamanecer.ui.screens.level4.ComunicatorScreen
+import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
 
 @Composable
 fun NavGraph (navController: NavHostController){

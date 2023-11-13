@@ -5,9 +5,9 @@ import android.speech.tts.TextToSpeech
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.cr7.jardinamanecer.model.level4.ComunicatorItem
 import com.cr7.jardinamanecer.ui.screens.level4.state.CommunicatorState
 import java.util.Locale
-import com.cr7.jardinamanecer.model.level4.ComunicatorItem
 
 
 class CommunicatorViewModel: ViewModel() {
