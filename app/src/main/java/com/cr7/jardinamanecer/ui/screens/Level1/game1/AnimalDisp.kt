@@ -46,8 +46,8 @@ fun AnimalDisp(item: AnimalsItem, onClick: () -> Unit) {
             painter = painter,
             contentDescription = null,
             modifier = Modifier
-                .width(if (isZoomed) 700.dp else 600.dp)
-                .height(if (isZoomed) 900.dp else 500.dp)
+                .width(if (isZoomed) 500.dp else 400.dp)
+                .height(if (isZoomed) 800.dp else 500.dp)
                 .padding(top = 60.dp)
                 .clickable {
                     isZoomed = !isZoomed
@@ -63,7 +63,11 @@ fun AnimalDisp(item: AnimalsItem, onClick: () -> Unit) {
         )*/
 
     }
+
+
 }
+
+
 
 
 @Preview

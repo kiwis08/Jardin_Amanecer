@@ -39,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberAsyncImagePainter
+import kotlinx.coroutines.flow.StateFlow
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -46,7 +47,12 @@ import coil.compose.rememberAsyncImagePainter
 fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
     Log.e("AnimalsScreen", "Entro")
 
+    //val images by viewModel.animalsItemList.collectAsState<List<AnimalsItem>>()
     val images by viewModel.animalsItemList.collectAsState<List<AnimalsItem>>()
+    println("$images")
+
+
+
 
     val state = rememberPagerState(pageCount = { images.size })
     val scope = rememberCoroutineScope()
@@ -155,12 +161,10 @@ fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
                         ) {
 
                             // Animales
-
                             val currentAnimal = images.getOrNull(state.currentPage.toInt())
-
-                            // Verifica si currentAnimal no es nulo antes de intentar mostrar la imagen
                             currentAnimal?.let { animal ->
-                                AnimalsItem(animal.imageUrl)
+                                println("ANIMAL:$animal")
+                                AnimalNow(animal)
                             }
 
                         }
@@ -219,23 +223,23 @@ fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
         }
     }
 
-    @Composable
-    fun AnimalsItem(animal: String?) {
-        animal?.let {
-            val painter: Painter = rememberAsyncImagePainter(
-                model = it
-            )
+}
 
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(MaterialTheme.shapes.medium),
-                contentScale = ContentScale.Crop
-            )
+@Composable
+fun AnimalNow(animal: AnimalsItem) {
+    println("Entra a la funcion")
 
-        }
+    animal.imageUrl?.let {
+        val painter: Painter = rememberAsyncImagePainter(model = it)
+
+        Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(MaterialTheme.shapes.medium),
+            contentScale = ContentScale.Crop
+        )
 
     }
 
