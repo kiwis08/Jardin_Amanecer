@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -49,6 +50,9 @@ import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalsItem
 import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalsViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberAsyncImagePainter
 
 
@@ -134,7 +138,7 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        list(images)
+                        Elementos(images)
                         //CONTENIDOoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
                     }
                 }
@@ -143,14 +147,45 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun list(cards: List<PartesItem>) {
-    Column(modifier = Modifier.wrapContentHeight()) {
-        LazyHorizontalGrid(
-            modifier = Modifier.height(200.dp),
-            rows = GridCells.Fixed(3)
-        ) {
+fun Elementos(cards: List<PartesItem>) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(cards.size) { index ->
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .clickable {
+                        // Agrega la lógica que deseas al hacer clic en un elemento
+                    }
+            ) {
+                // Usa la biblioteca Coil para cargar la imagen desde la URL
+                val painter = rememberAsyncImagePainter(
+                    model = cards[index].imageUrl,
+                    contentScale = ContentScale.Crop,
+                    filterQuality = FilterQuality.High
+                )
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(200.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.background)
+                )
 
+                // Texto debajo de la imagen
+                Text(
+                    text = cards[index].name.substringBeforeLast('.').toLowerCase(),
+                    style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
         }
     }
 }
