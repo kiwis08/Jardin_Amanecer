@@ -102,17 +102,17 @@ fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
                                 .height(100.dp)
                                 .padding(16.dp)
                                 .clickable {
-                                    navController.navigate(Screens.Start.route)
+                                    navController.navigate(Screens.GameMenu.route)
                                 }
                         )
 
                         // Título
                         Text(
                             text = "Animales",
-                            style = MaterialTheme.typography.bodyLarge.copy(fontSize = 24.sp),
+                            style = MaterialTheme.typography.bodyLarge.copy(fontSize = 30.sp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 30.dp, start = 50.dp)
+                                .padding(top = 30.dp, start = 15.dp)
                         )
 
                     }

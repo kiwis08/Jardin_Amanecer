@@ -50,38 +50,5 @@ class AnimalsViewModel(
         }
     }
 
-    @OptIn(ExperimentalFoundationApi::class)
-    fun onStateAndScopeReady(state: PagerState, scope: CoroutineScope) {
-        this.state
-        this.scope
-    }
 
-    @OptIn(ExperimentalFoundationApi::class)
-    fun onPreviousButtonClick() {
-        scope.launch {
-            state.scrollToPage(state.currentPage - 1)
-        }
-        Log.d("AnimalsViewModel", "Previous button clicked.")
-
-    }
-
-    fun onNextButtonClick() {
-        scope.launch {
-            state.scrollToPage(state.currentPage + 1)
-        }
-        Log.d("AnimalsViewModel", "Next button clicked.")
-
-    }
-
-    private fun goToPreviousPage() {
-        scope.launch {
-            state.scrollToPage(state.currentPage - 1)
-        }
-    }
-
-    private fun goToNextPage() {
-        scope.launch {
-            state.scrollToPage(state.currentPage + 1)
-        }
-    }
 }
