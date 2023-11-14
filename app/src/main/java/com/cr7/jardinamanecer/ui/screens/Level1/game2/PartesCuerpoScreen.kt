@@ -80,11 +80,12 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
                 Log.e("HorizontalPager", "Entra al pager")
 
                 val backgroundColors = listOf(
+
+                    Color(185, 49, 252),
                     Color(234, 4, 126, 255),
                     Color(255, 109, 40),
                     Color(252, 231, 0),
                     Color(38, 171, 226),
-                    Color(185, 49, 252),
                     Color(255, 23, 0),
                 )
                 val backgroundColorIndex = page % backgroundColors.size
@@ -118,13 +119,13 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
                         )
 
                         // Título
-                        /*Text(
+                        Text(
                             text = "Partes del Cuerpo",
                             style = MaterialTheme.typography.bodyLarge.copy(fontSize = 30.sp),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 30.dp, start = 15.dp)
-                        )*/
+                        )
 
                     }
 
@@ -181,11 +182,11 @@ fun Elementos(cards: List<PartesItem>) {
                     )
 
                     // Texto debajo de la imagen
-                    Text(
+                    /*Text(
                         text = cards[index].name.substringBeforeLast('.').toLowerCase(),
                         style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
                         modifier = Modifier.padding(top = 8.dp)
-                    )
+                    )*/
                 }
                 
 
