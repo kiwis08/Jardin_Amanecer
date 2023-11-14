@@ -9,8 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.cr7.jardinamanecer.ui.screens.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.GameMenu
+import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalsScreen
-import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalsViewModel
 import com.cr7.jardinamanecer.ui.screens.Level1.game2.PartesCuerpoScreen
 import com.cr7.jardinamanecer.ui.screens.Level1.game2.PartesViewModel
 import com.cr7.jardinamanecer.ui.screens.StartScreen
@@ -40,7 +40,7 @@ fun NavGraph (navController: NavHostController){
             GameMenu(navController)
         }
         composable(route = Screens.Level1Game1.route) {
-            val viewModel = AnimalsViewModel(state = pagerState, scope = coroutineScope)
+            val viewModel = AnimalViewModel( scope = coroutineScope)
             AnimalsScreen(viewModel = viewModel, navController = navController)
         }
         composable(route = Screens.Level1Game2.route){

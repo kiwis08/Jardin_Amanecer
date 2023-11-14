@@ -45,9 +45,6 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
-import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalDisp
-import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalsItem
-import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalsViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.ui.graphics.FilterQuality
@@ -63,6 +60,10 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
 
     val images by viewModel.partesItemList.collectAsState<List<PartesItem>>()
     println("$images")
+
+    val cant = images.size
+    println("CANTIDAD $cant")
+
 
 
     val state = rememberPagerState(pageCount = { images.size})
@@ -117,13 +118,13 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
                         )
 
                         // Título
-                        Text(
+                        /*Text(
                             text = "Partes del Cuerpo",
                             style = MaterialTheme.typography.bodyLarge.copy(fontSize = 30.sp),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 30.dp, start = 15.dp)
-                        )
+                        )*/
 
                     }
 
@@ -163,28 +164,31 @@ fun Elementos(cards: List<PartesItem>) {
                         // Agrega la lógica que deseas al hacer clic en un elemento
                     }
             ) {
-                // Usa la biblioteca Coil para cargar la imagen desde la URL
-                val painter = rememberAsyncImagePainter(
-                    model = cards[index].imageUrl,
-                    contentScale = ContentScale.Crop,
-                    filterQuality = FilterQuality.High
-                )
-                Image(
-                    painter = painter,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .width(200.dp)
-                        .height(200.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.background)
-                )
+                Row {
+                    val painter = rememberAsyncImagePainter(
+                        model = cards[index].imageUrl,
+                        contentScale = ContentScale.Crop,
+                        filterQuality = FilterQuality.High
+                    )
+                    Image(
+                        painter = painter,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(500.dp)
+                            .height(200.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.background)
+                    )
 
-                // Texto debajo de la imagen
-                Text(
-                    text = cards[index].name.substringBeforeLast('.').toLowerCase(),
-                    style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
-                    modifier = Modifier.padding(top = 8.dp)
-                )
+                    // Texto debajo de la imagen
+                    Text(
+                        text = cards[index].name.substringBeforeLast('.').toLowerCase(),
+                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+                
+
             }
         }
     }

@@ -1,6 +1,5 @@
-package com.cr7.jardinamanecer.ui.screens.Level1.game2
+package com.cr7.jardinamanecer.ui.screens.Level1.game1
 
-import androidx.compose.foundation.pager.PagerState
 import androidx.lifecycle.ViewModel
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
@@ -9,24 +8,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class PartesViewModel(
-private val scope: CoroutineScope
-) : ViewModel()  {
+class AnimalViewModel(
+    private val scope: CoroutineScope): ViewModel() {
+    private val folderPath = "Karla/Animales/Imagenes"
 
-    private val folderPath = "Karla/PartesCuerpo/Imagenes/Tarjetas"
-
-    private val _partesItemList = MutableStateFlow<List<PartesItem>>(emptyList())
-    val partesItemList: StateFlow<List<PartesItem>> get() = _partesItemList
+    private val _animalsItemList = MutableStateFlow<List<AnimalsItem>>(emptyList())
+    val animalsItemList: StateFlow<List<AnimalsItem>> get() = _animalsItemList
     init {
         scope.launch {
             val items = getImageUrlsAndTitles(folderPath)
-            _partesItemList.value = items
-            println("Parteslist: $items")
+            _animalsItemList.value = items
+            println("AnimalsItemList: $items")
 
         }
     }
 
-    private suspend fun getImageUrlsAndTitles(folderPath: String): List<PartesItem> {
+    private suspend fun getImageUrlsAndTitles(folderPath: String): List<AnimalsItem> {
         val storage = FirebaseStorage.getInstance()
         val storageReference = storage.reference.child(folderPath)
 
@@ -35,8 +32,8 @@ private val scope: CoroutineScope
 
             // Map the items to AnimalsItem instances
             items.items.map {
-                PartesItem(
-                    name = it.name,
+                AnimalsItem(
+                    title = it.name,
                     imageUrl = it.downloadUrl.await().toString()
                 )
             }
@@ -44,4 +41,6 @@ private val scope: CoroutineScope
             emptyList()
         }
     }
+
+
 }

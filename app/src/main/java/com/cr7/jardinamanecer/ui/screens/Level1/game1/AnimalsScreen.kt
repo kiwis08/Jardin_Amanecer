@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AnimalsScreen(viewModel: AnimalsViewModel, navController : NavController) {
+fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
     Log.e("AnimalsScreen", "Entro")
 
     //val images by viewModel.animalsItemList.collectAsState<List<AnimalsItem>>()
