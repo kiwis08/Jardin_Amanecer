@@ -24,7 +24,7 @@ fun NavGraph (navController: NavHostController){
             StudentSignIn()
         }
         composable(route = Screens.Level4Game1.route){
-            ComunicatorScreen()
+            ComunicatorScreen(navController = navController)
         }
 
     }

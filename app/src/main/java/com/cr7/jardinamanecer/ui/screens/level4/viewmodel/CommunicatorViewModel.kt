@@ -2,35 +2,29 @@ package com.cr7.jardinamanecer.ui.screens.level4.viewmodel
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.cr7.jardinamanecer.model.level4.ComunicatorItem
+import com.cr7.jardinamanecer.ui.screens.level4.model.ComunicatorItem
 import com.cr7.jardinamanecer.ui.screens.level4.state.CommunicatorState
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import java.util.Locale
 
 
 class CommunicatorViewModel: ViewModel() {
-    private val _state = mutableStateOf(CommunicatorState(
-        items = listOf(
-            ComunicatorItem("Déjame solo", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/dejamesolo.jpg?alt=media&token=029a5c81-7671-404c-938f-c0cee1145f7f"),
-            ComunicatorItem("Dirección", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/direccion.jpg?alt=media&token=a3582dda-9708-40c8-b3e8-ad0e64b4e41a"),
-            ComunicatorItem("Nadie con quien jugar", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/nadieconquienjugar.jpg?alt=media&token=210bdb84-c4c2-44c8-a5b8-cf0c50879a15"),
-            ComunicatorItem("Oh no!", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/ohno.jpg?alt=media&token=9c259c15-6add-4216-97c5-7eb75df85072"),
-            ComunicatorItem("Quiero mostrarte algo", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/quieromostrartealgo.jpg?alt=media&token=d576cc76-7f3e-4967-a327-1ba622969992"),
-            ComunicatorItem("Susurrar", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/susurrar.jpg?alt=media&token=cb0d83a2-ec5a-4b06-8ea0-64d5181bd860"),
-            ComunicatorItem("Te voy a alcanzar", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/tevoyaalcanzar.jpg?alt=media&token=53b62620-be70-4e9f-a1dd-50e2ee9bf1c9"),
-            ComunicatorItem("Yo quiero", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/yoquiero.jpg?alt=media&token=2cfa2f77-0d61-4ac5-86bf-048c18a5ab92"),
-        ),
-    )
-    )
+    private val userID = "OMHDUjTUnMiFQOSQGdq3"
+    private val database: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val storage: FirebaseStorage = FirebaseStorage.getInstance()
+
+
+    private val _state = mutableStateOf(CommunicatorState(),)
     val state: State<CommunicatorState> = _state
     private var textToSpeech: TextToSpeech? = null
 
     fun textToSpeech(context: Context){
-        _state.value = state.value.copy(
-            isButtonEnabled = false
-        )
+        _state.value.isButtonEnabled = false
         textToSpeech = TextToSpeech(
             context
         ) {
@@ -51,21 +45,64 @@ class CommunicatorViewModel: ViewModel() {
                     )
                 }
             }
-            _state.value = state.value.copy(
-                isButtonEnabled = true
-            )
+            _state.value.isButtonEnabled = true
         }
     }
 
     fun onItemSelected(item: ComunicatorItem) {
-        _state.value = state.value.copy(
-            selectedItems = state.value.selectedItems + item
-        )
+        _state.value.selectedItems = state.value.selectedItems + item
     }
 
     fun onItemRemoved(item: ComunicatorItem) {
-        _state.value = state.value.copy(
-            selectedItems = state.value.selectedItems - item
-        )
+        _state.value.selectedItems = state.value.selectedItems - item
+    }
+
+    fun onCategorySelected(category: String) {
+        _state.value.selectedCategory = category
+    }
+
+    fun _getItems(onCompletion: () -> Unit = {}) {
+        database.collection("level4").document(userID).get()
+            .addOnSuccessListener { result ->
+                val data = result.data ?: return@addOnSuccessListener
+                val communicatorItems = data["communicatorItems"] as List<Map<String, String>>
+                val items = communicatorItems.map { item ->
+                    ComunicatorItem(
+                        title = item["title"]!!,
+                        category = item["category"]!!,
+                        imageName = item["imageName"]!!,
+                    )
+                }
+                _state.value.items = items
+                onCompletion()
+            }
+    }
+
+    fun _getItemsImagesUrl() {
+        val items = state.value.items
+        items.forEach { item ->
+            storage.reference.child("$userID/${item.category}/${item.imageName}").downloadUrl.addOnSuccessListener { uri ->
+                val url = uri.toString()
+                _state.value.items.find {
+                    it.title == item.title
+                }.let {
+                    it?.imageUrl = url
+                }
+            }
+        }
+    }
+
+    fun _getCategories() {
+        database.collection("level4").document("general").get()
+            .addOnSuccessListener { result ->
+                val data = result.data ?: return@addOnSuccessListener
+                val categories = data["communicator_categories"] as List<String>
+                _state.value.categories = categories.map { it.lowercase() }
+            }
+    }
+
+    init {
+        _getCategories()
+        _getItems { _getItemsImagesUrl() }
     }
 }
