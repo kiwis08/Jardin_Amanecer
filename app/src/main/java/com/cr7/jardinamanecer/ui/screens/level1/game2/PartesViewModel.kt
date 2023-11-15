@@ -1,6 +1,7 @@
 package com.cr7.jardinamanecer.ui.screens.level1.game2
 
 import androidx.lifecycle.ViewModel
+import com.cr7.jardinamanecer.ui.screens.level1.DataBaseItem
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,8 +15,8 @@ scope: CoroutineScope
 
     private val folderPath = "Karla/PartesCuerpo/Imagenes/Tarjetas"
 
-    private val _partesItemList = MutableStateFlow<List<PartesItem>>(emptyList())
-    val partesItemList: StateFlow<List<PartesItem>> get() = _partesItemList
+    private val _partesItemList = MutableStateFlow<List<DataBaseItem>>(emptyList())
+    val partesItemList: StateFlow<List<DataBaseItem>> get() = _partesItemList
     init {
         scope.launch {
             val items = getImageUrlsAndTitles(folderPath)
@@ -25,7 +26,7 @@ scope: CoroutineScope
         }
     }
 
-    private suspend fun getImageUrlsAndTitles(folderPath: String): List<PartesItem> {
+    private suspend fun getImageUrlsAndTitles(folderPath: String): List<DataBaseItem> {
         val storage = FirebaseStorage.getInstance()
         val storageReference = storage.reference.child(folderPath)
 
@@ -34,9 +35,9 @@ scope: CoroutineScope
 
             // Map the items to AnimalsItem instances
             items.items.map {
-                PartesItem(
-                    name = it.name,
-                    imageUrl = it.downloadUrl.await().toString()
+                DataBaseItem(
+                    title = it.name,
+                    contentUrl = it.downloadUrl.await().toString()
                 )
             }
         } catch (e: Exception) {

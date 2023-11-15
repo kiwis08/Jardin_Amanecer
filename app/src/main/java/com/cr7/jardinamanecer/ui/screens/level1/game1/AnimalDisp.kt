@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,11 +24,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
+import com.cr7.jardinamanecer.ui.screens.level1.DataBaseItem
 
 
 @Composable
-fun AnimalDisp(item: AnimalsItem, onClick: () -> Unit) {
+fun AnimalDisp(item: DataBaseItem, onClick: () -> Unit) {
     var isZoomed by remember { mutableStateOf(false) }
+
+    //val audios by viewModel.animalsAudioList.collectAsState<List<DataBaseItem>>()
+    //println("$audios")
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -35,10 +41,10 @@ fun AnimalDisp(item: AnimalsItem, onClick: () -> Unit) {
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         //Imagen del animal
-        Log.d("Image URL", "URL: ${item.imageUrl}")
+        Log.d("Image URL", "URL: ${item.contentUrl}")
 
         val painter = rememberAsyncImagePainter(
-            model = item.imageUrl)
+            model = item.contentUrl)
         Image(
             painter = painter,
             contentDescription = null,
@@ -67,13 +73,14 @@ fun AnimalDisp(item: AnimalsItem, onClick: () -> Unit) {
 
 
 
+
 @Preview
 @Composable
 fun AnimalDispPreview() {
-    val animalsItem = AnimalsItem(
+    val animalsItem = DataBaseItem(
         title = "La vaca",
-        imageUrl = "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%20Jacome%2FAnimales%2Flavaca.png?alt=media&token=7acacfdc-4cde-4f2e-b417-aa5e3e679d95"
+        contentUrl = "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%20Jacome%2FAnimales%2Flavaca.png?alt=media&token=7acacfdc-4cde-4f2e-b417-aa5e3e679d95"
     )
 
-    AnimalDisp(item = animalsItem, onClick = {})
+    AnimalDisp(item = animalsItem) {}
 }

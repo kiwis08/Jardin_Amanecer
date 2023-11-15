@@ -27,8 +27,7 @@ fun GameMenu(navController: NavController) {
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL1_Instrumentos.png?alt=media&token=7cf2cfe2-c851-4628-9640-536f2a129e35",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Colorea.png?alt=media&token=be5599a1-ba9c-4999-aca4-7583e9c2010c",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3-OrdenaNumeros.png?alt=media&token=821b349a-36d8-4082-a026-5fa61c254bd9",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2/L4-Comunicador.png?alt=media&token=d3aba2fe-df3f-4290-a3a9-df2fa68d3460"
-    )
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL4-Comunicador.png?alt=media&token=d3aba2fe-df3f-4290-a3a9-df2fa68d3460")
     println("Lista de juegos $gamelists")
 
 

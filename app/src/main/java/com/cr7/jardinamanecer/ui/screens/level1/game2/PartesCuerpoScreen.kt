@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,14 +42,20 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
+import com.cr7.jardinamanecer.ui.screens.level1.DataBaseItem
+import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen2
+import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen2 as PartesCuerpoScreen21
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavController) {
+fun PartesCuerpoScreen(
+    viewModel: PartesViewModel,
+    navController : NavController
+){
     Log.e("AnimalsScreen", "Entro")
 
-    val images by viewModel.partesItemList.collectAsState<List<PartesItem>>()
+    val images by viewModel.partesItemList.collectAsState<List<DataBaseItem>>()
     println("$images")
 
     val cant = images.size
@@ -115,7 +124,7 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
 
                     }
 
-                    // Flechas y Animales
+                    // Tarjetas con partes del cuerpo
                     Row(
                         modifier = Modifier
                             .padding(16.dp)
@@ -126,7 +135,7 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        Elementos(images)
+                        Elementos(images, viewModel, navController)
                         //CONTENIDOoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
                     }
                 }
@@ -137,7 +146,7 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Elementos(cards: List<PartesItem>) {
+fun Elementos(cards: List<DataBaseItem>, viewModel: PartesViewModel, navController: NavController) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -146,14 +155,11 @@ fun Elementos(cards: List<PartesItem>) {
         items(cards.size) { index ->
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .clickable {
-                        // Agrega la lógica que deseas al hacer clic en un elemento
-                    }
+                    .padding(horizontal = 10.dp, vertical = 8.dp)
             ) {
                 Row {
                     val painter = rememberAsyncImagePainter(
-                        model = cards[index].imageUrl,
+                        model = cards[index].contentUrl,
                         contentScale = ContentScale.Crop,
                         filterQuality = FilterQuality.High
                     )
@@ -161,22 +167,21 @@ fun Elementos(cards: List<PartesItem>) {
                         painter = painter,
                         contentDescription = null,
                         modifier = Modifier
-                            .width(500.dp)
-                            .height(200.dp)
+                            .width(800.dp)
+                            .height(300.dp)
                             .clip(RoundedCornerShape(8.dp))
                             .background(MaterialTheme.colorScheme.background)
+                            .clickable {
+
+                                navController.navigate("${Screens.Level1Game2_2.route}/${cards[index].title}")
+                            }
                     )
-
-                    // Texto debajo de la imagen
-                    /*Text(
-                        text = cards[index].name.substringBeforeLast('.').toLowerCase(),
-                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
-                        modifier = Modifier.padding(top = 8.dp)
-                    )*/
                 }
-                
-
             }
         }
     }
 }
+
+
+
+

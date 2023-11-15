@@ -24,21 +24,24 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.rememberAsyncImagePainter
+import com.cr7.jardinamanecer.ui.screens.level1.DataBaseItem
+import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalDisp
+import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import kotlinx.coroutines.launch
 
 
@@ -48,8 +51,12 @@ fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
     Log.e("AnimalsScreen", "Entro")
 
     //val images by viewModel.animalsItemList.collectAsState<List<AnimalsItem>>()
-    val images by viewModel.animalsItemList.collectAsState<List<AnimalsItem>>()
+    val images by viewModel.animalsItemList.collectAsState<List<DataBaseItem>>()
     println("$images")
+
+    //val audios by viewModel.animalsAudioList.collectAsState<List<AnimalsItem>>()
+    //println("$audios")
+
 
 
 
@@ -234,10 +241,10 @@ fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
 }
 
 @Composable
-fun AnimalNow(animal: AnimalsItem) {
+fun AnimalNow(animal: DataBaseItem) {
     println("Entra a la funcion")
 
-    animal.imageUrl?.let {
+    animal.contentUrl?.let {
         val painter: Painter = rememberAsyncImagePainter(model = it)
 
         Image(
