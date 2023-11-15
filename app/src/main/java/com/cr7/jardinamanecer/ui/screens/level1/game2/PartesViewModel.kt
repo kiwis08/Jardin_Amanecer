@@ -1,6 +1,5 @@
-package com.cr7.jardinamanecer.ui.screens.Level1.game2
+package com.cr7.jardinamanecer.ui.screens.level1.game2
 
-import androidx.compose.foundation.pager.PagerState
 import androidx.lifecycle.ViewModel
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
@@ -10,7 +9,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class PartesViewModel(
-private val scope: CoroutineScope
+scope: CoroutineScope
 ) : ViewModel()  {
 
     private val folderPath = "Karla/PartesCuerpo/Imagenes/Tarjetas"

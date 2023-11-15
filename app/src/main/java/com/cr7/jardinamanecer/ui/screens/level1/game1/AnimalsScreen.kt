@@ -1,4 +1,4 @@
-package com.cr7.jardinamanecer.ui.screens.Level1.game1
+package com.cr7.jardinamanecer.ui.screens.level1.game1
 
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -24,22 +24,21 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
-import coil.compose.rememberAsyncImagePainter
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 

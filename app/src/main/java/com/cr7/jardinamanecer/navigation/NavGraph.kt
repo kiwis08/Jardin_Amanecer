@@ -1,7 +1,5 @@
 package com.cr7.jardinamanecer.navigation
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
@@ -9,18 +7,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.cr7.jardinamanecer.ui.screens.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.GameMenu
-import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalViewModel
-import com.cr7.jardinamanecer.ui.screens.Level1.game1.AnimalsScreen
-import com.cr7.jardinamanecer.ui.screens.Level1.game2.PartesCuerpoScreen
-import com.cr7.jardinamanecer.ui.screens.Level1.game2.PartesViewModel
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.StudentSignIn
-
-@OptIn(ExperimentalFoundationApi::class)
+import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
+import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
+import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
+import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
 
 @Composable
 fun NavGraph (navController: NavHostController){
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 1 })
     val coroutineScope = rememberCoroutineScope()
 
     NavHost(

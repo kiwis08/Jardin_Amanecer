@@ -1,4 +1,4 @@
-package com.cr7.jardinamanecer.ui.screens.Level1.game1
+package com.cr7.jardinamanecer.ui.screens.level1.game1
 
 data class AnimalsItem(
     val title: String = "",
