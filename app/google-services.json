@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "287418409556",
+    "project_id": "jardinamanecer-ade5c",
+    "storage_bucket": "jardinamanecer-ade5c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287418409556:android:30a08c1cfaa7b08c3803c1",
+        "android_client_info": {
+          "package_name": "com.cr7.jardinamanecer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ17PCu9q-jTARXoMnPJKbpGOoOM9jv3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287418409556:android:4f5d8abb0ab8d66c3803c1",
+        "android_client_info": {
+          "package_name": "com.tec.prueba"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ17PCu9q-jTARXoMnPJKbpGOoOM9jv3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
