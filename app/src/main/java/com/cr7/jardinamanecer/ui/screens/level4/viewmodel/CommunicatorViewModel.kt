@@ -21,7 +21,7 @@ class CommunicatorViewModel: ViewModel() {
             ComunicatorItem("Susurrar", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/susurrar.jpg?alt=media&token=cb0d83a2-ec5a-4b06-8ea0-64d5181bd860"),
             ComunicatorItem("Te voy a alcanzar", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/tevoyaalcanzar.jpg?alt=media&token=53b62620-be70-4e9f-a1dd-50e2ee9bf1c9"),
             ComunicatorItem("Yo quiero", "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-cr7.appspot.com/o/yoquiero.jpg?alt=media&token=2cfa2f77-0d61-4ac5-86bf-048c18a5ab92"),
-        )
+        ),
     )
     )
     val state: State<CommunicatorState> = _state

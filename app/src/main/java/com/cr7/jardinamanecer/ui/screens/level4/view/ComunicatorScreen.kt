@@ -14,9 +14,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,7 +60,9 @@ fun ComunicatorScreen(
             Row(
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(8.dp).height(300.dp)
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(300.dp)
             ) {
                 IconButton(
                     modifier = Modifier.size(64.dp),
@@ -66,7 +70,9 @@ fun ComunicatorScreen(
                     viewModel.textToSpeech(context)
 
                 }) {
-                    Icon(Icons.Filled.PlayArrow, contentDescription = "Play", modifier = Modifier.background(Color.Black, CircleShape).size(64.dp), tint = Color.White)
+                    Icon(Icons.Filled.PlayArrow, contentDescription = "Play", modifier = Modifier
+                        .background(Color.Black, CircleShape)
+                        .size(64.dp), tint = Color.White)
                 }
                 LazyRow(
                     contentPadding = PaddingValues(8.dp),
