@@ -9,6 +9,7 @@ import com.cr7.jardinamanecer.ui.screens.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.GameMenu
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.StudentSignIn
+import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
@@ -30,6 +31,9 @@ fun NavGraph (navController: NavHostController){
         }
         composable(route = Screens.StudentSignIn.route){
             StudentSignIn()
+        }
+        composable(route = Screens.Level4Game1.route){
+            ComunicatorScreen(navController = navController)
         }
         composable(route = Screens.GameMenu.route){
             GameMenu(navController)
