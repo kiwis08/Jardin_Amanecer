@@ -86,7 +86,7 @@ fun StartScreen(navController: NavController) {
 
                 Button(
                     onClick = {
-                        navController.navigate(Screens.Level4Game1.route)
+                        navController.navigate(Screens.GameMenu.route)
                     },
                     colors = ButtonDefaults.elevatedButtonColors(
                         containerColor = Color.White,
