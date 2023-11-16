@@ -6,6 +6,15 @@ import androidx.navigation.compose.composable
 import com.cr7.jardinamanecer.ui.screens.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.StudentSignIn
+<<<<<<< Updated upstream
+=======
+import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
+import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
+import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
+import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
+import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
+import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDrop
+>>>>>>> Stashed changes
 
 @Composable
 fun NavGraph (navController: NavHostController){
@@ -22,5 +31,25 @@ fun NavGraph (navController: NavHostController){
         composable(route = Screens.StudentSignIn.route){
             StudentSignIn()
         }
+<<<<<<< Updated upstream
+=======
+        composable(route = Screens.Level4Game1.route){
+            ComunicatorScreen(navController = navController)
+        }
+        composable(route = Screens.GameMenu.route){
+            GameMenu(navController)
+        }
+        composable(route = Screens.Level1Game1.route) {
+            val viewModel = AnimalViewModel( scope = coroutineScope)
+            AnimalsScreen(viewModel = viewModel, navController = navController)
+        }
+        composable(route = Screens.Level1Game2.route){
+            val viewModelPartes = PartesViewModel(scope = coroutineScope)
+            PartesCuerpoScreen(viewModelPartes,navController)
+        }
+        composable(route = Screens.Level3Game1.route){
+            ImageDragAndDrop(navController)
+        }
+>>>>>>> Stashed changes
     }
 }
