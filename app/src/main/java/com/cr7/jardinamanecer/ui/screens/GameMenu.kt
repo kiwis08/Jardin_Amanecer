@@ -56,7 +56,11 @@ fun GameMenu(navController: NavController) {
                                 navController.navigate(Screens.StudentSignIn.route)
                                 println("Juego 3")
                             }
+                            5 -> {
+                                navController.navigate(Screens.Level4Game1.route)
+                            }
                             else -> {
+                                navController.navigate(Screens.Level4Game2.route)
                                 println("Click en card de pagina $page")
                             }
                         }
