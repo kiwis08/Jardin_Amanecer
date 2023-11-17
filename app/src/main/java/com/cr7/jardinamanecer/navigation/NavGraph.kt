@@ -14,6 +14,7 @@ import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
+import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
 
 @Composable
 fun NavGraph (navController: NavHostController){
@@ -45,6 +46,9 @@ fun NavGraph (navController: NavHostController){
         composable(route = Screens.Level1Game2.route){
             val viewModelPartes = PartesViewModel(scope = coroutineScope)
             PartesCuerpoScreen(viewModelPartes,navController)
+        }
+        composable(route = Screens.Level4Game2.route) {
+            MemoryScreen(navController = navController)
         }
     }
 }
