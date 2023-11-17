@@ -1,23 +1,26 @@
 package com.cr7.jardinamanecer.navigation
+
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.cr7.jardinamanecer.ui.screens.AdminSignIn
+import com.cr7.jardinamanecer.ui.screens.GameMenu
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.StudentSignIn
-<<<<<<< Updated upstream
-=======
 import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDrop
->>>>>>> Stashed changes
+import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
 
 @Composable
 fun NavGraph (navController: NavHostController){
+    val coroutineScope = rememberCoroutineScope()
+
     NavHost(
         navController = navController,
         startDestination = Screens.Start.route)
@@ -31,8 +34,6 @@ fun NavGraph (navController: NavHostController){
         composable(route = Screens.StudentSignIn.route){
             StudentSignIn()
         }
-<<<<<<< Updated upstream
-=======
         composable(route = Screens.Level4Game1.route){
             ComunicatorScreen(navController = navController)
         }
@@ -50,6 +51,8 @@ fun NavGraph (navController: NavHostController){
         composable(route = Screens.Level3Game1.route){
             ImageDragAndDrop(navController)
         }
->>>>>>> Stashed changes
+        composable(route = Screens.Level4Game2.route) {
+            MemoryScreen(navController = navController)
+        }
     }
 }
