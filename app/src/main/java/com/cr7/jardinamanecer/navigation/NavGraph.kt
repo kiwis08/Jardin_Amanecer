@@ -16,6 +16,8 @@ import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
 import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
+import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDrop
+import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
 
 @Composable
 fun NavGraph (navController: NavHostController){
@@ -53,6 +55,12 @@ fun NavGraph (navController: NavHostController){
         }
         composable(route = Screens.Level2Game3.route){
             ClothingDragAndDrop()
+        }
+        composable(route = Screens.Level3Game1.route){
+            ImageDragAndDrop(navController)
+        }
+        composable(route = Screens.Level4Game2.route) {
+            MemoryScreen(navController = navController)
         }
     }
 }
