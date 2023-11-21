@@ -7,9 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.cr7.jardinamanecer.R
 import kotlinx.coroutines.CoroutineScope
 
-class PartesViewModel(
-scope: CoroutineScope
-) : ViewModel()  {
+class PartesViewModel() : ViewModel()  {
 
     var index_glo by mutableStateOf(0)
 
