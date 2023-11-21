@@ -1,11 +1,7 @@
 package com.cr7.jardinamanecer.ui.screens.level2.game1
 
 import com.cr7.jardinamanecer.R
-import com.cr7.jardinamanecer.navigation.Screens
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,21 +36,9 @@ import android.speech.tts.TextToSpeech
 import java.util.Locale
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-
-class figurines : ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-        setContent {
-            ImageDragAndDrop()
-        }
-    }
-}
-
 @Preview(widthDp = 900, heightDp = 700)
 @Composable
-fun ImageDragAndDrop() {
+fun FigurinesDragAndDrop() {
     val context = LocalContext.current
     val imagesInPlace = BooleanArray(4) { false }
     var showSuccessMessage by remember { mutableStateOf(false) }

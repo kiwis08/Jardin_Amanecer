@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -26,8 +27,14 @@ fun GameMenu(navController: NavController) {
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL1_PartesCuerpo.png?alt=media&token=26f7c3c2-9ff6-4782-bf6f-056ac04a3d0f",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL1_Instrumentos.png?alt=media&token=7cf2cfe2-c851-4628-9640-536f2a129e35",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Colorea.png?alt=media&token=be5599a1-ba9c-4999-aca4-7583e9c2010c",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Ali%CC%81state.png?alt=media&token=1a37afa9-8de2-4c54-bfde-b001834bb205",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Figurines.png?alt=media&token=8756776e-ea56-4efc-afb3-a6c692b85234",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3-OrdenaNumeros.png?alt=media&token=821b349a-36d8-4082-a026-5fa61c254bd9",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2/L4-Comunicador.png?alt=media&token=d3aba2fe-df3f-4290-a3a9-df2fa68d3460"
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3_Relaciona.png?alt=media&token=171ac591-9417-40a7-b1e0-1cdf47d2fe36",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3_Vocales.png?alt=media&token=01348a40-a91a-4fd5-a10e-437eab8e68c9",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL4-Comunicador.png?alt=media&token=d3aba2fe-df3f-4290-a3a9-df2fa68d3460",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL4_Memorama.png?alt=media&token=d41de9be-d2dc-410e-9cbe-ac8d33655ead",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL4_Rompecabezas.png?alt=media&token=ca815e8e-d408-4693-85ae-d0f598b357ea",
     )
     println("Lista de juegos $gamelists")
 
@@ -50,11 +57,9 @@ fun GameMenu(navController: NavController) {
                             }
                             1 -> {
                                 navController.navigate(Screens.Level1Game2.route)
-                                println("Juego 2")
                             }
                             2 -> {
                                 navController.navigate(Screens.StudentSignIn.route)
-                                println("Juego 3")
                             }
                             else -> {
                                 println("Click en card de pagina $page")
