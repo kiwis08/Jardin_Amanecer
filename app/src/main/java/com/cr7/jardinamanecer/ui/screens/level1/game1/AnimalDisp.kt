@@ -1,6 +1,8 @@
 package com.cr7.jardinamanecer.ui.screens.level1.game1
 
 
+import android.R
+import android.media.MediaPlayer
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -43,11 +45,17 @@ fun AnimalDisp(item: AnimalsItem, onClick: () -> Unit) {
             painter = painter,
             contentDescription = null,
             modifier = Modifier
-                .width(if (isZoomed) 500.dp else 400.dp)
-                .height(if (isZoomed) 800.dp else 500.dp)
+                .width(if (isZoomed) 500.dp else 300.dp)
+                .height(if (isZoomed) 800.dp else 400.dp)
                 .padding(top = 60.dp)
                 .clickable {
                     isZoomed = !isZoomed
+                    if (item.title
+                            .substringBeforeLast('.')
+                            .toLowerCase() == "lavaca"
+                    ) {
+
+                    }
                 }
         )
 

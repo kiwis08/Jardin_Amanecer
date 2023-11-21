@@ -1,46 +1,66 @@
 package com.cr7.jardinamanecer.ui.screens.level1.game2
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.google.firebase.storage.FirebaseStorage
+import com.cr7.jardinamanecer.R
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class PartesViewModel(
 scope: CoroutineScope
 ) : ViewModel()  {
 
-    private val folderPath = "Karla/PartesCuerpo/Imagenes/Tarjetas"
+    var index_glo by mutableStateOf(0)
 
-    private val _partesItemList = MutableStateFlow<List<PartesItem>>(emptyList())
-    val partesItemList: StateFlow<List<PartesItem>> get() = _partesItemList
-    init {
-        scope.launch {
-            val items = getImageUrlsAndTitles(folderPath)
-            _partesItemList.value = items
-            println("Parteslist: $items")
+    // Other ViewModel methods and properties
 
+    fun setIndex(index: Int) {
+        index_glo = index
+    }
+
+
+    val imagenes = listOf(
+        (R.drawable.hombroyrodilla),
+        (R.drawable.narizyoreja),
+        (R.drawable.ojoylabios),
+        (R.drawable.piesymanos)
+    )
+
+    val imagenes_ind = listOf(
+
+        (R.drawable.ojo),
+        (R.drawable.manos),
+        (R.drawable.pies),
+        (R.drawable.labios),
+        (R.drawable.nariz),
+        (R.drawable.oreja),
+        (R.drawable.hombro),
+        (R.drawable.rodilla)
+        )
+
+    fun getImagesForIndex(index: Int): List<Int> {
+        return when (index) {
+            0 -> listOf(
+                (R.drawable.hombro),
+                (R.drawable.rodilla))
+
+            1 -> listOf(
+                (R.drawable.nariz),
+                (R.drawable.oreja))
+
+            2 -> listOf(
+                (R.drawable.ojo),
+                (R.drawable.labios))
+
+            3 -> listOf(
+                (R.drawable.pies),
+                (R.drawable.manos))
+
+            else -> emptyList()
         }
     }
 
-    private suspend fun getImageUrlsAndTitles(folderPath: String): List<PartesItem> {
-        val storage = FirebaseStorage.getInstance()
-        val storageReference = storage.reference.child(folderPath)
 
-        return try {
-            val items = storageReference.listAll().await()
 
-            // Map the items to AnimalsItem instances
-            items.items.map {
-                PartesItem(
-                    name = it.name,
-                    imageUrl = it.downloadUrl.await().toString()
-                )
-            }
-        } catch (e: Exception) {
-            emptyList()
-        }
-    }
 }

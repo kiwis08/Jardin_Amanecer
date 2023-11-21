@@ -2,9 +2,12 @@ package com.cr7.jardinamanecer.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.cr7.jardinamanecer.ui.screens.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.GameMenu
 import com.cr7.jardinamanecer.ui.screens.StartScreen
@@ -13,6 +16,7 @@ import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
+import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen2
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
 
 @Composable
@@ -45,6 +49,11 @@ fun NavGraph (navController: NavHostController){
         composable(route = Screens.Level1Game2.route){
             val viewModelPartes = PartesViewModel(scope = coroutineScope)
             PartesCuerpoScreen(viewModelPartes,navController)
+        }
+        composable(route = Screens.Level1Game22.route) {
+            val viewModelPartes = PartesViewModel(scope = coroutineScope)
+
+            PartesCuerpoScreen2(navController, viewModelPartes)
         }
     }
 }

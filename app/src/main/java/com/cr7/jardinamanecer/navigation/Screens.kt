@@ -8,4 +8,6 @@ sealed class Screens(val route: String) {
     object GameMenu : Screens("GameMenu")
     object Level1Game1 : Screens("level1_game1")
     object Level1Game2 : Screens("level1_game2")
+    object Level1Game22 : Screens("partesCuerpoScreen2")
+
 }
