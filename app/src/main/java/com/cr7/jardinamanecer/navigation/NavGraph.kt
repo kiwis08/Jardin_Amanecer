@@ -14,6 +14,8 @@ import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
+import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
+import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
 
@@ -47,6 +49,12 @@ fun NavGraph (navController: NavHostController){
         composable(route = Screens.Level1Game2.route){
             val viewModelPartes = PartesViewModel(scope = coroutineScope)
             PartesCuerpoScreen(viewModelPartes,navController)
+        }
+        composable(route = Screens.Level2Game1.route){
+            FigurinesDragAndDrop()
+        }
+        composable(route = Screens.Level2Game3.route){
+            ClothingDragAndDrop()
         }
         composable(route = Screens.Level3Game1.route){
             ImageDragAndDrop(navController)
