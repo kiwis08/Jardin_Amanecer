@@ -44,7 +44,6 @@ import com.cr7.jardinamanecer.navigation.Screens
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavController) {
-    Log.e("AnimalsScreen", "Entro")
 
     val images by viewModel.partesItemList.collectAsState<List<PartesItem>>()
     println("$images")

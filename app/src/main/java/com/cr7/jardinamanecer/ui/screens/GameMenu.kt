@@ -61,7 +61,12 @@ fun GameMenu(navController: NavController) {
                                 navController.navigate(Screens.Level1Game2.route)
                             }
                             2 -> {
-                                // TODO: Navigate to Level 1 Game 3
+                                try {
+                                    navController.navigate(Screens.Level1Game3.route)
+                                }catch (e: Exception) {
+                                    println("No funciono: ${e.message}")
+
+                                }
                             }
                             3 -> {
                                 navController.navigate(Screens.Level2Game1.route)
