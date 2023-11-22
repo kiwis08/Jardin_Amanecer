@@ -45,7 +45,12 @@ fun GameMenu(navController: NavController) {
                     .clickable {
                         when (page) {
                             0 -> {
-                                navController.navigate(Screens.Level1Game1.route)
+                                try {
+                                    navController.navigate(Screens.Level1Game1.route)
+
+                                }catch (e: Exception) {
+                                    println("No funciono: ${e.message}")
+                                }
                             }
                             1 -> {
                                 navController.navigate(Screens.Level1Game2.route)
