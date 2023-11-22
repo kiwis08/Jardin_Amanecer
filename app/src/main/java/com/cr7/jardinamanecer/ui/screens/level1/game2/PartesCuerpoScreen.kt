@@ -152,6 +152,7 @@ fun PartesCuerpoScreen(viewModel: PartesViewModel = viewModel(), navController :
                         .padding(horizontal = 16.dp, vertical = 8.dp)
 
                 ) {
+
                     Row {
                         val painter = rememberAsyncImagePainter(
                             model = images[index],
