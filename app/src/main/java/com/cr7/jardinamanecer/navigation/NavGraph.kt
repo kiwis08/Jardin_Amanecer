@@ -14,10 +14,13 @@ import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
+import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropAnimales
+import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropColores
+import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropNumeros
 import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
-import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
+
 
 @Composable
 fun NavGraph (navController: NavHostController){
@@ -39,6 +42,9 @@ fun NavGraph (navController: NavHostController){
         composable(route = Screens.Level4Game1.route){
             ComunicatorScreen(navController = navController)
         }
+        composable(route = Screens.Level4Game2.route){
+            MemoryScreen(navController = navController)
+        }
         composable(route = Screens.GameMenu.route){
             GameMenu(navController)
         }
@@ -50,17 +56,20 @@ fun NavGraph (navController: NavHostController){
             val viewModelPartes = PartesViewModel(scope = coroutineScope)
             PartesCuerpoScreen(viewModelPartes,navController)
         }
+        composable(route = Screens.Level3Game1.route) {
+            ImageDragAndDropNumeros(navController = navController)
+        }
+        composable(route = Screens.Level3Game3.route) {
+            ImageDragAndDropAnimales(navController = navController)
+        }
+        composable(route = Screens.Level3Game2.route) {
+            ImageDragAndDropColores(navController = navController)
+        }
         composable(route = Screens.Level2Game1.route){
             FigurinesDragAndDrop()
         }
         composable(route = Screens.Level2Game3.route){
             ClothingDragAndDrop()
-        }
-        composable(route = Screens.Level3Game1.route){
-            ImageDragAndDrop(navController)
-        }
-        composable(route = Screens.Level4Game2.route) {
-            MemoryScreen(navController = navController)
         }
     }
 }
