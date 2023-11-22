@@ -1,6 +1,7 @@
 package com.cr7.jardinamanecer.ui.screens.level1.game2
 
 import android.content.Context
+import android.icu.lang.UCharacter.VerticalOrientation
 import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -93,6 +95,7 @@ fun PartesCuerpoScreen2(navController: NavController, viewModel: PartesViewModel
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .background(Color(234, 4, 126, 255))
+                .fillMaxSize()
             ) {
 
 
@@ -128,12 +131,14 @@ fun DisImages(image: Int, index: Int, indexgen :Int, viewModel: PartesViewModel)
 
     Column(
         modifier = Modifier
-            .fillMaxHeight()
+            .fillMaxSize()
+            .padding(top = 30.dp)
         ) {
 
         // Imagenes de las partes del cuerpo
         Row(
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.Top,
+            modifier = Modifier.fillMaxSize()
         ) {
             val painter = rememberAsyncImagePainter(
                 model = image,
@@ -145,8 +150,8 @@ fun DisImages(image: Int, index: Int, indexgen :Int, viewModel: PartesViewModel)
                 contentDescription = null,
                 modifier = Modifier
                     .width(if (isZoomed) 3000.dp else 800.dp)
-                    .height(1800.dp) // Set a fixed height
-                    .padding(horizontal = 100.dp, vertical = if (isZoomed) 60.dp else 0.dp) // Adjust padding
+                    .height(1800.dp)
+                    .padding(horizontal = 100.dp, vertical = if (isZoomed) 60.dp else 0.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(backgroundColors[0])
                     .clickable {
@@ -159,6 +164,7 @@ fun DisImages(image: Int, index: Int, indexgen :Int, viewModel: PartesViewModel)
 
                         }
                     },
+                Alignment.TopCenter
             )
         }
     }

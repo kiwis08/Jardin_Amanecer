@@ -63,21 +63,11 @@ fun PartesCuerpoScreen(viewModel: PartesViewModel = viewModel(), navController :
             HorizontalPager(state = state) { page ->
                 Log.e("HorizontalPager", "Entra al pager")
 
-                val backgroundColors = listOf(
-
-                    Color(185, 49, 252),
-                    Color(234, 4, 126, 255),
-                    Color(255, 109, 40),
-                    Color(252, 231, 0),
-                    Color(38, 171, 226),
-                    Color(255, 23, 0),
-                )
-                val backgroundColorIndex = page % backgroundColors.size
 
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(backgroundColors[backgroundColorIndex])
+                        .background(Color(185, 49, 252))
                 ) {
 
 
@@ -86,7 +76,6 @@ fun PartesCuerpoScreen(viewModel: PartesViewModel = viewModel(), navController :
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(Color.White)
-                            .weight(1f)
                             .height(100.dp),
                     ) {
                         //Boton hace pantalla anterior
@@ -117,13 +106,10 @@ fun PartesCuerpoScreen(viewModel: PartesViewModel = viewModel(), navController :
                     Row(
                         modifier = Modifier
                             .padding(16.dp)
-                            .weight(6f)
-                            .fillMaxWidth()
-                            .fillMaxHeight(3f),
+                            .fillMaxSize(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
                         //Dispaly de las tarjetas de los animales
                         Elementos(images, navController, viewModel)
 
@@ -149,7 +135,8 @@ fun PartesCuerpoScreen(viewModel: PartesViewModel = viewModel(), navController :
                 println("IMAGENS $images")
                 Column(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(horizontal = 16.dp, vertical = 2.dp)
+                        .fillMaxSize()
 
                 ) {
 
@@ -159,6 +146,7 @@ fun PartesCuerpoScreen(viewModel: PartesViewModel = viewModel(), navController :
                             contentScale = ContentScale.Crop,
                             filterQuality = FilterQuality.High
                         )
+                        //Tarjetas generales
                         Image(
                             painter = painter,
                             contentDescription = null,

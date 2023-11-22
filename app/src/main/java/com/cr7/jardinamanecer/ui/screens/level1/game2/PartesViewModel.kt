@@ -41,17 +41,6 @@ class PartesViewModel() : ViewModel()  {
         )
 
 
-    val imagesName = listOf(
-        "ojo",
-        "manos",
-        "pies",
-        "labios",
-        "nariz",
-        "oreja",
-        "hombro",
-        "rodilla"
-    )
-
     fun getImagesForIndex(index: Int): List<Int> {
         return when (index) {
             0 -> listOf(
