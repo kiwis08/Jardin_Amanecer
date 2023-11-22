@@ -17,6 +17,8 @@ import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropAnimales
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropColores
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropNumeros
+import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
+import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
 
 @Composable
 fun NavGraph (navController: NavHostController){
@@ -49,14 +51,20 @@ fun NavGraph (navController: NavHostController){
             val viewModelPartes = PartesViewModel(scope = coroutineScope)
             PartesCuerpoScreen(viewModelPartes,navController)
         }
-        composable(route = Screens.Level3Game1.route){
+        composable(route = Screens.Level3Game1.route) {
             ImageDragAndDropNumeros(navController = navController)
         }
-        composable(route = Screens.Level3Game2.route){
+        composable(route = Screens.Level3Game2.route) {
             ImageDragAndDropAnimales(navController = navController)
         }
-        composable(route = Screens.Level3Game3.route){
+        composable(route = Screens.Level3Game3.route) {
             ImageDragAndDropColores(navController = navController)
+        }
+        composable(route = Screens.Level2Game1.route){
+            FigurinesDragAndDrop()
+        }
+        composable(route = Screens.Level2Game3.route){
+            ClothingDragAndDrop()
         }
     }
 }
