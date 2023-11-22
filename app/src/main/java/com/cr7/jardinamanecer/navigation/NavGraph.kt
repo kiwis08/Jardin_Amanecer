@@ -20,6 +20,7 @@ import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropNumeros
 import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
 
+
 @Composable
 fun NavGraph (navController: NavHostController){
     val coroutineScope = rememberCoroutineScope()

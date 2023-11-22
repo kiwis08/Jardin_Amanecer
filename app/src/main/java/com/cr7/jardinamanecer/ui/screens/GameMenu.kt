@@ -5,17 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.size.Scale
 import com.cr7.jardinamanecer.navigation.Screens
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -26,9 +22,9 @@ fun GameMenu(navController: NavController) {
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL1_Animales.png?alt=media&token=72240018-4a25-433f-ba55-644c70f841fd",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL1_PartesCuerpo.png?alt=media&token=26f7c3c2-9ff6-4782-bf6f-056ac04a3d0f",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL1_Instrumentos.png?alt=media&token=7cf2cfe2-c851-4628-9640-536f2a129e35",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Colorea.png?alt=media&token=be5599a1-ba9c-4999-aca4-7583e9c2010c",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Ali%CC%81state.png?alt=media&token=1a37afa9-8de2-4c54-bfde-b001834bb205",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Figurines.png?alt=media&token=8756776e-ea56-4efc-afb3-a6c692b85234",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Colorea.png?alt=media&token=be5599a1-ba9c-4999-aca4-7583e9c2010c",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Alistate.png?alt=media&token=aa33a18c-a1ad-4088-b570-3de0650cf3be",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3-OrdenaNumeros.png?alt=media&token=821b349a-36d8-4082-a026-5fa61c254bd9",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3_Relaciona.png?alt=media&token=171ac591-9417-40a7-b1e0-1cdf47d2fe36",
         "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3_Vocales.png?alt=media&token=01348a40-a91a-4fd5-a10e-437eab8e68c9",
@@ -59,11 +55,34 @@ fun GameMenu(navController: NavController) {
                                 navController.navigate(Screens.Level1Game2.route)
                             }
                             2 -> {
-                                navController.navigate(Screens.StudentSignIn.route)
+                                // TODO: Navigate to Level 1 Game 3
+                            }
+                            3 -> {
+                                navController.navigate(Screens.Level2Game1.route)
                             }
                             4 -> {
+                                // TODO: Navigate to Level 2 Game 2
+                            }
+                            5 -> {
+                                navController.navigate(Screens.Level2Game3.route)
+                            }
+                            6 -> {
                                 navController.navigate(Screens.Level3Game1.route)
-                                println("Juego 3")
+                            }
+                            7 -> {
+                                // TODO: Navigate to Level 3 Game 2
+                            }
+                            8 -> {
+                                // TODO: Navigate to Level 3 Game 3
+                            }
+                            9 -> {
+                                navController.navigate(Screens.Level4Game1.route)
+                            }
+                            10 -> {
+                                navController.navigate(Screens.Level4Game2.route)
+                            }
+                            11 -> {
+                                // TODO: Navigate to Level 4 Game 3
                             }
                             else -> {
                                 println("Click en card de pagina $page")
@@ -72,11 +91,7 @@ fun GameMenu(navController: NavController) {
                     }
             ) {
                 AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(imageUrl)
-                        .crossfade(true)
-                        .scale(Scale.FILL)
-                        .build(),
+                    model = imageUrl,
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize()
                 )
