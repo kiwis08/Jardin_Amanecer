@@ -70,10 +70,10 @@ fun GameMenu(navController: NavController) {
                                 navController.navigate(Screens.Level3Game1.route)
                             }
                             7 -> {
-                                // TODO: Navigate to Level 3 Game 2
+                                navController.navigate(Screens.Level3Game2.route)
                             }
                             8 -> {
-                                // TODO: Navigate to Level 3 Game 3
+                                navController.navigate(Screens.Level3Game3.route)
                             }
                             9 -> {
                                 navController.navigate(Screens.Level4Game1.route)
