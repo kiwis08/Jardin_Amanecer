@@ -26,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +37,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.cr7.jardinamanecer.R
@@ -45,15 +48,10 @@ import com.cr7.jardinamanecer.navigation.Screens
 @Composable
 fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavController) {
 
-    val images by viewModel.partesItemList.collectAsState<List<PartesItem>>()
+    val images = viewModel.imagenes
     println("$images")
 
-    val cant = images.size
-    println("CANTIDAD $cant")
-
-
-
-    val state = rememberPagerState(pageCount = { images.size})
+    val state = rememberPagerState(pageCount = { images.size })
 
 
     Surface(
@@ -64,21 +62,11 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
             HorizontalPager(state = state) { page ->
                 Log.e("HorizontalPager", "Entra al pager")
 
-                val backgroundColors = listOf(
-
-                    Color(185, 49, 252),
-                    Color(234, 4, 126, 255),
-                    Color(255, 109, 40),
-                    Color(252, 231, 0),
-                    Color(38, 171, 226),
-                    Color(255, 23, 0),
-                )
-                val backgroundColorIndex = page % backgroundColors.size
 
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(backgroundColors[backgroundColorIndex])
+                        .background(Color(185, 49, 252))
                 ) {
 
 
@@ -87,7 +75,6 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(Color.White)
-                            .weight(1f)
                             .height(100.dp),
                     ) {
                         //Boton hace pantalla anterior
@@ -114,68 +101,78 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
 
                     }
 
-                    // Flechas y Animales
+                    // Cards
                     Row(
                         modifier = Modifier
                             .padding(16.dp)
-                            .weight(6f)
-                            .fillMaxWidth()
-                            .fillMaxHeight(3f),
+                            .fillMaxSize(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        //Dispaly de las tarjetas de los animales
+                        Elementos(images, navController, viewModel)
 
-                        Elementos(images)
-                        //CONTENIDOoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+                        }
+                    }
+                }
+            
+        }
+    }
+}
+
+    @Composable
+    fun Elementos(images: List<Int>, navController: NavController, viewModel: PartesViewModel) {
+        println("Entro a ELEMENTOS")
+
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(images.size) { index ->
+                println("IMAGENS $images")
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 2.dp)
+                        .fillMaxSize()
+
+                ) {
+
+                    Row {
+                        val painter = rememberAsyncImagePainter(
+                            model = images[index],
+                            contentScale = ContentScale.Crop,
+                            filterQuality = FilterQuality.High
+                        )
+                        //Tarjetas generales
+                        Image(
+                            painter = painter,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .width(800.dp)
+                                .height(300.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(MaterialTheme.colorScheme.background)
+                                .clickable {
+                                    viewModel.setIndex(index)
+                                    val prueba = viewModel.index_glo
+                                    try {
+                                        println("PRUEBA INDEX $prueba")
+                                        navController.navigate(Screens.Level1Game22.route)
+                                    } catch (e: Exception) {
+                                        println("No funciono: ${e.message}")
+                                        println("INDEX: $index")
+
+                                    }
+
+
+                                }
+                        )
+
                     }
                 }
             }
         }
     }
-}
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun Elementos(cards: List<PartesItem>) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(cards.size) { index ->
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .clickable {
-                        // Agrega la lógica que deseas al hacer clic en un elemento
-                    }
-            ) {
-                Row {
-                    val painter = rememberAsyncImagePainter(
-                        model = cards[index].imageUrl,
-                        contentScale = ContentScale.Crop,
-                        filterQuality = FilterQuality.High
-                    )
-                    Image(
-                        painter = painter,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .width(500.dp)
-                            .height(200.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(MaterialTheme.colorScheme.background)
-                    )
-
-                    // Texto debajo de la imagen
-                    /*Text(
-                        text = cards[index].name.substringBeforeLast('.').toLowerCase(),
-                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
-                        modifier = Modifier.padding(top = 8.dp)
-                    )*/
-                }
-                
-
-            }
-        }
-    }
-}

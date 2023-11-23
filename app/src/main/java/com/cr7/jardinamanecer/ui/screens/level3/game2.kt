@@ -53,7 +53,7 @@ import androidx.navigation.NavController
 //@Preview(heightDp = 600, widthDp = 1000)
 @Composable
 //navController : NavController
-fun ImageDragAndDropNumeros(navController : NavController) {
+fun ImageDragAndDropAnimales(navController : NavController) {
     val context = LocalContext.current
     val imagesInPlace = BooleanArray(5) { false }
     var showSuccessMessage by remember { mutableStateOf(false) }
@@ -68,8 +68,8 @@ fun ImageDragAndDropNumeros(navController : NavController) {
         }
     }
 
-    val imageSize = 100.dp
-    val dropTargetSize = 100.dp
+    val imageSize = 150.dp
+    val dropTargetSize = 150.dp
 
     // numero 1
     var imagePosition by remember { mutableStateOf(Offset(170f, 300f)) }
@@ -95,7 +95,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color(0, 191, 255, 255))) {
+        .background(Color(237, 118, 14, 200))) {
 
         Row(
             modifier = Modifier
@@ -117,7 +117,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
 
             // Título
             Text(
-                text = "Números",
+                text = "Animales",
                 style = MaterialTheme.typography.bodyLarge.copy(fontSize = 30.sp),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -133,7 +133,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                 .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
-            Text("1", color = Color.Black, fontSize = 40.sp)
+            Text("A", color = Color.Black, fontSize = 50.sp)
         }
 
         Box(
@@ -143,7 +143,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                 .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
-            Text("2", color = Color.Black, fontSize = 40.sp)
+            Text("P", color = Color.Black, fontSize = 50.sp)
         }
 
         Box(
@@ -153,7 +153,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                 .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
-            Text("3", color = Color.Black, fontSize = 40.sp)
+            Text("O", color = Color.Black, fontSize = 50.sp)
         }
 
         Box(
@@ -163,7 +163,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                 .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
-            Text("4", color = Color.Black, fontSize = 40.sp)
+            Text("V", color = Color.Black, fontSize = 50.sp)
         }
 
         Box(
@@ -173,12 +173,12 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                 .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
-            Text("5", color = Color.Black, fontSize = 40.sp)
+            Text("G", color = Color.Black, fontSize = 50.sp)
         }
 
         // Draggable Image
         Image(
-            painter = painterResource(id = R.drawable.numero1),
+            painter = painterResource(id = R.drawable.abeja),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition.x.roundToInt(), imagePosition.y.roundToInt()) }
@@ -196,7 +196,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                         ) {
                             imagePosition = dropTargetPosition
                             imagesInPlace[0] = true
-                            textToSpeech.value?.speak("Uno", TextToSpeech.QUEUE_FLUSH, null, null)
+                            textToSpeech.value?.speak("Abeja", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
                                 Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
                                 showSuccessMessage = true                            }
@@ -206,7 +206,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.numero2),
+            painter = painterResource(id = R.drawable.pez),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition2.x.roundToInt(), imagePosition2.y.roundToInt()) }
@@ -224,7 +224,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                         ) {
                             imagePosition2 = dropTargetPosition2
                             imagesInPlace[1] = true
-                            textToSpeech.value?.speak("Dos", TextToSpeech.QUEUE_FLUSH, null, null)
+                            textToSpeech.value?.speak("Pess", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
                                 Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
                                 showSuccessMessage = true                            }
@@ -234,7 +234,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.numero3),
+            painter = painterResource(id = R.drawable.oso),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition3.x.roundToInt(), imagePosition3.y.roundToInt()) }
@@ -242,7 +242,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition3 = imagePosition3.plus(Offset(dragAmount.x, dragAmount.y))
-
+                        // Check if the image is within the drop target bounds
                         if (isImageInDropTarget(
                                 imagePosition3,
                                 dropTargetPosition3,
@@ -252,7 +252,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                         ) {
                             imagePosition3 = dropTargetPosition3
                             imagesInPlace[2] = true
-                            textToSpeech.value?.speak("Tres", TextToSpeech.QUEUE_FLUSH, null, null)
+                            textToSpeech.value?.speak("Osoh", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
                                 Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
                                 showSuccessMessage = true                            }
@@ -262,7 +262,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.numero4),
+            painter = painterResource(id = R.drawable.vaca),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition4.x.roundToInt(), imagePosition4.y.roundToInt()) }
@@ -280,7 +280,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                         ) {
                             imagePosition4 = dropTargetPosition4
                             imagesInPlace[3] = true
-                            textToSpeech.value?.speak("Cuatro", TextToSpeech.QUEUE_FLUSH, null, null)
+                            textToSpeech.value?.speak("backa", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
                                 Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
                                 showSuccessMessage = true                            }
@@ -290,7 +290,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.numero5),
+            painter = painterResource(id = R.drawable.gato),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition5.x.roundToInt(), imagePosition5.y.roundToInt()) }
@@ -308,7 +308,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                         ) {
                             imagePosition5 = dropTargetPosition5
                             imagesInPlace[4] = true
-                            textToSpeech.value?.speak("Cinco", TextToSpeech.QUEUE_FLUSH, null, null)
+                            textToSpeech.value?.speak("Gatoh", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
                                 Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
                                 showSuccessMessage = true
@@ -353,4 +353,3 @@ private fun isImageInDropTarget(
     val dropTargetBounds = Rect(dropTargetPosition, dropTargetPosition + Offset(dropTargetSize.value, dropTargetSize.value))
     return imageBounds.overlaps(dropTargetBounds)
 }
-

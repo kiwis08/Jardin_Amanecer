@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,21 +25,26 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import coil.compose.rememberAsyncImagePainter
+import com.cr7.jardinamanecer.ui.screens.level1.DataBaseItem
+import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalDisp
+import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import kotlinx.coroutines.launch
 
 
@@ -47,12 +53,8 @@ import kotlinx.coroutines.launch
 fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
     Log.e("AnimalsScreen", "Entro")
 
-    //val images by viewModel.animalsItemList.collectAsState<List<AnimalsItem>>()
-    val images by viewModel.animalsItemList.collectAsState<List<AnimalsItem>>()
-    println("$images")
-
-
-
+    val images = viewModel.animales
+    println("IMAGENES MAIN$images")
 
     val state = rememberPagerState(pageCount = { images.size })
 
@@ -67,20 +69,28 @@ fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
             HorizontalPager(state = state) { page ->
                 Log.e("HorizontalPager", "Entra al pager")
 
-                val backgroundColors = listOf(
-                    Color(234, 4, 126, 255),
-                    Color(255, 109, 40),
-                    Color(252, 231, 0),
-                    Color(38, 171, 226),
-                    Color(185, 49, 252),
-                    Color(255, 23, 0),
-                )
-                val backgroundColorIndex = page % backgroundColors.size
+                //val backgroundColors = listOf(
+                //Color(234, 4, 126, 255),
+                //Color(255, 109, 40),
+                //Color(252, 231, 0),
+                //Color(38, 171, 226),
+                //Color(185, 49, 252),
+                //Color(255, 23, 0),
+                //)
+                //val backgroundColorIndex = page % backgroundColors.size
 
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(backgroundColors[backgroundColorIndex])
+                        //.background(backgroundColors[backgroundColorIndex])
+                        .paint(
+                            painterResource(id = R.drawable.granja),
+                            contentScale = ContentScale.FillBounds
+                        )
+                        .background(
+                            color = Color(0xFF000000).copy(alpha = 0.5f),
+
+                        )
                 ) {
 
 
@@ -131,8 +141,8 @@ fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
                         Box(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .weight(1f)
-                                .background(backgroundColors[backgroundColorIndex]),
+                                .weight(1f),
+                            //.background(backgroundColors[backgroundColorIndex]),
                             contentAlignment = Alignment.CenterStart
 
                         ) {
@@ -150,34 +160,34 @@ fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
                                             }
                                         }
                                 )
-                           }
+                            }
                         }
 
                         // Animales
                         Box(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .weight(3f)
-                                .background(backgroundColors[backgroundColorIndex]),
+                                .weight(3f),
+                            //.background(backgroundColors[backgroundColorIndex]),
                             contentAlignment = Alignment.Center
 
                         ) {
-
-                            // Animales
-                            val currentAnimal = images.getOrNull(state.currentPage.toInt())
-                            currentAnimal?.let { animal ->
-                                println("ANIMAL:$animal")
-                                AnimalDisp(animal){}
+                            val currentAnimalResourceId =
+                                images.getOrNull(state.currentPage.toInt())
+                            currentAnimalResourceId?.let { imageId ->
+                                val currentAnimalName =
+                                    viewModel.nombresAnimales.getOrNull(state.currentPage.toInt())
+                                        ?: ""
+                                AnimalDisp(imageId, currentAnimalName, viewModel)
                             }
-
                         }
 
                         // Felcha-boton-next
                         Box(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .weight(1f)
-                                .background(backgroundColors[backgroundColorIndex]),
+                                .weight(1f),
+                            //.background(backgroundColors[backgroundColorIndex]),
                             contentAlignment = Alignment.CenterEnd
                         ) {
                             if (state.currentPage != images.size - 1) {
@@ -227,17 +237,18 @@ fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
                         )
                     }
                 }
+
             }
         }
-    }
 
+    }
 }
 
 @Composable
-fun AnimalNow(animal: AnimalsItem) {
+fun AnimalNow(animal: DataBaseItem) {
     println("Entra a la funcion")
 
-    animal.imageUrl?.let {
+    animal.contentUrl?.let {
         val painter: Painter = rememberAsyncImagePainter(model = it)
 
         Image(
