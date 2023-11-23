@@ -19,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.ui.screens.level4.model.MemoryItem
-import java.util.Locale
 
 @Composable
 fun MemoryCard(modifier: Modifier, item: MemoryItem, isTurned: Boolean, onClick: () -> Unit) {
