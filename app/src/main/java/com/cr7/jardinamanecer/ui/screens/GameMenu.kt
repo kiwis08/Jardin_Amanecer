@@ -84,9 +84,18 @@ fun GameMenu(navController: NavController) {
                             11 -> {
                                 // TODO: Navigate to Level 4 Game 3
                             }
-                            else -> {
+                            3 -> {
                                 println("Click en card de pagina $page")
                             }
+                            4 -> {
+                                println("Juego 4")
+                            }
+                            5 -> {
+                                navController.navigate(Screens.Level4Game1.route)
+                                println("Juego 4")
+                            }
+
+
                         }
                     }
             ) {
