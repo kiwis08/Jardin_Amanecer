@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -53,7 +54,9 @@ fun MemoryScreen(
     Surface(
         color = Color(0xFF076187),
     ) {
-        Column {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -68,6 +71,7 @@ fun MemoryScreen(
                         .height(100.dp)
                         .padding(16.dp)
                         .clickable {
+                            viewModel.resetState()
                             navController.navigate(Screens.GameMenu.route)
                         }
                 )
@@ -85,7 +89,7 @@ fun MemoryScreen(
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(horizontal = 64.dp)
+                modifier = Modifier.padding(horizontal = 64.dp).fillMaxHeight()
             ) {
                 if ((state.guessedItems.count() * 2) == state.items.count()) {
                     mediaPlayer.start()
