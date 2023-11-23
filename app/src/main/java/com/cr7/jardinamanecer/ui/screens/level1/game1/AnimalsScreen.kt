@@ -29,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
 import kotlinx.coroutines.launch
@@ -47,7 +49,6 @@ import kotlinx.coroutines.launch
 fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
     Log.e("AnimalsScreen", "Entro")
 
-    //val images by viewModel.animalsItemList.collectAsState<List<AnimalsItem>>()
     val images by viewModel.animalsItemList.collectAsState<List<AnimalsItem>>()
     println("$images")
 
@@ -77,10 +78,12 @@ fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
                 )
                 val backgroundColorIndex = page % backgroundColors.size
 
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(backgroundColors[backgroundColorIndex])
+                        //.background(backgroundColors[backgroundColorIndex])
+                        .background(color = Color.Transparent)
                 ) {
 
 
