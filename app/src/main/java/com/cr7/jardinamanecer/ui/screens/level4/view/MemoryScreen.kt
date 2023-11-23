@@ -1,5 +1,6 @@
 package com.cr7.jardinamanecer.ui.screens.level4.view
 
+import android.media.MediaPlayer
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -36,6 +38,8 @@ fun MemoryScreen(
     navController: NavHostController
 ) {
     val state = viewModel.state.value
+
+    val mediaPlayer = MediaPlayer.create(LocalContext.current, R.raw.fanfare)
 
     BackHandler {
         if (state.selectedCategory.isNotEmpty()) {
@@ -84,6 +88,7 @@ fun MemoryScreen(
                 modifier = Modifier.padding(horizontal = 64.dp)
             ) {
                 if ((state.guessedItems.count() * 2) == state.items.count()) {
+                    mediaPlayer.start()
                     Text(
                         text = "¡Felicidades!",
                         fontSize = 64.sp,
