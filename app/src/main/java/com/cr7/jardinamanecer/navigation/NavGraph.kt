@@ -18,6 +18,7 @@ import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen2
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
+import com.cr7.jardinamanecer.ui.screens.level1.game3.InstrumntosScreen
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropAnimales
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropColores
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropNumeros
@@ -58,6 +59,9 @@ fun NavGraph (navController: NavHostController) {
         }
         composable(route = Screens.Level1Game2.route){
             PartesCuerpoScreen(viewModelPartes,navController)
+        }
+        composable(route = Screens.Level1Game3.route){
+            InstrumntosScreen(navController = navController)
         }
         composable(route = Screens.Level1Game22.route) {
             PartesCuerpoScreen2(navController, viewModelPartes)
