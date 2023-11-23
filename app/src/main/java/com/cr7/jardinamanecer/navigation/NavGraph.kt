@@ -12,8 +12,15 @@ import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.StudentSignIn
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
-import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen2
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
+import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
+import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropAnimales
+import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropColores
+import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropNumeros
+import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
+import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
+import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
+
 
 @Composable
 fun NavGraph (navController: NavHostController){
@@ -32,11 +39,17 @@ fun NavGraph (navController: NavHostController){
         composable(route = Screens.StudentSignIn.route){
             StudentSignIn()
         }
+        composable(route = Screens.Level4Game1.route){
+            ComunicatorScreen(navController = navController)
+        }
+        composable(route = Screens.Level4Game2.route){
+            MemoryScreen(navController = navController)
+        }
         composable(route = Screens.GameMenu.route){
             GameMenu(navController)
         }
         composable(route = Screens.Level1Game1.route) {
-            val viewModel = AnimalViewModel( scope = coroutineScope)
+            val viewModel = AnimalViewModel(scope = coroutineScope)
             AnimalsScreen(viewModel = viewModel, navController = navController)
         }
         composable(route = Screens.Level1Game2.route){
@@ -48,5 +61,20 @@ fun NavGraph (navController: NavHostController){
             PartesCuerpoScreen2(viewModelPartes,navController, )
         }*/
 
+        composable(route = Screens.Level3Game1.route) {
+            ImageDragAndDropNumeros(navController = navController)
+        }
+        composable(route = Screens.Level3Game3.route) {
+            ImageDragAndDropAnimales(navController = navController)
+        }
+        composable(route = Screens.Level3Game2.route) {
+            ImageDragAndDropColores(navController = navController)
+        }
+        composable(route = Screens.Level2Game1.route){
+            FigurinesDragAndDrop()
+        }
+        composable(route = Screens.Level2Game3.route){
+            ClothingDragAndDrop()
+        }
     }
 }
