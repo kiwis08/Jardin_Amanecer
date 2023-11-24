@@ -9,11 +9,13 @@ import androidx.compose.ui.text.font.FontWeight
 import com.cr7.jardinamanecer.R
 
 @RequiresApi(Build.VERSION_CODES.Q)
-val dmMonoFamily = FontFamily(
-    Font(R.font.dmmono_light, FontWeight.Light),
-    Font(R.font.dmmono_regular, FontWeight.Normal),
-    Font(R.font.dmmono_italic, FontWeight.Normal, FontStyle.Italic),
-    Font(R.font.dmmono_medium, FontWeight.Medium),
-    Font(R.font.dmmono_lightitalic, FontWeight.Light, FontStyle.Italic),
-    Font(R.font.dmmono_mediumitalic, FontWeight.Medium, FontStyle.Italic),
+
+
+val lexendFamily = FontFamily(
+    Font(R.font.lexend_variablefont_wght, FontWeight.Light),
+    Font(R.font.lexend_variablefont_wght, FontWeight.Normal),
+    Font(R.font.lexend_variablefont_wght, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.lexend_variablefont_wght, FontWeight.Medium),
+    Font(R.font.lexend_variablefont_wght, FontWeight.Light, FontStyle.Italic),
+    Font(R.font.lexend_variablefont_wght, FontWeight.Medium, FontStyle.Italic),
 )

@@ -9,9 +9,13 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -19,82 +23,101 @@ import com.cr7.jardinamanecer.navigation.Screens
 fun GameMenu(navController: NavController) {
     // Lista de juegos
     val gamelists = listOf(
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL1_Animales.png?alt=media&token=72240018-4a25-433f-ba55-644c70f841fd",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL1_PartesCuerpo.png?alt=media&token=26f7c3c2-9ff6-4782-bf6f-056ac04a3d0f",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL1_Instrumentos.png?alt=media&token=7cf2cfe2-c851-4628-9640-536f2a129e35",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Figurines.png?alt=media&token=8756776e-ea56-4efc-afb3-a6c692b85234",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Colorea.png?alt=media&token=be5599a1-ba9c-4999-aca4-7583e9c2010c",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL2_Alistate.png?alt=media&token=aa33a18c-a1ad-4088-b570-3de0650cf3be",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3-OrdenaNumeros.png?alt=media&token=821b349a-36d8-4082-a026-5fa61c254bd9",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3_Relaciona.png?alt=media&token=171ac591-9417-40a7-b1e0-1cdf47d2fe36",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL3_Vocales.png?alt=media&token=01348a40-a91a-4fd5-a10e-437eab8e68c9",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL4-Comunicador.png?alt=media&token=d3aba2fe-df3f-4290-a3a9-df2fa68d3460",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL4_Memorama.png?alt=media&token=d41de9be-d2dc-410e-9cbe-ac8d33655ead",
-        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FJuegos%2FL4_Rompecabezas.png?alt=media&token=ca815e8e-d408-4693-85ae-d0f598b357ea",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL1_Animales.png?alt=media&token=01b6c0cd-835a-46f9-a747-5a857f8df1d3",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL1_Instrumentos.png?alt=media&token=c525ded9-fd92-4a10-8f23-e343f939bbfd",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL1_PartesCuerpo.png?alt=media&token=22ff52a1-9847-4b6e-9ee6-16aed14bc7df",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL2_Alistate.png?alt=media&token=0a5e3cf5-62c0-4f32-bfd1-14f287541b39",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL2_Colorea.png?alt=media&token=95f413c5-fa5a-4134-be68-e4a5f5e5b0be",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL2_Figurines.png?alt=media&token=6f71e215-b189-463b-b3e9-95f958d917e6",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL3-OrdenaNumeros.png?alt=media&token=4d6b3a46-6c6d-485c-8f0a-9c047c59dabc",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL3_Relaciona.png?alt=media&token=8e7eab7d-6935-4ef5-8bcd-b8219dc86229",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL3_Vocales.png?alt=media&token=2e6bfb5e-9dd0-49ca-a7df-3d3f946d8de0",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL4-Comunicador.png?alt=media&token=8efdc18f-3024-410f-9471-0231566ce112",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL4_Memorama.png?alt=media&token=0e177aef-6f95-4db9-bcf9-66441cc2aa1f",
+        "https://firebasestorage.googleapis.com/v0/b/jardinamanecer-ade5c.appspot.com/o/Karla%2FPrueba%2FL4_Rompecabezas.png?alt=media&token=8bd43fac-ae58-46e1-b7b3-4201056f625d"
     )
     println("Lista de juegos $gamelists")
 
 
 
-    LazyRow(
-        modifier = Modifier.fillMaxSize(),
-        state = rememberLazyListState(),
-        contentPadding = PaddingValues(horizontal = 5.dp, vertical = 0.dp)
+    Box(modifier = Modifier
+        .paint(painterResource(id = R.drawable.menuscreen),
+            contentScale = ContentScale.FillBounds)
     ) {
-        items(gamelists.size) { page ->
-            val imageUrl = gamelists[page]
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable {
-                        when (page) {
-                            0 -> {
-                                navController.navigate(Screens.Level1Game1.route)
-                            }
-                            1 -> {
-                                navController.navigate(Screens.Level1Game2.route)
-                            }
-                            2 -> {
-                                // TODO: Navigate to Level 1 Game 3
-                            }
-                            3 -> {
-                                navController.navigate(Screens.Level2Game1.route)
-                            }
-                            4 -> {
-                                // TODO: Navigate to Level 2 Game 2
-                            }
-                            5 -> {
-                                navController.navigate(Screens.Level2Game3.route)
-                            }
-                            6 -> {
-                                navController.navigate(Screens.Level3Game1.route)
-                            }
-                            7 -> {
-                                navController.navigate(Screens.Level3Game2.route)
-                            }
-                            8 -> {
-                                navController.navigate(Screens.Level3Game3.route)
-                            }
-                            9 -> {
-                                navController.navigate(Screens.Level4Game1.route)
-                            }
-                            10 -> {
-                                navController.navigate(Screens.Level4Game2.route)
-                            }
-                            11 -> {
-                                // TODO: Navigate to Level 4 Game 3
-                            }
-                            else -> {
-                                println("Click en card de pagina $page")
+        LazyRow(
+            modifier = Modifier.fillMaxSize(),
+            state = rememberLazyListState(),
+            contentPadding = PaddingValues(horizontal = 5.dp, vertical = 0.dp),
+
+            ) {
+            items(gamelists.size) { page ->
+                val imageUrl = gamelists[page]
+                Box(
+
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable {
+                            when (page) {
+                                0 -> {
+                                    navController.navigate(Screens.Level1Game1.route)
+                                }
+
+                                1 -> {
+                                    navController.navigate(Screens.Level1Game2.route)
+                                }
+
+                                2 -> {
+                                    // TODO: Navigate to Level 1 Game 3
+                                }
+
+                                3 -> {
+                                    navController.navigate(Screens.Level2Game1.route)
+                                }
+
+                                4 -> {
+                                    // TODO: Navigate to Level 2 Game 2
+                                }
+
+                                5 -> {
+                                    navController.navigate(Screens.Level2Game3.route)
+                                }
+
+                                6 -> {
+                                    navController.navigate(Screens.Level3Game1.route)
+                                }
+
+                                7 -> {
+                                    navController.navigate(Screens.Level3Game2.route)
+                                }
+
+                                8 -> {
+                                    navController.navigate(Screens.Level3Game3.route)
+                                }
+
+                                9 -> {
+                                    navController.navigate(Screens.Level4Game1.route)
+                                }
+
+                                10 -> {
+                                    navController.navigate(Screens.Level4Game2.route)
+                                }
+
+                                11 -> {
+                                    // TODO: Navigate to Level 4 Game 3
+                                }
+
+                                else -> {
+                                    println("Click en card de pagina $page")
+                                }
                             }
                         }
-                    }
-            ) {
-                AsyncImage(
-                    model = imageUrl,
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
-                )
+                ) {
+                    AsyncImage(
+                        model = imageUrl,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
         }
     }
