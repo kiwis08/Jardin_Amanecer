@@ -60,12 +60,12 @@ fun FigurinesDragAndDrop() {
 
     var imagePosition by remember { mutableStateOf(Offset(300f, 300f)) }
     val dropTargetPosition = Offset(300f, 1200f)
-    var imagePosition2 by remember { mutableStateOf(Offset(700f, 300f)) }
-    val dropTargetPosition2 = Offset(700f, 1200f)
-    var imagePosition3 by remember { mutableStateOf(Offset(1100f, 300f)) }
-    val dropTargetPosition3 = Offset(1100f, 1200f)
-    var imagePosition4 by remember { mutableStateOf(Offset(1500f, 300f)) }
-    val dropTargetPosition4 = Offset(1500f, 1200f)
+    var imagePosition2 by remember { mutableStateOf(Offset(900f, 300f)) }
+    val dropTargetPosition2 = Offset(900f, 1200f)
+    var imagePosition3 by remember { mutableStateOf(Offset(1500f, 300f)) }
+    val dropTargetPosition3 = Offset(1500f, 1200f)
+    var imagePosition4 by remember { mutableStateOf(Offset(2000f, 300f)) }
+    val dropTargetPosition4 = Offset(2000f, 1200f)
 
 
     Box(modifier = Modifier
@@ -114,8 +114,7 @@ fun FigurinesDragAndDrop() {
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition2.x.roundToInt(), dropTargetPosition2.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
+                .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
             Image(
