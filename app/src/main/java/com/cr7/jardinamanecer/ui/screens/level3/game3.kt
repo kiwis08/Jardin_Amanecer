@@ -91,7 +91,7 @@ fun ImageDragAndDropColores(navController : NavController) {
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color(191, 128, 255, 255))) {
+        .background(Color(12, 192, 223))) {
 
         Row(
             modifier = Modifier
