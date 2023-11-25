@@ -123,8 +123,6 @@ fun AdminSignIn(navController: NavController) {
                 Box(modifier = Modifier.fillMaxHeight()) {
 
 
-
-
                     //Titulo - Jardin
                     Box(
                         modifier = Modifier
@@ -189,6 +187,7 @@ fun AdminSignIn(navController: NavController) {
                                 shape = CircleShape,
                                 modifier = Modifier
                                     .padding(16.dp)
+                                    .width(350.dp)
                             )
                         }
                     }
@@ -212,6 +211,8 @@ fun AdminSignIn(navController: NavController) {
                             shape = CircleShape,
                             modifier = Modifier
                                 .padding(16.dp)
+                                .width(350.dp)
+
                         )
                     }
 

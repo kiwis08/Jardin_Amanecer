@@ -178,7 +178,6 @@ fun StartScreen(navController: NavController) {
                                 expanded = expanded,
                                 onExpandedChange = { expanded = it },
                                 modifier = Modifier
-                                    //.align(Alignment.CenterHorizontally)
                             ) {
                                 TextField(
                                     modifier = Modifier.menuAnchor().fillMaxWidth(0.3f),
