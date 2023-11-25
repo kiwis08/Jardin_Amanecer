@@ -38,7 +38,6 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
-import com.cr7.jardinamanecer.ui.screens.level1.DataBaseItem
 import kotlinx.coroutines.launch
 
 
@@ -238,22 +237,4 @@ fun AnimalsScreen(viewModel: AnimalViewModel, navController : NavController) {
     }
 }
 
-@Composable
-fun AnimalNow(animal: DataBaseItem) {
-    println("Entra a la funcion")
 
-    animal.contentUrl?.let {
-        val painter: Painter = rememberAsyncImagePainter(model = it)
-
-        Image(
-            painter = painter,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(MaterialTheme.shapes.medium),
-            contentScale = ContentScale.Crop
-        )
-
-    }
-
-}
