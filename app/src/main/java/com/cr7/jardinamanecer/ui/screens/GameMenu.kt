@@ -99,7 +99,7 @@ fun GameMenu(navController: NavController) {
                             }
 
                             11 -> {
-                                // TODO: Navigate to Level 4 Game 3
+                                navController.navigate(Screens.Level4Game3.route)
                             }
 
                             3 -> {
