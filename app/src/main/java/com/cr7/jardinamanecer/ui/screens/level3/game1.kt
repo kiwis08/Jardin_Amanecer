@@ -61,7 +61,7 @@ fun ImageDragAndDropNumeros(navController : NavController) {
     LaunchedEffect(Unit) {
         textToSpeech.value = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                textToSpeech.value?.language = Locale.US
+                textToSpeech.value?.language = Locale("es", "MX")
             }
         }
     }
