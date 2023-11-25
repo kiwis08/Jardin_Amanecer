@@ -18,6 +18,7 @@ import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
+import com.cr7.jardinamanecer.ui.screens.level4.view.PuzzleScreen
 
 @Composable
 fun NavGraph (navController: NavHostController){
@@ -61,6 +62,9 @@ fun NavGraph (navController: NavHostController){
         }
         composable(route = Screens.Level4Game2.route) {
             MemoryScreen(navController = navController)
+        }
+        composable(route = Screens.Level4Game3.route){
+            PuzzleScreen(navController = navController)
         }
     }
 }

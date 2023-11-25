@@ -1,16 +1,21 @@
 package com.cr7.jardinamanecer.ui.screens.level4.view
 
+import android.media.MediaPlayer
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +43,8 @@ fun MemoryScreen(
     navController: NavHostController
 ) {
     val state = viewModel.state.value
+    val mediaPlayer = MediaPlayer.create(LocalContext.current, R.raw.fanfare)
+
 
     BackHandler {
         if (state.selectedCategory.isNotEmpty()) {
@@ -51,7 +58,9 @@ fun MemoryScreen(
     Surface(
         color = Color(0xFF076187),
     ) {
-        Column {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -83,14 +92,16 @@ fun MemoryScreen(
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(horizontal = 64.dp)
+                modifier = Modifier.fillMaxHeight()
             ) {
                 if ((state.guessedItems.count() * 2) == state.items.count()) {
+                    mediaPlayer.start()
                     Text(
                         text = "¡Felicidades!",
                         fontSize = 64.sp,
                         color = Color.White,
-                        fontWeight = FontWeight.Black
+                        fontWeight = FontWeight.Black,
+                        modifier = Modifier.wrapContentHeight(align = Alignment.CenterVertically)
                     )
                 } else {
                     if (state.selectedCategory.isEmpty()) {
@@ -116,18 +127,19 @@ fun MemoryScreen(
                             columns = GridCells.Fixed(4),
                             modifier = Modifier.padding(8.dp),
                         ) {
-                            state.items.filter { it.category == state.selectedCategory }.forEach {
-                                item {
-                                    MemoryCard(
-                                        modifier = Modifier
-                                            .padding(24.dp),
-                                        item = it,
-                                        isTurned = viewModel.isTurned(it),
-                                    ) {
-                                        viewModel.onItemSelected(it)
+                            state.items.filter { it.category == state.selectedCategory }
+                                .forEach {
+                                    item {
+                                        MemoryCard(
+                                            modifier = Modifier
+                                                .padding(24.dp),
+                                            item = it,
+                                            isTurned = viewModel.isTurned(it),
+                                        ) {
+                                            viewModel.onItemSelected(it)
+                                        }
                                     }
                                 }
-                            }
                         }
                     }
                 }
