@@ -1,5 +1,6 @@
 package com.cr7.jardinamanecer.ui.screens.level4.view
 
+import android.media.MediaPlayer
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,12 +27,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import com.cr7.jardinamanecer.ui.screens.level4.viewmodel.MemoryViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
-import com.cr7.jardinamanecer.ui.screens.level4.model.MemoryItem
+import com.cr7.jardinamanecer.ui.screens.level4.viewmodel.MemoryViewModel
 
 @Composable
 fun MemoryScreen(
@@ -38,6 +39,8 @@ fun MemoryScreen(
     navController: NavHostController
 ) {
     val state = viewModel.state.value
+
+    val mediaPlayer = MediaPlayer.create(LocalContext.current, R.raw.fanfare)
 
     BackHandler {
         if (state.selectedCategory.isNotEmpty()) {
@@ -51,7 +54,9 @@ fun MemoryScreen(
     Surface(
         color = Color(0xFF076187),
     ) {
-        Column {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -66,6 +71,7 @@ fun MemoryScreen(
                         .height(100.dp)
                         .padding(16.dp)
                         .clickable {
+                            viewModel.resetState()
                             navController.navigate(Screens.GameMenu.route)
                         }
                 )
@@ -83,9 +89,10 @@ fun MemoryScreen(
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(horizontal = 64.dp)
+                modifier = Modifier.padding(horizontal = 64.dp).fillMaxHeight()
             ) {
                 if ((state.guessedItems.count() * 2) == state.items.count()) {
+                    mediaPlayer.start()
                     Text(
                         text = "¡Felicidades!",
                         fontSize = 64.sp,

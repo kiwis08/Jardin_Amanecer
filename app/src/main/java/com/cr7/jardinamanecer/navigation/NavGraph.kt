@@ -2,6 +2,7 @@ package com.cr7.jardinamanecer.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,23 +10,25 @@ import com.cr7.jardinamanecer.ui.screens.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.GameMenu
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.StudentSignIn
-import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
+import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen2
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
+import com.cr7.jardinamanecer.ui.screens.level1.game3.InstrumntosScreen
+import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
+import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropAnimales
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropColores
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropNumeros
-import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
-import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
+import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
 import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
 
 
 @Composable
-fun NavGraph (navController: NavHostController){
+fun NavGraph (navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
-
+    val viewModelPartes: PartesViewModel = viewModel()
     NavHost(
         navController = navController,
         startDestination = Screens.Start.route)
@@ -53,8 +56,13 @@ fun NavGraph (navController: NavHostController){
             AnimalsScreen(viewModel = viewModel, navController = navController)
         }
         composable(route = Screens.Level1Game2.route){
-            val viewModelPartes = PartesViewModel(scope = coroutineScope)
             PartesCuerpoScreen(viewModelPartes,navController)
+        }
+        composable(route = Screens.Level1Game3.route){
+            InstrumntosScreen(navController = navController)
+        }
+        composable(route = Screens.Level1Game22.route) {
+            PartesCuerpoScreen2(navController, viewModelPartes)
         }
         composable(route = Screens.Level3Game1.route) {
             ImageDragAndDropNumeros(navController = navController)
