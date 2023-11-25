@@ -15,7 +15,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.*
-import androidx.compose.ui.text.style.TextForegroundStyle.Unspecified.alpha
 import androidx.compose.ui.unit.IntSize
 import kotlinx.coroutines.launch
 import kotlin.math.abs

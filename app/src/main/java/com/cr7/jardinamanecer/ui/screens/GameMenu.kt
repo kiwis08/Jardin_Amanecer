@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -37,69 +39,66 @@ fun GameMenu(navController: NavController) {
     println("Lista de juegos $gamelists")
 
 
-
-    LazyRow(
-        modifier = Modifier.fillMaxSize(),
-        state = rememberLazyListState(),
-        contentPadding = PaddingValues(horizontal = 5.dp, vertical = 0.dp)
+    Box(modifier = Modifier
+        .paint(painterResource(id = R.drawable.menuscreen),
+            contentScale = ContentScale.FillBounds)
     ) {
-        items(gamelists.size) { page ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable {
-                        when (page) {
-                            0 -> {
-                                navController.navigate(Screens.Level1Game1.route)
-                            }
-
-                            1 -> {
-                                navController.navigate(Screens.Level1Game2.route)
-                            }
-
-                            2 -> {
-                                try {
-                                    navController.navigate(Screens.Level1Game3.route)
-                                } catch (e: Exception) {
-                                    println("No funciono: ${e.message}")
-
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            state = rememberLazyListState(),
+            contentPadding = PaddingValues(horizontal = 5.dp, vertical = 0.dp),
+        ) {
+            items(gamelists.size) { page ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable {
+                            when (page) {
+                                0 -> {
+                                    navController.navigate(Screens.Level1Game1.route)
                                 }
-                            }
 
-                            3 -> {
-                                navController.navigate(Screens.Level2Game1.route)
-                            }
+                                1 -> {
+                                    navController.navigate(Screens.Level1Game2.route)
+                                }
+                                2 -> {
+                                    navController.navigate(Screens.Level1Game3.route)
+                                }
+                                3 -> {
+                                    navController.navigate(Screens.Level2Game1.route)
+                                }
 
-                            4 -> {
-                                // TODO: Navigate to Level 2 Game 2
-                            }
+                                4 -> {
+                                    // TODO: Navigate to Level 2 Game 2
+                                }
 
-                            5 -> {
-                                navController.navigate(Screens.Level2Game3.route)
-                            }
+                                5 -> {
+                                    navController.navigate(Screens.Level2Game3.route)
+                                }
 
-                            6 -> {
-                                navController.navigate(Screens.Level3Game1.route)
-                            }
+                                6 -> {
+                                    navController.navigate(Screens.Level3Game1.route)
+                                }
 
-                            7 -> {
-                                navController.navigate(Screens.Level3Game2.route)
-                            }
+                                7 -> {
+                                    navController.navigate(Screens.Level3Game2.route)
+                                }
 
-                            8 -> {
-                                navController.navigate(Screens.Level3Game3.route)
-                            }
+                                8 -> {
+                                    navController.navigate(Screens.Level3Game3.route)
+                                }
 
-                            9 -> {
-                                navController.navigate(Screens.Level4Game1.route)
-                            }
+                                9 -> {
+                                    navController.navigate(Screens.Level4Game1.route)
+                                }
 
-                            10 -> {
-                                navController.navigate(Screens.Level4Game2.route)
-                            }
+                                10 -> {
+                                    navController.navigate(Screens.Level4Game2.route)
+                                }
 
-                            11 -> {
-                                navController.navigate(Screens.Level4Game3.route)
+                                11 -> {
+                                    navController.navigate(Screens.Level4Game3.route)
+                                }
                             }
 
                             3 -> {
@@ -117,13 +116,13 @@ fun GameMenu(navController: NavController) {
 
 
                         }
-                    }
-            ) {
-                Image(
-                    painter = painterResource(id = gamelists[page]),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Image(
+                        painter = painterResource(id = gamelists[page]),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize()
                     )
+                }
             }
         }
     }
