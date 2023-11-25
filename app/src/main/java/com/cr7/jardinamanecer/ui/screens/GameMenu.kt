@@ -28,8 +28,8 @@ fun GameMenu(navController: NavController) {
         R.drawable.l2_colorea,
         R.drawable.l2_alistate,
         R.drawable.l3_ordena_numeros,
-        R.drawable.l3_relaciona,
-        R.drawable.l3_vocales,
+        R.drawable.l3_colores,
+        R.drawable.l3_letrasanimales,
         R.drawable.l4_comunicador,
         R.drawable.l4_memorama,
         R.drawable.l4_rompecabezas

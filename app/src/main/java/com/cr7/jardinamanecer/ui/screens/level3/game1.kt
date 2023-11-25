@@ -4,6 +4,7 @@ package com.cr7.jardinamanecer.ui.screens.level3
 
 //import androidx.compose.foundation.layout.ColumnScopeInstance.weight
 //import androidx.compose.foundation.layout.RowScopeInstance.weight
+import android.media.MediaPlayer
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -30,12 +31,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -48,7 +51,6 @@ import kotlin.math.roundToInt
 
 //@Preview(heightDp = 600, widthDp = 1000)
 @Composable
-//navController : NavController
 fun ImageDragAndDropNumeros(navController : NavController) {
     val context = LocalContext.current
     val imagesInPlace = BooleanArray(5) { false }
@@ -64,28 +66,31 @@ fun ImageDragAndDropNumeros(navController : NavController) {
         }
     }
 
-    val imageSize = 100.dp
-    val dropTargetSize = 100.dp
+
+    val mediaPlayer = MediaPlayer.create(LocalContext.current, R.raw.fanfare)
+
+    val imageSize = 200.dp
+    val dropTargetSize = 200.dp
 
     // numero 1
-    var imagePosition by remember { mutableStateOf(Offset(170f, 300f)) }
-    val dropTargetPosition = Offset(170f, 1100f)
+    var imagePosition by remember { mutableStateOf(Offset(1670f, 300f)) }
+    val dropTargetPosition = Offset(90f, 900f)
 
 // numero 2
     var imagePosition2 by remember { mutableStateOf(Offset(670f, 300f)) }
-    val dropTargetPosition2 = Offset(670f, 1000f)
+    val dropTargetPosition2 = Offset(600f, 700f)
 
 // numero 3
-    var imagePosition3 by remember { mutableStateOf(Offset(1170f, 300f)) }
-    val dropTargetPosition3 = Offset(1170f, 1200f)
+    var imagePosition3 by remember { mutableStateOf(Offset(2170f, 300f)) }
+    val dropTargetPosition3 = Offset(1100f, 800f)
 
 // numero 4
-    var imagePosition4 by remember { mutableStateOf(Offset(1670f, 300f)) }
-    val dropTargetPosition4 = Offset(1670f, 1000f)
+    var imagePosition4 by remember { mutableStateOf(Offset(170f, 300f)) }
+    val dropTargetPosition4 = Offset(1600f, 700f)
 
 // numero 5
-    var imagePosition5 by remember { mutableStateOf(Offset(2170f, 300f)) }
-    val dropTargetPosition5 = Offset(2170f, 1100f)
+    var imagePosition5 by remember { mutableStateOf(Offset(1170f, 300f)) }
+    val dropTargetPosition5 = Offset(2100f, 900f)
 
 
 
@@ -121,64 +126,89 @@ fun ImageDragAndDropNumeros(navController : NavController) {
             )
         }
 
-        // Drop Target
+        // Drop Target 1
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition.x.roundToInt(), dropTargetPosition.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
+                .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
-            Text("1", color = Color.Black, fontSize = 40.sp)
+            Image(
+                painter = painterResource(id = R.drawable.hueco1),
+                contentDescription = "Drop Target 1",
+                modifier = Modifier
+                    .size(200.dp)
+            )
         }
 
+        //Drop Target 2
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition2.x.roundToInt(), dropTargetPosition2.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
+                .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
-            Text("2", color = Color.Black, fontSize = 40.sp)
+            Image(
+                painter = painterResource(id = R.drawable.hueco2),
+                contentDescription = "Drop Target",
+                modifier = Modifier
+                    .size(200.dp)
+            )
         }
 
+        //Drop Target 3
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition3.x.roundToInt(), dropTargetPosition3.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
+                .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
-            Text("3", color = Color.Black, fontSize = 40.sp)
+            Image(
+                painter = painterResource(id = R.drawable.hueco3),
+                contentDescription = "Drop Target",
+                modifier = Modifier
+                    .size(200.dp)
+            )
         }
 
+        //Drop Target 4
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition4.x.roundToInt(), dropTargetPosition4.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
+                .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
-            Text("4", color = Color.Black, fontSize = 40.sp)
+            Image(
+                painter = painterResource(id = R.drawable.hueco4),
+                contentDescription = "Drop Target",
+                modifier = Modifier
+                    .size(200.dp)
+            )
         }
 
+        //Drop Target 5
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition5.x.roundToInt(), dropTargetPosition5.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
+                .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
-            Text("5", color = Color.Black, fontSize = 40.sp)
+            Image(
+                painter = painterResource(id = R.drawable.hueco5),
+                contentDescription = "Drop Target",
+                modifier = Modifier
+                    .size(200.dp)
+            )
         }
 
-        // Draggable Image
+        // Draggable Image 1
         Image(
             painter = painterResource(id = R.drawable.numero1),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition.x.roundToInt(), imagePosition.y.roundToInt()) }
                 .size(imageSize)
+                .scale(scale = 0.6f)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition = imagePosition.plus(Offset(dragAmount.x, dragAmount.y))
@@ -194,19 +224,21 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                             imagesInPlace[0] = true
                             textToSpeech.value?.speak("Uno", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
                 }
         )
 
+        // Draggable Image 2
         Image(
             painter = painterResource(id = R.drawable.numero2),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition2.x.roundToInt(), imagePosition2.y.roundToInt()) }
                 .size(imageSize)
+                .scale(scale = 0.6f)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition2 = imagePosition2.plus(Offset(dragAmount.x, dragAmount.y))
@@ -222,19 +254,21 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                             imagesInPlace[1] = true
                             textToSpeech.value?.speak("Dos", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
                 }
         )
 
+        // Draggable Image 3
         Image(
             painter = painterResource(id = R.drawable.numero3),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition3.x.roundToInt(), imagePosition3.y.roundToInt()) }
                 .size(imageSize)
+                .scale(scale = 0.6f)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition3 = imagePosition3.plus(Offset(dragAmount.x, dragAmount.y))
@@ -250,19 +284,21 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                             imagesInPlace[2] = true
                             textToSpeech.value?.speak("Tres", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
                 }
         )
 
+        // Draggable Image 4
         Image(
             painter = painterResource(id = R.drawable.numero4),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition4.x.roundToInt(), imagePosition4.y.roundToInt()) }
                 .size(imageSize)
+                .scale(scale = 0.6f)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition4 = imagePosition4.plus(Offset(dragAmount.x, dragAmount.y))
@@ -278,19 +314,21 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                             imagesInPlace[3] = true
                             textToSpeech.value?.speak("Cuatro", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
                 }
         )
 
+        // Draggable Image 5
         Image(
             painter = painterResource(id = R.drawable.numero5),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition5.x.roundToInt(), imagePosition5.y.roundToInt()) }
                 .size(imageSize)
+                .scale(scale = 0.6f)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition5 = imagePosition5.plus(Offset(dragAmount.x, dragAmount.y))
@@ -306,28 +344,29 @@ fun ImageDragAndDropNumeros(navController : NavController) {
                             imagesInPlace[4] = true
                             textToSpeech.value?.speak("Cinco", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true
                             }
                         }
                     }
                 }
         )
+
         if (showSuccessMessage) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0x66000000)),
+                    .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "¡Ganaste!",
+                    text = "¡Felicidades!",
+                    fontSize = 64.sp,
                     color = Color.White,
-                    fontSize = 100.sp,
-                    modifier = Modifier.padding(16.dp)
+                    fontWeight = FontWeight.Black
                 )
             }
         }
+
     }
     DisposableEffect(Unit) {
         onDispose {

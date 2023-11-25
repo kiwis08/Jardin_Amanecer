@@ -1,9 +1,11 @@
 package com.cr7.jardinamanecer.ui.screens.level2.game1
 
+import android.media.MediaPlayer
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -31,18 +33,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.cr7.jardinamanecer.R
+import com.cr7.jardinamanecer.navigation.Screens
 import java.util.Locale
 import kotlin.math.roundToInt
 
-@Preview(widthDp = 900, heightDp = 700)
+
 @Composable
-fun FigurinesDragAndDrop() {
+fun FigurinesDragAndDrop(navController : NavController) {
     val context = LocalContext.current
     val imagesInPlace = BooleanArray(4) { false }
     var showSuccessMessage by remember { mutableStateOf(false) }
@@ -50,22 +55,24 @@ fun FigurinesDragAndDrop() {
     LaunchedEffect(Unit) {
         textToSpeech.value = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                textToSpeech.value?.language = Locale.US
+                textToSpeech.value?.language = Locale("es", "MX")
             }
         }
     }
+
+    val mediaPlayer = MediaPlayer.create(LocalContext.current, R.raw.fanfare)
 
     val imageSize = 150.dp
     val dropTargetSize = 150.dp
 
     var imagePosition by remember { mutableStateOf(Offset(300f, 300f)) }
-    val dropTargetPosition = Offset(300f, 1200f)
+    val dropTargetPosition = Offset(300f, 1000f)
     var imagePosition2 by remember { mutableStateOf(Offset(900f, 300f)) }
-    val dropTargetPosition2 = Offset(900f, 1200f)
+    val dropTargetPosition2 = Offset(900f, 1000f)
     var imagePosition3 by remember { mutableStateOf(Offset(1500f, 300f)) }
-    val dropTargetPosition3 = Offset(1500f, 1200f)
+    val dropTargetPosition3 = Offset(1500f, 1000f)
     var imagePosition4 by remember { mutableStateOf(Offset(2000f, 300f)) }
-    val dropTargetPosition4 = Offset(2000f, 1200f)
+    val dropTargetPosition4 = Offset(2000f, 1000f)
 
 
     Box(modifier = Modifier
@@ -86,6 +93,9 @@ fun FigurinesDragAndDrop() {
                     .width(100.dp)
                     .height(100.dp)
                     .padding(1.dp)
+                    .clickable {
+                        navController.navigate(Screens.GameMenu.route)
+                    }
             )
 
             Text(
@@ -99,9 +109,14 @@ fun FigurinesDragAndDrop() {
 
         Box(
             modifier = Modifier
-                .offset { IntOffset(dropTargetPosition.x.roundToInt(), dropTargetPosition.y.roundToInt()) }
+                .offset {
+                    IntOffset(
+                        dropTargetPosition.x.roundToInt(),
+                        dropTargetPosition.y.roundToInt()
+                    )
+                }
                 .size(dropTargetSize)
-                .background(Color.White),
+                .background(Color.Transparent),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -113,7 +128,12 @@ fun FigurinesDragAndDrop() {
 
         Box(
             modifier = Modifier
-                .offset { IntOffset(dropTargetPosition2.x.roundToInt(), dropTargetPosition2.y.roundToInt()) }
+                .offset {
+                    IntOffset(
+                        dropTargetPosition2.x.roundToInt(),
+                        dropTargetPosition2.y.roundToInt()
+                    )
+                }
                 .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
@@ -126,9 +146,13 @@ fun FigurinesDragAndDrop() {
 
         Box(
             modifier = Modifier
-                .offset { IntOffset(dropTargetPosition3.x.roundToInt(), dropTargetPosition3.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
+                .offset {
+                    IntOffset(
+                        dropTargetPosition3.x.roundToInt(),
+                        dropTargetPosition3.y.roundToInt()
+                    )
+                }
+                .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -140,9 +164,13 @@ fun FigurinesDragAndDrop() {
 
         Box(
             modifier = Modifier
-                .offset { IntOffset(dropTargetPosition4.x.roundToInt(), dropTargetPosition4.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
+                .offset {
+                    IntOffset(
+                        dropTargetPosition4.x.roundToInt(),
+                        dropTargetPosition4.y.roundToInt()
+                    )
+                }
+                .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -152,6 +180,7 @@ fun FigurinesDragAndDrop() {
             )
 
         }
+
 
         Image(
             painter = painterResource(id = R.drawable.triangulo),
@@ -171,10 +200,16 @@ fun FigurinesDragAndDrop() {
                         ) {
                             imagePosition = dropTargetPosition
                             imagesInPlace[0] = true
-                            textToSpeech.value?.speak("Triangulo", TextToSpeech.QUEUE_FLUSH, null, null)
-                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3]){
-                                Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
-                                showSuccessMessage = true                            }
+                            textToSpeech.value?.speak(
+                                "Triángulo",
+                                TextToSpeech.QUEUE_FLUSH,
+                                null,
+                                null
+                            )
+                            if (imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3]) {
+                                mediaPlayer.start()
+                                showSuccessMessage = true
+                            }
                         }
                     }
                 }
@@ -198,10 +233,16 @@ fun FigurinesDragAndDrop() {
                         ) {
                             imagePosition2 = dropTargetPosition2
                             imagesInPlace[1] = true
-                            textToSpeech.value?.speak("cuadrado", TextToSpeech.QUEUE_FLUSH, null, null)
-                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] ){
-                                Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
-                                showSuccessMessage = true                            }
+                            textToSpeech.value?.speak(
+                                "cuadrado",
+                                TextToSpeech.QUEUE_FLUSH,
+                                null,
+                                null
+                            )
+                            if (imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3]) {
+                                mediaPlayer.start()
+                                showSuccessMessage = true
+                            }
                         }
                     }
                 }
@@ -225,14 +266,22 @@ fun FigurinesDragAndDrop() {
                         ) {
                             imagePosition3 = dropTargetPosition3
                             imagesInPlace[2] = true
-                            textToSpeech.value?.speak("estrella", TextToSpeech.QUEUE_FLUSH, null, null)
-                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] ){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
-                                showSuccessMessage = true                            }
+                            textToSpeech.value?.speak(
+                                "estrella",
+                                TextToSpeech.QUEUE_FLUSH,
+                                null,
+                                null
+                            )
+                            if (imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3]) {
+                                mediaPlayer.start()
+                                showSuccessMessage = true
+                            }
                         }
                     }
                 }
         )
+
+
 
         Image(
             painter = painterResource(id = R.drawable.circulo),
@@ -252,10 +301,16 @@ fun FigurinesDragAndDrop() {
                         ) {
                             imagePosition4 = dropTargetPosition4
                             imagesInPlace[3] = true
-                            textToSpeech.value?.speak("circulo", TextToSpeech.QUEUE_FLUSH, null, null)
-                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] ){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
-                                showSuccessMessage = true                            }
+                            textToSpeech.value?.speak(
+                                "circulo",
+                                TextToSpeech.QUEUE_FLUSH,
+                                null,
+                                null
+                            )
+                            if (imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3]) {
+                                mediaPlayer.start()
+                                showSuccessMessage = true
+                            }
                         }
                     }
                 }
@@ -269,10 +324,10 @@ fun FigurinesDragAndDrop() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "¡Felicidades, Ganaste!",
+                    text = "¡Felicidades!",
+                    fontSize = 64.sp,
                     color = Color.White,
-                    fontSize = 120.sp,
-                    modifier = Modifier.padding(16.dp)
+                    fontWeight = FontWeight.Black
                 )
             }
         }
@@ -296,3 +351,4 @@ private fun isImageInDropTarget(
     val dropTargetBounds = Rect(dropTargetPosition, dropTargetPosition + Offset(dropTargetSize.value, dropTargetSize.value))
     return imageBounds.overlaps(dropTargetBounds)
 }
+
