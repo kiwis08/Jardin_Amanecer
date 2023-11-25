@@ -6,7 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.cr7.jardinamanecer.ui.screens.AdminSignIn
+import com.cr7.jardinamanecer.ui.screens.admin.signin.view.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.GameMenu
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.StudentSignIn
