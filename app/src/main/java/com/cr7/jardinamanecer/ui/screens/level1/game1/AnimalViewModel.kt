@@ -1,46 +1,30 @@
 package com.cr7.jardinamanecer.ui.screens.level1.game1
 
+import android.media.MediaPlayer
 import androidx.lifecycle.ViewModel
-import com.google.firebase.storage.FirebaseStorage
+import com.cr7.jardinamanecer.R
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class AnimalViewModel(
-    scope: CoroutineScope): ViewModel() {
-    private val folderPath = "Karla/Animales/Imagenes"
+    private val scope: CoroutineScope): ViewModel() {
 
-    private val _animalsItemList = MutableStateFlow<List<AnimalsItem>>(emptyList())
-    val animalsItemList: StateFlow<List<AnimalsItem>> get() = _animalsItemList
-    init {
-        scope.launch {
-            val items = getImageUrlsAndTitles(folderPath)
-            _animalsItemList.value = items
-            println("AnimalsItemList: $items")
+    private lateinit var mediaPlayer: MediaPlayer
 
-        }
-    }
+    val nombresAnimales = listOf("vaca", "caballo", "oveja", "cerdo", "gallo")
 
-    private suspend fun getImageUrlsAndTitles(folderPath: String): List<AnimalsItem> {
-        val storage = FirebaseStorage.getInstance()
-        val storageReference = storage.reference.child(folderPath)
+    val animales = listOf(
+        (R.drawable.vaca),
+        (R.drawable.caballo),
+        (R.drawable.oveja),
+        (R.drawable.cerdo),
+        (R.drawable.gallo)
+    )
 
-        return try {
-            val items = storageReference.listAll().await()
 
-            // Map the items to AnimalsItem instances
-            items.items.map {
-                AnimalsItem(
-                    title = it.name,
-                    imageUrl = it.downloadUrl.await().toString()
-                )
-            }
-        } catch (e: Exception) {
-            emptyList()
-        }
-    }
+    val audioSource = listOf(
+        (R.raw.mugida),
+        (R.raw.lavaca)
+    )
 
 
 }

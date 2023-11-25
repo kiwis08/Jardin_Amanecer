@@ -1,46 +1,114 @@
 package com.cr7.jardinamanecer.ui.screens.level1.game2
 
+import android.content.Context
+import android.speech.tts.TextToSpeech
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+import com.cr7.jardinamanecer.R
 
-class PartesViewModel(
-scope: CoroutineScope
-) : ViewModel()  {
+class PartesViewModel() : ViewModel()  {
 
-    private val folderPath = "Karla/PartesCuerpo/Imagenes/Tarjetas"
+    var index_glo by mutableStateOf(0)
 
-    private val _partesItemList = MutableStateFlow<List<PartesItem>>(emptyList())
-    val partesItemList: StateFlow<List<PartesItem>> get() = _partesItemList
-    init {
-        scope.launch {
-            val items = getImageUrlsAndTitles(folderPath)
-            _partesItemList.value = items
-            println("Parteslist: $items")
+    // Other ViewModel methods and properties
 
+    fun setIndex(index: Int) {
+        index_glo = index
+    }
+
+
+    val imagenes = listOf(
+        (R.drawable.hombroyrodilla),
+        (R.drawable.narizyoreja),
+        (R.drawable.ojoylabios),
+        (R.drawable.piesymanos)
+    )
+
+    val imagenes_ind = listOf(
+
+        (R.drawable.ojo),
+        (R.drawable.manos),
+        (R.drawable.pies),
+        (R.drawable.labios),
+        (R.drawable.nariz),
+        (R.drawable.oreja),
+        (R.drawable.hombro),
+        (R.drawable.rodilla)
+        )
+
+
+    fun getImagesForIndex(index: Int): List<Int> {
+        return when (index) {
+            0 -> listOf(
+                (R.drawable.hombro),
+                (R.drawable.rodilla))
+
+            1 -> listOf(
+                (R.drawable.nariz),
+                (R.drawable.oreja))
+
+            2 -> listOf(
+                (R.drawable.ojo),
+                (R.drawable.labios))
+
+            3 -> listOf(
+                (R.drawable.pies),
+                (R.drawable.manos))
+
+            else -> emptyList()
         }
     }
 
-    private suspend fun getImageUrlsAndTitles(folderPath: String): List<PartesItem> {
-        val storage = FirebaseStorage.getInstance()
-        val storageReference = storage.reference.child(folderPath)
+    fun getNamesForIndex(index: Int): List<String> {
+        return when (index) {
+            0 -> listOf(
+                "hombro",
+                "rodilla")
 
-        return try {
-            val items = storageReference.listAll().await()
+            1 -> listOf(
+                "nariz",
+                "oreja")
 
-            // Map the items to AnimalsItem instances
-            items.items.map {
-                PartesItem(
-                    name = it.name,
-                    imageUrl = it.downloadUrl.await().toString()
-                )
+            2 -> listOf(
+                "ojo",
+                "labios")
+
+            3 -> listOf(
+                "pies",
+                "manos")
+
+            else -> emptyList()
+        }
+    }
+
+
+
+    private var textToSpeech: TextToSpeech? = null
+
+    fun textToSpeech(context: Context,indexgen:Int, index: Int){
+        textToSpeech = TextToSpeech(
+            context
+        ) {
+            if (it == TextToSpeech.SUCCESS) {
+                textToSpeech?.let { txtToSpeech ->
+                    txtToSpeech.language = java.util.Locale("es", "MX")
+                    txtToSpeech.setSpeechRate(0.3f)
+
+                    val Imagenes = getNamesForIndex(indexgen)
+                    val text = Imagenes[index]
+
+                    txtToSpeech.speak(
+                        text,
+                        TextToSpeech.QUEUE_ADD,
+                        null,
+                        null
+                    )
+                }
             }
-        } catch (e: Exception) {
-            emptyList()
         }
     }
+
+
 }

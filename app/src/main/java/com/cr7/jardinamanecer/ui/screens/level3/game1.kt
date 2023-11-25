@@ -1,27 +1,17 @@
 package com.cr7.jardinamanecer.ui.screens.level3
 
-import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 //import com.example.drag_and_drop.ui.theme.Drag_and_dropTheme
 
-import androidx.activity.compose.setContent
-import androidx.annotation.ReturnThis
+//import androidx.compose.foundation.layout.ColumnScopeInstance.weight
+//import androidx.compose.foundation.layout.RowScopeInstance.weight
+import android.speech.tts.TextToSpeech
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
-//import androidx.compose.foundation.layout.ColumnScopeInstance.weight
 import androidx.compose.foundation.layout.Row
-//import androidx.compose.foundation.layout.RowScopeInstance.weight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,33 +19,37 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import kotlin.math.roundToInt
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
-import android.speech.tts.TextToSpeech
-import androidx.compose.foundation.clickable
-import java.util.Locale
+import androidx.navigation.NavController
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
-import androidx.navigation.NavController
-import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
-
+import java.util.Locale
+import kotlin.math.roundToInt
 
 //@Preview(heightDp = 600, widthDp = 1000)
 @Composable
 //navController : NavController
-fun ImageDragAndDrop(navController : NavController) {
+fun ImageDragAndDropNumeros(navController : NavController) {
     val context = LocalContext.current
     val imagesInPlace = BooleanArray(5) { false }
     var showSuccessMessage by remember { mutableStateOf(false) }
@@ -74,30 +68,30 @@ fun ImageDragAndDrop(navController : NavController) {
     val dropTargetSize = 100.dp
 
     // numero 1
-    var imagePosition by remember { mutableStateOf(Offset(170f, 300f)) } // Moved 80f to the left
-    val dropTargetPosition = Offset(170f, 1100f) // Moved 80f to the left and 200f down
+    var imagePosition by remember { mutableStateOf(Offset(170f, 300f)) }
+    val dropTargetPosition = Offset(170f, 1100f)
 
 // numero 2
-    var imagePosition2 by remember { mutableStateOf(Offset(670f, 300f)) } // Moved 80f to the left
-    val dropTargetPosition2 = Offset(670f, 1000f) // Moved 80f to the left and 200f down
+    var imagePosition2 by remember { mutableStateOf(Offset(670f, 300f)) }
+    val dropTargetPosition2 = Offset(670f, 1000f)
 
 // numero 3
-    var imagePosition3 by remember { mutableStateOf(Offset(1170f, 300f)) } // Moved 80f to the left
-    val dropTargetPosition3 = Offset(1170f, 1200f) // Moved 80f to the left and 200f down
+    var imagePosition3 by remember { mutableStateOf(Offset(1170f, 300f)) }
+    val dropTargetPosition3 = Offset(1170f, 1200f)
 
 // numero 4
-    var imagePosition4 by remember { mutableStateOf(Offset(1670f, 300f)) } // Moved 80f to the left
-    val dropTargetPosition4 = Offset(1670f, 1000f) // Moved 80f to the left and 200f down
+    var imagePosition4 by remember { mutableStateOf(Offset(1670f, 300f)) }
+    val dropTargetPosition4 = Offset(1670f, 1000f)
 
 // numero 5
-    var imagePosition5 by remember { mutableStateOf(Offset(2170f, 300f)) } // Moved 80f to the left
-    val dropTargetPosition5 = Offset(2170f, 1100f) // Moved 80f to the left and 200f down
+    var imagePosition5 by remember { mutableStateOf(Offset(2170f, 300f)) }
+    val dropTargetPosition5 = Offset(2170f, 1100f)
 
 
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color.Cyan)) {
+        .background(Color(0, 191, 255, 255))) {
 
         Row(
             modifier = Modifier
@@ -133,7 +127,7 @@ fun ImageDragAndDrop(navController : NavController) {
                 .offset { IntOffset(dropTargetPosition.x.roundToInt(), dropTargetPosition.y.roundToInt()) }
                 .size(dropTargetSize)
                 .background(Color.White),
-            contentAlignment = Alignment.Center // Align the text to the center of the Box
+            contentAlignment = Alignment.Center
         ) {
             Text("1", color = Color.Black, fontSize = 40.sp)
         }
@@ -143,7 +137,7 @@ fun ImageDragAndDrop(navController : NavController) {
                 .offset { IntOffset(dropTargetPosition2.x.roundToInt(), dropTargetPosition2.y.roundToInt()) }
                 .size(dropTargetSize)
                 .background(Color.White),
-            contentAlignment = Alignment.Center // Align the text to the center of the Box
+            contentAlignment = Alignment.Center
         ) {
             Text("2", color = Color.Black, fontSize = 40.sp)
         }
@@ -153,7 +147,7 @@ fun ImageDragAndDrop(navController : NavController) {
                 .offset { IntOffset(dropTargetPosition3.x.roundToInt(), dropTargetPosition3.y.roundToInt()) }
                 .size(dropTargetSize)
                 .background(Color.White),
-            contentAlignment = Alignment.Center // Align the text to the center of the Box
+            contentAlignment = Alignment.Center
         ) {
             Text("3", color = Color.Black, fontSize = 40.sp)
         }
@@ -163,7 +157,7 @@ fun ImageDragAndDrop(navController : NavController) {
                 .offset { IntOffset(dropTargetPosition4.x.roundToInt(), dropTargetPosition4.y.roundToInt()) }
                 .size(dropTargetSize)
                 .background(Color.White),
-            contentAlignment = Alignment.Center // Align the text to the center of the Box
+            contentAlignment = Alignment.Center
         ) {
             Text("4", color = Color.Black, fontSize = 40.sp)
         }
@@ -173,14 +167,14 @@ fun ImageDragAndDrop(navController : NavController) {
                 .offset { IntOffset(dropTargetPosition5.x.roundToInt(), dropTargetPosition5.y.roundToInt()) }
                 .size(dropTargetSize)
                 .background(Color.White),
-            contentAlignment = Alignment.Center // Align the text to the center of the Box
+            contentAlignment = Alignment.Center
         ) {
             Text("5", color = Color.Black, fontSize = 40.sp)
         }
 
         // Draggable Image
         Image(
-            painter = painterResource(id = R.drawable.numero1), // Replace with your image resource
+            painter = painterResource(id = R.drawable.numero1),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition.x.roundToInt(), imagePosition.y.roundToInt()) }
@@ -188,7 +182,7 @@ fun ImageDragAndDrop(navController : NavController) {
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition = imagePosition.plus(Offset(dragAmount.x, dragAmount.y))
-                        // Check if the image is within the drop target bounds
+
                         if (isImageInDropTarget(
                                 imagePosition,
                                 dropTargetPosition,
@@ -196,7 +190,7 @@ fun ImageDragAndDrop(navController : NavController) {
                                 dropTargetSize
                             )
                         ) {
-                            imagePosition = dropTargetPosition // Snap the image to the drop target
+                            imagePosition = dropTargetPosition
                             imagesInPlace[0] = true
                             textToSpeech.value?.speak("Uno", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
@@ -208,7 +202,7 @@ fun ImageDragAndDrop(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.numero2), // Replace with your image resource
+            painter = painterResource(id = R.drawable.numero2),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition2.x.roundToInt(), imagePosition2.y.roundToInt()) }
@@ -216,7 +210,7 @@ fun ImageDragAndDrop(navController : NavController) {
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition2 = imagePosition2.plus(Offset(dragAmount.x, dragAmount.y))
-                        // Check if the image is within the drop target bounds
+
                         if (isImageInDropTarget(
                                 imagePosition2,
                                 dropTargetPosition2,
@@ -224,7 +218,7 @@ fun ImageDragAndDrop(navController : NavController) {
                                 dropTargetSize
                             )
                         ) {
-                            imagePosition2 = dropTargetPosition2 // Snap the image to the drop target
+                            imagePosition2 = dropTargetPosition2
                             imagesInPlace[1] = true
                             textToSpeech.value?.speak("Dos", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
@@ -236,7 +230,7 @@ fun ImageDragAndDrop(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.numero3), // Replace with your image resource
+            painter = painterResource(id = R.drawable.numero3),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition3.x.roundToInt(), imagePosition3.y.roundToInt()) }
@@ -244,7 +238,7 @@ fun ImageDragAndDrop(navController : NavController) {
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition3 = imagePosition3.plus(Offset(dragAmount.x, dragAmount.y))
-                        // Check if the image is within the drop target bounds
+
                         if (isImageInDropTarget(
                                 imagePosition3,
                                 dropTargetPosition3,
@@ -252,7 +246,7 @@ fun ImageDragAndDrop(navController : NavController) {
                                 dropTargetSize
                             )
                         ) {
-                            imagePosition3 = dropTargetPosition3 // Snap the image to the drop target
+                            imagePosition3 = dropTargetPosition3
                             imagesInPlace[2] = true
                             textToSpeech.value?.speak("Tres", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
@@ -264,7 +258,7 @@ fun ImageDragAndDrop(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.numero4), // Replace with your image resource
+            painter = painterResource(id = R.drawable.numero4),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition4.x.roundToInt(), imagePosition4.y.roundToInt()) }
@@ -272,7 +266,7 @@ fun ImageDragAndDrop(navController : NavController) {
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition4 = imagePosition4.plus(Offset(dragAmount.x, dragAmount.y))
-                        // Check if the image is within the drop target bounds
+
                         if (isImageInDropTarget(
                                 imagePosition4,
                                 dropTargetPosition4,
@@ -280,7 +274,7 @@ fun ImageDragAndDrop(navController : NavController) {
                                 dropTargetSize
                             )
                         ) {
-                            imagePosition4 = dropTargetPosition4 // Snap the image to the drop target
+                            imagePosition4 = dropTargetPosition4
                             imagesInPlace[3] = true
                             textToSpeech.value?.speak("Cuatro", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
@@ -292,7 +286,7 @@ fun ImageDragAndDrop(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.numero5), // Replace with your image resource
+            painter = painterResource(id = R.drawable.numero5),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition5.x.roundToInt(), imagePosition5.y.roundToInt()) }
@@ -300,7 +294,7 @@ fun ImageDragAndDrop(navController : NavController) {
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition5 = imagePosition5.plus(Offset(dragAmount.x, dragAmount.y))
-                        // Check if the image is within the drop target bounds
+
                         if (isImageInDropTarget(
                                 imagePosition5,
                                 dropTargetPosition5,
@@ -308,7 +302,7 @@ fun ImageDragAndDrop(navController : NavController) {
                                 dropTargetSize
                             )
                         ) {
-                            imagePosition5 = dropTargetPosition5 // Snap the image to the drop target
+                            imagePosition5 = dropTargetPosition5
                             imagesInPlace[4] = true
                             textToSpeech.value?.speak("Cinco", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
@@ -323,7 +317,7 @@ fun ImageDragAndDrop(navController : NavController) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0x66000000)), // Semi-transparent background
+                    .background(Color(0x66000000)),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -345,7 +339,6 @@ fun ImageDragAndDrop(navController : NavController) {
 }
 
 
-// Function to check if the image is within the drop target bounds
 private fun isImageInDropTarget(
     imagePosition: Offset,
     dropTargetPosition: Offset,
@@ -356,20 +349,4 @@ private fun isImageInDropTarget(
     val dropTargetBounds = Rect(dropTargetPosition, dropTargetPosition + Offset(dropTargetSize.value, dropTargetSize.value))
     return imageBounds.overlaps(dropTargetBounds)
 }
-/*
-Color.White - A classic, bright white. Hex: #FFFFFF
-Color.Black - Pure black. Hex: #000000
-Color.Red - A vibrant, primary red. Hex: #FF0000
-Color.Green - A rich, leafy green. Hex: #008000
-Color.Blue - A deep, primary blue. Hex: #0000FF
-Color.Yellow - A bright, sunny yellow. Hex: #FFFF00
-Color.Cyan - A light, aquatic blue-green. Hex: #00FFFF
-Color.Magenta - A deep blend of purple and red. Hex: #FF00FF
-Color.DarkGray - A darker shade of gray. Hex: #A9A9A9
-Color.Pink - A soft, light pink. Hex: #FFC0CB
-Color.Purple - A royal, deep purple. Hex: #800080
-Color.Orange - A bright, citrus orange. Hex: #FFA500
-Color.Brown - A rich, earthy brown. Hex: #A52A2A
-Color.Teal - A dark cyan-green color. Hex: #008080
-Color.Olive - A dark, warm green. Hex: #808000
- */
+
