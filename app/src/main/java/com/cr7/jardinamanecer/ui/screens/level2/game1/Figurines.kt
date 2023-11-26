@@ -42,7 +42,7 @@ import kotlin.math.roundToInt
 
 @Preview(widthDp = 900, heightDp = 700)
 @Composable
-fun FigurinesDragAndDrop() {
+fun Figurines() {
     val context = LocalContext.current
     val imagesInPlace = BooleanArray(4) { false }
     var showSuccessMessage by remember { mutableStateOf(false) }
@@ -269,7 +269,7 @@ fun FigurinesDragAndDrop() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "¡Felicidades, Ganaste!",
+                    text = "¡ganaste!",
                     color = Color.White,
                     fontSize = 120.sp,
                     modifier = Modifier.padding(16.dp)
