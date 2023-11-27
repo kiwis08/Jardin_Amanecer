@@ -23,6 +23,7 @@ import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropColores
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropNumeros
 import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
 import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
+import com.cr7.jardinamanecer.ui.screens.level4.view.PuzzleScreen
 
 
 @Composable
@@ -78,6 +79,9 @@ fun NavGraph (navController: NavHostController) {
         }
         composable(route = Screens.Level2Game3.route){
             ClothingDragAndDrop(navController)
+        }
+        composable(route = Screens.Level4Game3.route){
+            PuzzleScreen(navController = navController)
         }
     }
 }

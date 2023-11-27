@@ -75,6 +75,7 @@ fun FigurinesDragAndDrop(navController : NavController) {
     val dropTargetPosition4 = Offset(2000f, 1000f)
 
 
+
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Color(android.graphics.Color.parseColor("#26ABE2")))
