@@ -159,11 +159,8 @@ fun PartesCuerpoScreen( viewModel: PartesViewModel, navController : NavControlle
                                         println("INDEX: $index")
 
                                     }
-
-
                                 }
                         )
-
                     }
                 }
             }
