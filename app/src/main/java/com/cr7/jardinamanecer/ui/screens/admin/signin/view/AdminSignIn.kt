@@ -241,6 +241,7 @@ fun AdminSignIn(navController: NavController, viewModel: AdminSignInViewModel = 
                                         viewModel.authenticate(state.email, state.password)
                                         println("Ingresado como administrador")
                                         println(viewModel.getAdminId())
+                                        navController.navigate(Screens.AdminStudentList.route)
                                     } catch (e: Exception) {
                                         Toast.makeText(
                                             context,
