@@ -75,10 +75,10 @@ fun NavGraph (navController: NavHostController) {
             ImageDragAndDropColores(navController = navController)
         }
         composable(route = Screens.Level2Game1.route){
-            FigurinesDragAndDrop()
+            FigurinesDragAndDrop(navController)
         }
         composable(route = Screens.Level2Game3.route){
-            ClothingDragAndDrop()
+            ClothingDragAndDrop(navController)
         }
         composable(route = Screens.Level4Game3.route){
             PuzzleScreen(navController = navController)

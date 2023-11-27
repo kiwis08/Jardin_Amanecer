@@ -10,20 +10,28 @@ class AnimalViewModel(
 
     private lateinit var mediaPlayer: MediaPlayer
 
-    val nombresAnimales = listOf("vaca", "caballo", "oveja", "cerdo", "gallo")
+    val nombresAnimales = listOf(
+        "vaca",
+        "caballo",
+        "perro",
+        "pato",
+        "oveja",
+        "pajaro",
+        "cerdo",
+        "gallo",
+        "burro"
+    )
 
     val animales = listOf(
         (R.drawable.vaca),
         (R.drawable.caballo),
+        (R.drawable.perro),
+        (R.drawable.pato),
         (R.drawable.oveja),
+        (R.drawable.pajaro),
         (R.drawable.cerdo),
-        (R.drawable.gallo)
-    )
-
-
-    val audioSource = listOf(
-        (R.raw.mugida),
-        (R.raw.lavaca)
+        (R.drawable.gallo),
+        (R.drawable.burro)
     )
 
 
