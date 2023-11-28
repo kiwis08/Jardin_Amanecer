@@ -15,12 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.cr7.jardinamanecer.ui.screens.level4.model.ComunicatorItem
 
 @Composable
-fun ComunicatorCard(modifier: Modifier = Modifier, item: ComunicatorItem, onClick: () -> Unit) {
+fun ComunicatorCard(modifier: Modifier = Modifier, item: ComunicatorItem, internetConnection: Boolean, onClick: () -> Unit) {
     Box(
         modifier = modifier.clickable(interactionSource = MutableInteractionSource(), indication = null, onClick = onClick).background(Color.White, RoundedCornerShape(30.dp)).width(300.dp),
         contentAlignment = Alignment.Center
@@ -32,7 +34,7 @@ fun ComunicatorCard(modifier: Modifier = Modifier, item: ComunicatorItem, onClic
         ) {
             Text(text = item.title)
             AsyncImage(
-                model = item.imageUrl,
+                model = ImageRequest.Builder(LocalContext.current).data(if (internetConnection) item.imageUrl else item.imageLocalPath).build(),
                 contentDescription = null,
                 contentScale = ContentScale.Fit
             )
