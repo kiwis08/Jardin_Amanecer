@@ -79,7 +79,7 @@ fun NavGraph (navController: NavHostController) {
             Figurines()
         }
         composable(route = Screens.Level2Game2.route){
-            Color(navController = navController)
+            Color()
         }
         composable(route = Screens.Level2Game3.route){
             Clothing()

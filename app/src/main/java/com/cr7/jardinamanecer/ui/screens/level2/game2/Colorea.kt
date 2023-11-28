@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -42,13 +43,13 @@ import com.cr7.jardinamanecer.navigation.Screens
 import java.util.Locale
 import kotlin.math.roundToInt
 
+@Preview(widthDp = 900, heightDp = 700)
 @Composable
-fun Color(navController : NavController) {
+fun Color() {
     val context = LocalContext.current
     val imagesInPlace = BooleanArray(3) { false }
-    var finishMessage by remember { mutableStateOf(false) }
+    var showSuccessMessage by remember { mutableStateOf(false) }
     val textToSpeech = remember { mutableStateOf<TextToSpeech?>(null) }
-
     LaunchedEffect(Unit) {
         textToSpeech.value = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
@@ -57,16 +58,20 @@ fun Color(navController : NavController) {
         }
     }
 
-    val imageSize = 100.dp
+    val imageSize = 150.dp
     val dropTargetSize = 400.dp
 
-    var imagePosition by remember { mutableStateOf(Offset(400f, 800f)) }
-    val dropTargetPosition = Offset(400f, 800f)
-    val dropTargetPosition2 = Offset(200f, 800f)
-    val dropTargetPosition3 = Offset(600f, 800f)
+    var imagePosition by remember { mutableStateOf(Offset(1300f, 300f)) }
+    var imagePosition2 by remember { mutableStateOf(Offset(1800f, 450f)) }
+    var imagePosition3 by remember { mutableStateOf(Offset(1300f, 800f)) }
+
+    val dropTargetPosition = Offset(300f, 500f)
+
+
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color(234, 4, 126, 255))) {
+        .background(Color(android.graphics.Color.parseColor("#EA047E")))
+    ) {
 
         Row(
             modifier = Modifier
@@ -75,15 +80,12 @@ fun Color(navController : NavController) {
                 .height(100.dp),
         ){
             Image(
-                painter = painterResource(id = R.drawable.abejaimg),
+                painter = painterResource(id = R.drawable.back),
                 contentDescription = null,
                 modifier = Modifier
                     .width(100.dp)
                     .height(100.dp)
-                    .padding(16.dp)
-                    .clickable {
-                        navController.navigate(Screens.GameMenu.route)
-                    }
+                    .padding(1.dp)
             )
 
             Text(
@@ -95,6 +97,7 @@ fun Color(navController : NavController) {
             )
         }
 
+
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition.x.roundToInt(), dropTargetPosition.y.roundToInt()) }
@@ -102,39 +105,21 @@ fun Color(navController : NavController) {
                 .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
-            Text("azul", color = Color.Black, fontSize = 40.sp)
-        }
-
-        Box(
-            modifier = Modifier
-                .offset { IntOffset(dropTargetPosition2.x.roundToInt(), dropTargetPosition2.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("negro", color = Color.Black, fontSize = 40.sp)
-        }
-
-        Box(
-            modifier = Modifier
-                .offset { IntOffset(dropTargetPosition3.x.roundToInt(), dropTargetPosition3.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("amarillo", color = Color.Black, fontSize = 40.sp)
+            Image(
+                painter = painterResource(id = R.drawable.abejaimg),
+                contentDescription = "Drop Target",
+                modifier = Modifier.size(300.dp).offset { IntOffset(0, 0) }
+            )
         }
 
         Image(
             painter = painterResource(id = R.drawable.azulimg),
             contentDescription = "Draggable image",
-            modifier = Modifier
+            modifier = Modifier.size(250.dp)
                 .offset { IntOffset(imagePosition.x.roundToInt(), imagePosition.y.roundToInt()) }
-                .size(imageSize)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition = imagePosition.plus(Offset(dragAmount.x, dragAmount.y))
-
                         if (isImageInDropTarget(
                                 imagePosition,
                                 dropTargetPosition,
@@ -142,12 +127,13 @@ fun Color(navController : NavController) {
                                 dropTargetSize
                             )
                         ) {
-                            imagePosition = dropTargetPosition
+                           // imagePosition = dropTargetPosition
                             imagesInPlace[0] = true
                             textToSpeech.value?.speak("azul", TextToSpeech.QUEUE_FLUSH, null, null)
-                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "ganaste", Toast.LENGTH_SHORT).show()
-                                finishMessage = true                            }
+                            if(imagesInPlace[0] && imagesInPlace[1] && imagesInPlace[2] ){
+                                Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
+                                showSuccessMessage = true
+                            }
                         }
                     }
                 }
@@ -156,26 +142,25 @@ fun Color(navController : NavController) {
         Image(
             painter = painterResource(id = R.drawable.negroimg),
             contentDescription = "Draggable image",
-            modifier = Modifier
-                .offset { IntOffset(imagePosition.x.roundToInt(), imagePosition.y.roundToInt()) }
-                .size(imageSize)
+            modifier = Modifier.size(150.dp)
+                .offset { IntOffset(imagePosition2.x.roundToInt(), imagePosition2.y.roundToInt()) }
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
-                        imagePosition = imagePosition.plus(Offset(dragAmount.x, dragAmount.y))
-
+                        imagePosition2 = imagePosition2.plus(Offset(dragAmount.x, dragAmount.y))
                         if (isImageInDropTarget(
-                                imagePosition,
-                                dropTargetPosition2,
+                                imagePosition2,
+                                dropTargetPosition,
                                 imageSize,
                                 dropTargetSize
                             )
                         ) {
-                            imagePosition = dropTargetPosition2
+                           // imagePosition2 = dropTargetPosition
                             imagesInPlace[1] = true
-                            textToSpeech.value?.speak("negro", TextToSpeech.QUEUE_FLUSH, null, null)
-                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "ganaste", Toast.LENGTH_SHORT).show()
-                                finishMessage = true                            }
+                            textToSpeech.value?.speak("negro ", TextToSpeech.QUEUE_FLUSH, null, null)
+                            if(imagesInPlace[0] && imagesInPlace[1] && imagesInPlace[2]  ){
+                                Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
+                                showSuccessMessage = true
+                            }
                         }
                     }
                 }
@@ -184,45 +169,41 @@ fun Color(navController : NavController) {
         Image(
             painter = painterResource(id = R.drawable.amarilloimg),
             contentDescription = "Draggable image",
-            modifier = Modifier
-                .offset { IntOffset(imagePosition.x.roundToInt(), imagePosition.y.roundToInt()) }
-                .size(imageSize)
+            modifier = Modifier.size(120.dp)
+                .offset { IntOffset(imagePosition3.x.roundToInt(), imagePosition3.y.roundToInt()) }
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
-                        imagePosition = imagePosition.plus(Offset(dragAmount.x, dragAmount.y))
-
+                        imagePosition3 = imagePosition3.plus(Offset(dragAmount.x, dragAmount.y))
                         if (isImageInDropTarget(
-                                imagePosition,
-                                dropTargetPosition3,
+                                imagePosition3,
+                                dropTargetPosition,
                                 imageSize,
                                 dropTargetSize
                             )
                         ) {
-                            imagePosition = dropTargetPosition3
+                           // imagePosition3 = dropTargetPosition
                             imagesInPlace[2] = true
                             textToSpeech.value?.speak("amarillo", TextToSpeech.QUEUE_FLUSH, null, null)
-                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "ganaste", Toast.LENGTH_SHORT).show()
-                                finishMessage = true                            }
+                            if(imagesInPlace[0] && imagesInPlace[1] && imagesInPlace[2]){
+                                Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
+                                showSuccessMessage = true
+                            }
                         }
                     }
                 }
         )
 
 
-
-
-        if (finishMessage) {
+        if (showSuccessMessage) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0x66000000)),
+                    .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "¡Ganaste!",
+                    text = "¡ganaste!",
                     color = Color.White,
-                    fontSize = 100.sp,
+                    fontSize = 120.sp,
                     modifier = Modifier.padding(16.dp)
                 )
             }
@@ -234,9 +215,7 @@ fun Color(navController : NavController) {
             textToSpeech.value?.shutdown()
         }
     }
-
 }
-
 
 private fun isImageInDropTarget(
     imagePosition: Offset,
@@ -244,8 +223,5 @@ private fun isImageInDropTarget(
     imageSize: Dp,
     dropTargetSize: Dp
 ): Boolean {
-    val imageBounds = Rect(imagePosition, imagePosition + Offset(imageSize.value, imageSize.value))
-    val dropTargetBounds = Rect(dropTargetPosition, dropTargetPosition + Offset(dropTargetSize.value, dropTargetSize.value))
-    return imageBounds.overlaps(dropTargetBounds)
+    return true
 }
-
