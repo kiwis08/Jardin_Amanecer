@@ -118,7 +118,8 @@ fun ComunicatorScreen(
                                     modifier = Modifier
                                         .padding(24.dp)
                                         .height(150.dp),
-                                    item = it
+                                    item = it,
+                                    internetConnection = viewModel.checkInternetConnection(context)
                                 ) {
                                     viewModel.onItemSelected(it)
                                 }
@@ -155,7 +156,8 @@ fun ComunicatorScreen(
                                     modifier = Modifier
                                         .padding(24.dp)
                                         .height(150.dp),
-                                    item = it
+                                    item = it,
+                                    internetConnection = viewModel.checkInternetConnection(context)
                                 ) {
                                     viewModel.onItemRemoved(it)
                                 }
