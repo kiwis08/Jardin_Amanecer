@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
 import java.util.Locale
@@ -47,7 +48,7 @@ import kotlin.math.roundToInt
 
 
 @Composable
-fun ClothingDragAndDrop(navController : NavController) {
+fun Clothing(navController: NavHostController) {
     val context = LocalContext.current
     val imagesInPlace = BooleanArray(4) { false }
     var showSuccessMessage by remember { mutableStateOf(false) }
@@ -342,8 +343,7 @@ fun ClothingDragAndDrop(navController : NavController) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "¡Felicidades!",
-                    fontSize = 64.sp,
+                    text = "¡Ganaste!",
                     color = Color.White,
                     fontWeight = FontWeight.Black
                 )

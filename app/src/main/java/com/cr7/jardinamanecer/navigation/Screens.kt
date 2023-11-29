@@ -15,6 +15,7 @@ sealed class Screens(val route: String) {
     object Level3Game3 : Screens("level3_game3")
     object Level2Game1 : Screens("level2_game1")
     object Level2Game3 : Screens("level2_game3")
+    object Level2Game2 : Screens("level2_game2")
     object Level4Game2 : Screens("level4_game2")
     object Level4Game3 : Screens("level4_game3")
 }
