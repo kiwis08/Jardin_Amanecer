@@ -222,7 +222,7 @@ fun AdminSignIn(navController: NavController) {
 
                         Button(
                             onClick = {
-                                println("Ingresar")
+                                navController.navigate(Screens.AdminHome.route)
                             },
                             colors = ButtonDefaults.elevatedButtonColors(
                                 containerColor = Color(38, 171, 226),

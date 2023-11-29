@@ -17,4 +17,10 @@ sealed class Screens(val route: String) {
     object Level2Game3 : Screens("level2_game3")
     object Level4Game2 : Screens("level4_game2")
     object Level4Game3 : Screens("level4_game3")
+
+    //Admins
+    object AdminHome : Screens("admin_home")
+    object AdminAlumnos : Screens("admin_alumnos")
+    object AdminAdmins : Screens("admin_admins")
+    object AdminConfig : Screens("admin_config")
 }

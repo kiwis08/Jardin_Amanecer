@@ -10,6 +10,10 @@ import com.cr7.jardinamanecer.ui.screens.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.GameMenu
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.StudentSignIn
+import com.cr7.jardinamanecer.ui.screens.admin.AdminScreen
+import com.cr7.jardinamanecer.ui.screens.admin.AlumnosScreen
+import com.cr7.jardinamanecer.ui.screens.admin.ConfigScreen
+import com.cr7.jardinamanecer.ui.screens.admin.HomeScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
@@ -82,6 +86,20 @@ fun NavGraph (navController: NavHostController) {
         }
         composable(route = Screens.Level4Game3.route){
             PuzzleScreen(navController = navController)
+        }
+
+        //Admin
+        composable(route = Screens.AdminHome.route){
+            HomeScreen(navController = navController)
+        }
+        composable(route = Screens.AdminAlumnos.route){
+            AlumnosScreen()
+        }
+        composable(route = Screens.AdminAdmins.route){
+            AdminScreen()
+        }
+        composable(route = Screens.AdminConfig.route){
+            ConfigScreen()
         }
     }
 }
