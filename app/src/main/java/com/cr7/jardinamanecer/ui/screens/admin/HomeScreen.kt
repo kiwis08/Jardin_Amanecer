@@ -1,129 +1,101 @@
 package com.cr7.jardinamanecer.ui.screens.admin
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.Surface
-import androidx.compose.material.contentColorFor
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Face
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconToggleButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
-import com.cr7.jardinamanecer.R import kotlinx.coroutines.launch
+import com.cr7.jardinamanecer.navigation.Screens
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
-
-    val screenlists = listOf(
-        R.drawable.admins,
-        R.drawable.estudiantes,
-    )
-
-    val navigationItemList = listOf<AdminNavItem>(
-        AdminNavItem(
-            title = "Home",
-            icon = Icons.Default.Home,
-            description = "Home",
-            itemId = "AdminHome"
-        ),
-        AdminNavItem(
-            title = "Alumnos",
-            icon = Icons.Default.Face,
-            description = "Alumnos List",
-            itemId = "AdminAlumnos"
-        ),
-        AdminNavItem(
-            title = "Admin",
-            icon = Icons.Default.AccountBox,
-            description = "Admin",
-            itemId = "AdminAdmins"
-        ),
-        AdminNavItem(
-            title = "Configuracion",
-            icon = Icons.Default.Settings,
-            description = "Config",
-            itemId = "AdminConfig"
-        ),
-    )
-
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
-    Column (modifier = Modifier
-        .paint(
-            painterResource(id = R.drawable.menuscreen),
-            contentScale = ContentScale.FillBounds
+    val items = listOf(
+        AdminNavItem(title = "Home",
+            selectedIcon = Icons.Filled.Home,
+            unselectedIcon = Icons.Outlined.Home,
+        ),
+        AdminNavItem(title = "Alumnos",
+            selectedIcon = Icons.Filled.Face,
+            unselectedIcon = Icons.Outlined.Face,
+        ),
+        AdminNavItem(title = "Administradores",
+            selectedIcon = Icons.Filled.AccountCircle,
+            unselectedIcon = Icons.Outlined.AccountCircle,
+        ),
+        AdminNavItem(title = "Configuracion",
+            selectedIcon = Icons.Filled.Settings,
+            unselectedIcon = Icons.Outlined.Settings,
+        ),
+    )
 
-    )){
+    var topNavState by rememberSaveable {
+        mutableStateOf(0)
+    }
 
-
-        //Scaffold
-        androidx.compose.material.Scaffold(
-            topBar = {
-                MenuBar(toolbarTitle = "MENU", navController,
-                    navigationIconClicked = {
-                        coroutineScope.launch {
-                            scaffoldState.drawerState.open()
-
+    Scaffold(
+        topBar = {
+            NavigationBar {
+                items.forEachIndexed { index, item ->
+                    NavigationBarItem(
+                        selected = topNavState == index,
+                        onClick = { topNavState = index },
+                        icon = {
+                            Icon(
+                                imageVector = if (topNavState == index) item.selectedIcon
+                                else item.unselectedIcon
+                                , contentDescription = item.title
+                            )
                         }
-
-                    })
-
-            },
-            drawerContent = {
-                NavigationDrawerHeader()
-                NavigationDrawerBody(navigationDrawerItems = navigationItemList)
+                    )
+                }
             }
+        }
+    ) { contentPadding ->
+        Column(
+            modifier = Modifier
+                .padding(contentPadding)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        ) { paddingValues ->
-            Surface(
-                modifier = Modifier
-
-                    .fillMaxSize()
-                    .background(Color.White)
-                    .padding(paddingValues)
-            ) {
-
-                Text(text = "CONTENIDO PANTALLA PRINCIPAL", textAlign = TextAlign.Center)
-
-
+            when (items[topNavState].title) {
+                "Alumnos" -> AlumnosScreen()
+                "Administradores" -> AdminScreen()
+                "Configuracion" -> ConfigScreen()
+                else -> Text("Default Screen")
             }
         }
     }
 }
+
 

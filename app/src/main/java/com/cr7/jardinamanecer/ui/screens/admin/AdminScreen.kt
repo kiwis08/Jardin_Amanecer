@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cr7.jardinamanecer.R
+import okhttp3.internal.wait
 
 data class Admins(
     val id: Int,
@@ -53,7 +54,7 @@ fun AdminScreen(){
 
     Box(modifier = Modifier
         .paint(
-            painterResource(id = R.drawable.menuscreen),
+            painterResource(id = R.drawable.adminfondo),
             contentScale = ContentScale.FillBounds)
         ) {
 
@@ -88,8 +89,8 @@ fun TablaAdmins(data: List<Admins>) {
     {
         LazyColumn(
             modifier = Modifier
-                .width(1500.dp)
-                .height(700.dp)
+                .width(1300.dp)
+                .height(500.dp)
         ) {
             item{
                 AdminTableHeader()
@@ -108,7 +109,7 @@ fun AdminTableHeader() {
     Row(
         modifier = Modifier
             .width(1500.dp)
-            .height(50.dp)
+            .height(70.dp)
             .background(Color.White, RoundedCornerShape(10.dp))
             .border(1.dp, Color(173, 172, 172), RoundedCornerShape(10.dp))
             .padding(8.dp)
@@ -149,8 +150,8 @@ fun TableCell(Admin: Admins) {
         modifier = Modifier
             .width(1500.dp)
             .height(80.dp)
-            .background(Color(237, 237, 237), RoundedCornerShape(10.dp))
-            .border(1.dp, Color(173, 172, 172), RoundedCornerShape(10.dp))
+            .background(Color.White, RoundedCornerShape(10.dp))
+            .border(1.dp, Color(242, 242, 240), RoundedCornerShape(10.dp))
             .padding(8.dp)
 
     ) {

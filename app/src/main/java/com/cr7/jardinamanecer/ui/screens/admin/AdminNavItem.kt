@@ -5,8 +5,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 data class AdminNavItem(
     val title: String,
-    val description: String,
-    val itemId: String,
-    val icon: ImageVector
-) {
-}
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+)

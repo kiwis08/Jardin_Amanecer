@@ -21,6 +21,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -29,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,9 +39,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cr7.jardinamanecer.R
+<<<<<<< Updated upstream
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+=======
+import com.cr7.jardinamanecer.ui.theme.lexendFamily
+>>>>>>> Stashed changes
 
 data class Alumno(
     val id: String,
@@ -79,8 +85,9 @@ fun AlumnosScreen(viewModel: AdminStudentListViewModel = viewModel()){
 
     Box(modifier = Modifier
         .paint(
-            painterResource(id = R.drawable.menuscreen),
+            painterResource(id = R.drawable.adminfondo),
             contentScale = ContentScale.FillBounds)
+
     ) {
         TablaAlumnos(data = students)
 
@@ -99,8 +106,8 @@ fun TablaAlumnos(data: List<Alumno>) {
     {
         LazyColumn(
             modifier = Modifier
-                .width(1500.dp)
-                .height(700.dp)
+                .width(1300.dp)
+                .height(500.dp)
         ) {
             item{
                 TableHeader()
@@ -119,9 +126,8 @@ fun TableHeader() {
     Row(
         modifier = Modifier
             .width(1500.dp)
-            .height(50.dp)
+            .height(70.dp)
             .background(Color.White, RoundedCornerShape(10.dp))
-            .border(1.dp, Color(173, 172, 172), RoundedCornerShape(10.dp))
             .padding(8.dp)
     ) {
         Text(
@@ -129,7 +135,8 @@ fun TableHeader() {
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             color = Color(104, 180, 72),
-            modifier = Modifier.weight(2f) // Ajusta el peso según sea necesario
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.weight(2f)
         )
 
         // Encabezados de Nivel 1 a Nivel 4
@@ -151,9 +158,9 @@ fun TableCell(Alumno: Alumno) {
         modifier = Modifier
             .width(1500.dp)
             .height(80.dp)
-            .background(Color(237, 237, 237), RoundedCornerShape(10.dp))
-            .border(1.dp, Color(173, 172, 172), RoundedCornerShape(10.dp))
-            .padding(8.dp)
+            .background(Color.White, RoundedCornerShape(12.dp))
+            .border(1.dp, Color(242, 242, 240), RoundedCornerShape(12.dp))
+            .padding(5.dp)
 
     ) {
 
