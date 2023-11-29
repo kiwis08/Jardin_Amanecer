@@ -28,6 +28,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,18 +49,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.dataStore
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
-import com.cr7.jardinamanecer.ui.theme.lexendFamily
+import com.cr7.jardinamanecer.MainActivity
+import com.cr7.jardinamanecer.dataStore
+import com.cr7.jardinamanecer.ui.screens.admin.Student
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StartScreen(navController: NavController) {
-
+fun StartScreen(navController: NavController, viewModel: StudentSignInViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+    val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
-    val items = listOf("Santiago", "Eugenio", "Karlita", "Angie", "Daniel")
+    val items = viewModel.studentList.collectAsState(initial = emptyList()).value
     var selectedIndex by remember { mutableStateOf(0) }
 
     Surface(
@@ -161,83 +167,98 @@ fun StartScreen(navController: NavController) {
                     Spacer(modifier = Modifier.fillMaxHeight(0.4f))
 
                     //Seleccion de alumnos y boton
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .offset(x = -100.dp, y = 30.dp)
-                    ) {
-
-                        //Boton de seleccion de alumnos
-                        Box(
-                            modifier = Modifier
-                                .align(alignment = Alignment.Center)
-                                .offset(x = 10.dp, y = 40.dp)
-                        )
-                        {
-                            ExposedDropdownMenuBox(
-                                expanded = expanded,
-                                onExpandedChange = { expanded = it },
-                                modifier = Modifier
-                            ) {
-                                TextField(
-                                    modifier = Modifier.menuAnchor().fillMaxWidth(0.3f),
-                                    readOnly = true,
-                                    value = items[selectedIndex],
-                                    onValueChange = { },
-                                    label = { Text("Alumno") },
-                                    trailingIcon = {
-                                        ExposedDropdownMenuDefaults.TrailingIcon(
-                                            expanded = expanded
-                                        )
-                                    },
-                                    colors = ExposedDropdownMenuDefaults.textFieldColors(
-                                        containerColor = Color(237, 237, 237),
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent
-                                    ),
-                                    shape = CircleShape,
-                                )
-                                ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                                    items.forEachIndexed { index, s ->
-                                        DropdownMenuItem(text = {
-                                            Text(s)
-                                        }, onClick = {
-                                            selectedIndex = index
-                                            expanded = false
-                                        })
-
-                                    }
-                                }
-                            }
-                        }
-
-                        //Boton de entrar
+                    if (items.size > 0) {
                         Box(
                             modifier = Modifier
                                 .align(Alignment.Center)
-                                .offset(x = 10.dp, y = 250.dp)
+                                .offset(x = -100.dp, y = 30.dp)
                         ) {
-                            Button(
-                                onClick = {
-                                    navController.navigate(Screens.GameMenu.route)
-                                },
-                                colors = ButtonDefaults.elevatedButtonColors(
-                                    containerColor = Color(38, 171, 226),
-                                    contentColor = Color.White
-                                ),
-                                modifier = Modifier
-                                    .size(150.dp)
-                                    .clip(CircleShape),
-                            ) {
-                                Text(text = "Entrar", fontSize = 20.sp)
-                            }
-                        }
 
+                            //Boton de seleccion de alumnos
+                            Box(
+                                modifier = Modifier
+                                    .align(alignment = Alignment.Center)
+                                    .offset(x = 10.dp, y = 40.dp)
+                            )
+                            {
+                                ExposedDropdownMenuBox(
+                                    expanded = expanded,
+                                    onExpandedChange = { expanded = it },
+                                    modifier = Modifier
+                                ) {
+                                    TextField(
+                                        modifier = Modifier
+                                            .menuAnchor()
+                                            .fillMaxWidth(0.3f),
+                                        readOnly = true,
+                                        value = items[selectedIndex].name,
+                                        onValueChange = { },
+                                        label = { Text("Alumno") },
+                                        trailingIcon = {
+                                            ExposedDropdownMenuDefaults.TrailingIcon(
+                                                expanded = expanded
+                                            )
+                                        },
+                                        colors = ExposedDropdownMenuDefaults.textFieldColors(
+                                            containerColor = Color(237, 237, 237),
+                                            focusedIndicatorColor = Color.Transparent,
+                                            unfocusedIndicatorColor = Color.Transparent
+                                        ),
+                                        shape = CircleShape,
+                                    )
+                                    ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                                        items.forEachIndexed { index, s ->
+                                            DropdownMenuItem(text = {
+                                                Text(s.name)
+                                            }, onClick = {
+                                                selectedIndex = index
+                                                expanded = false
+                                            })
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            //Boton de entrar
+                            Box(
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .offset(x = 10.dp, y = 250.dp)
+                            ) {
+                                Button(
+                                    onClick = {
+                                        viewModel.viewModelScope.launch {
+                                            setUser(context, items[selectedIndex])
+                                        }
+                                        navController.navigate(Screens.GameMenu.route)
+                                    },
+                                    colors = ButtonDefaults.elevatedButtonColors(
+                                        containerColor = Color(38, 171, 226),
+                                        contentColor = Color.White
+                                    ),
+                                    modifier = Modifier
+                                        .size(150.dp)
+                                        .clip(CircleShape),
+                                ) {
+                                    Text(text = "Entrar", fontSize = 20.sp)
+                                }
+                            }
+
+                        }
                     }
                 }
 
             }
         }
+    }
+}
+
+suspend fun setUser(context: Context, student: Student) {
+    context.dataStore.updateData { settings ->
+        settings.copy(
+            currentStudent = student
+        )
     }
 }
 

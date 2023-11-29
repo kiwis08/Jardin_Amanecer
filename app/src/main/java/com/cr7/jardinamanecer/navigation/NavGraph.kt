@@ -7,9 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.cr7.jardinamanecer.ui.screens.AdminSignIn
-import com.cr7.jardinamanecer.ui.screens.GameMenu
+import com.cr7.jardinamanecer.ui.screens.menu.GameMenu
 import com.cr7.jardinamanecer.ui.screens.StartScreen
-import com.cr7.jardinamanecer.ui.screens.StudentSignIn
 import com.cr7.jardinamanecer.ui.screens.admin.AdminScreen
 import com.cr7.jardinamanecer.ui.screens.admin.AlumnosScreen
 import com.cr7.jardinamanecer.ui.screens.admin.ConfigScreen
@@ -32,21 +31,18 @@ import com.cr7.jardinamanecer.ui.screens.level4.view.PuzzleScreen
 
 
 @Composable
-fun NavGraph (navController: NavHostController) {
+fun NavGraph (navController: NavHostController, sessionSaved: Boolean) {
     val coroutineScope = rememberCoroutineScope()
     val viewModelPartes: PartesViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = Screens.Start.route)
+        startDestination = if (sessionSaved) Screens.GameMenu.route else Screens.Start.route)
     {
         composable(route = Screens.Start.route){
             StartScreen(navController)
         }
         composable(route = Screens.AdminSignIn.route){
             AdminSignIn(navController)
-        }
-        composable(route = Screens.StudentSignIn.route){
-            StudentSignIn()
         }
         composable(route = Screens.Level4Game1.route){
             ComunicatorScreen(navController = navController)
