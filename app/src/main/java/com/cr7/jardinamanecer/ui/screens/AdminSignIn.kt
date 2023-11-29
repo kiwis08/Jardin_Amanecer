@@ -80,6 +80,7 @@ fun AdminSignIn(navController: NavController, viewModel: AdminSignInViewModel = 
             )
         ) {
 
+            //Cuadro Blanco
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.4f)
@@ -121,6 +122,7 @@ fun AdminSignIn(navController: NavController, viewModel: AdminSignInViewModel = 
             }
 
 
+            //Seccion de inicio de sesion
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,

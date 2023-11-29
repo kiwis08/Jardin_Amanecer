@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
 
 
@@ -88,10 +89,12 @@ fun HomeScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+            val Pedro = Alumno(id = "1", nombre = "Pedro Suarez", edad = 10, Nivel1 = false, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino)
+
             when (items[topNavState].title) {
                 "Alumnos" -> AlumnosScreen()
                 "Administradores" -> AdminScreen()
-                "Configuracion" -> ConfigScreen()
+                "Configuracion" -> PerfilAlumno(navController = navController, Alumno = Pedro)
                 else -> Text("Default Screen")
             }
         }
