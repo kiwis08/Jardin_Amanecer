@@ -39,13 +39,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cr7.jardinamanecer.R
-<<<<<<< Updated upstream
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-=======
-import com.cr7.jardinamanecer.ui.theme.lexendFamily
->>>>>>> Stashed changes
 
 data class Alumno(
     val id: String,
