@@ -38,14 +38,14 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
 import java.util.Locale
 import kotlin.math.roundToInt
 
-@Preview(widthDp = 900, heightDp = 700)
 @Composable
-fun Color() {
+fun Color(navController: NavHostController) {
     val context = LocalContext.current
     val imagesInPlace = BooleanArray(3) { false }
     var showSuccessMessage by remember { mutableStateOf(false) }
@@ -86,6 +86,9 @@ fun Color() {
                     .width(100.dp)
                     .height(100.dp)
                     .padding(1.dp)
+                    .clickable {
+                        navController.navigate(Screens.GameMenu.route)
+                    }
             )
 
             Text(
