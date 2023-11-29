@@ -20,8 +20,9 @@ import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen2
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game3.InstrumntosScreen
-import com.cr7.jardinamanecer.ui.screens.level2.game1.FigurinesDragAndDrop
-import com.cr7.jardinamanecer.ui.screens.level2.game3.ClothingDragAndDrop
+import com.cr7.jardinamanecer.ui.screens.level2.game1.Figurines
+import com.cr7.jardinamanecer.ui.screens.level2.game2.Color
+import com.cr7.jardinamanecer.ui.screens.level2.game3.Clothing
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropAnimales
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropColores
 import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropNumeros
@@ -79,10 +80,13 @@ fun NavGraph (navController: NavHostController) {
             ImageDragAndDropColores(navController = navController)
         }
         composable(route = Screens.Level2Game1.route){
-            FigurinesDragAndDrop(navController)
+            Figurines(navController = navController)
+        }
+        composable(route = Screens.Level2Game2.route){
+            Color(navController = navController)
         }
         composable(route = Screens.Level2Game3.route){
-            ClothingDragAndDrop(navController)
+            Clothing(navController = navController)
         }
         composable(route = Screens.Level4Game3.route){
             PuzzleScreen(navController = navController)

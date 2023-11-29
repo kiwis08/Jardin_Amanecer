@@ -35,18 +35,12 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
-
 @Composable
 fun PartesCuerpoScreen2(navController: NavController, viewModel: PartesViewModel) {
-
     val index_actual = viewModel.index_glo
     println("SCREEN2 - INDEX $index_actual")
-
     val imagenes = viewModel.getImagesForIndex(viewModel.index_glo)
     println("$imagenes")
-
-
-
     Column (
         modifier = Modifier.fillMaxSize()
     ){
@@ -69,7 +63,6 @@ fun PartesCuerpoScreen2(navController: NavController, viewModel: PartesViewModel
                         navController.navigate(Screens.Level1Game2.route)
                     }
             )
-
             // Título
             Text(
                 text = "Partes del Cuerpo",
@@ -78,9 +71,7 @@ fun PartesCuerpoScreen2(navController: NavController, viewModel: PartesViewModel
                     .fillMaxWidth()
                     .padding(top = 30.dp, start = 15.dp)
             )
-
         }
-
         //Tarjetas individuales
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -88,30 +79,19 @@ fun PartesCuerpoScreen2(navController: NavController, viewModel: PartesViewModel
             modifier = Modifier
                 .background(Color(234, 4, 126, 255))
                 .fillMaxSize()
-            ) {
-
-
+        ) {
             val ind = viewModel.imagenes_ind
-
             items(2) { imagen ->
                 println("INDEX en IMAGENES  $imagen")
-
                 DisImages(image = imagenes[imagen],index = imagen, indexgen = index_actual, viewModel )
             }
         }
-
     }
-
-
 }
-
 @Composable
 fun DisImages(image: Int, index: Int, indexgen :Int, viewModel: PartesViewModel) {
-
     var isZoomed by remember { mutableStateOf(false) }
     val context = LocalContext.current
-
-
     val backgroundColors = listOf(
         Color(234, 4, 126, 255),
         Color(255, 109, 40),
@@ -120,13 +100,11 @@ fun DisImages(image: Int, index: Int, indexgen :Int, viewModel: PartesViewModel)
         Color(185, 49, 252),
         Color(255, 23, 0),
     )
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 30.dp)
-        ) {
-
+    ) {
         // Imagenes de las partes del cuerpo
         Row(
             verticalAlignment = Alignment.Top,
@@ -153,7 +131,6 @@ fun DisImages(image: Int, index: Int, indexgen :Int, viewModel: PartesViewModel)
                             viewModel.textToSpeech(context, indexgen,index)
                         }catch (e: Exception) {
                             println("No funciono: ${e.message}")
-
                         }
                     },
                 Alignment.TopCenter
@@ -161,4 +138,3 @@ fun DisImages(image: Int, index: Int, indexgen :Int, viewModel: PartesViewModel)
         }
     }
 }
-
