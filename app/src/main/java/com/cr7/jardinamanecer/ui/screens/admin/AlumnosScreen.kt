@@ -43,15 +43,18 @@ import androidx.compose.ui.unit.sp
 import com.cr7.jardinamanecer.R
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.cr7.jardinamanecer.navigation.Screens
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 
 
 @Composable
-fun AlumnosScreen(navController: NavController = rememberNavController(), viewModel: AdminStudentListViewModel = viewModel()){
+fun AlumnosScreen(navController: NavHostController, viewModel: AdminStudentListViewModel = viewModel()){
     val studentList by viewModel.studentList.collectAsState(initial = emptyList())
 
     val students = studentList.map { student ->
@@ -176,7 +179,8 @@ fun TableCell(Alumno: Alumno, navController: NavController) {
                 TextButton(
                     onClick = {
                         try {
-                            navController.navigate(Screens.AdminPerfilAlumno.route)
+                            val json = Json.encodeToString(Alumno)
+                            navController.navigate(Screens.AdminPerfilAlumno.route + "/$json")
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }

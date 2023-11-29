@@ -15,6 +15,7 @@ import com.cr7.jardinamanecer.ui.screens.admin.AlumnosScreen
 import com.cr7.jardinamanecer.ui.screens.admin.ConfigScreen
 import com.cr7.jardinamanecer.ui.screens.admin.HomeScreen
 import com.cr7.jardinamanecer.ui.screens.admin.PerfilAlumno
+import com.cr7.jardinamanecer.ui.screens.admin.Student
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalViewModel
 import com.cr7.jardinamanecer.ui.screens.level1.game1.AnimalsScreen
 import com.cr7.jardinamanecer.ui.screens.level1.game2.PartesCuerpoScreen
@@ -30,6 +31,8 @@ import com.cr7.jardinamanecer.ui.screens.level3.ImageDragAndDropNumeros
 import com.cr7.jardinamanecer.ui.screens.level4.view.ComunicatorScreen
 import com.cr7.jardinamanecer.ui.screens.level4.view.MemoryScreen
 import com.cr7.jardinamanecer.ui.screens.level4.view.PuzzleScreen
+import com.google.firebase.firestore.auth.User
+import kotlinx.serialization.json.Json
 
 
 @Composable
@@ -95,7 +98,7 @@ fun NavGraph (navController: NavHostController, sessionSaved: Boolean) {
             HomeScreen(navController = navController)
         }
         composable(route = Screens.AdminAlumnos.route){
-            AlumnosScreen()
+            AlumnosScreen(navController = navController)
         }
         composable(route = Screens.AdminAdmins.route){
             AdminScreen()
@@ -103,9 +106,12 @@ fun NavGraph (navController: NavHostController, sessionSaved: Boolean) {
         composable(route = Screens.AdminConfig.route){
             ConfigScreen()
         }
-        /*composable(route = Screens.AdminPerfilAlumno.route){
-            PerfilAlumno(navController, Alumno())
-        }*/
+        composable(route = Screens.AdminPerfilAlumno.route + "/{student}"){
+            val userJson = it.arguments?.getString("student")
+            // Convert json string to the User data class object
+            val student = Json.decodeFromString(Alumno.serializer(), userJson!!)
+            PerfilAlumno(navController, student)
+        }
 
     }
 }

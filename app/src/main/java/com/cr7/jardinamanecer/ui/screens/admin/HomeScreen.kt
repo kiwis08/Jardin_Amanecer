@@ -28,14 +28,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.cr7.jardinamanecer.R
-import com.cr7.jardinamanecer.navigation.Screens
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavHostController) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -92,9 +91,9 @@ fun HomeScreen(navController: NavController) {
             val Pedro = Alumno(id = "1", nombre = "Pedro Suarez", edad = 10, Nivel1 = false, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino)
 
             when (items[topNavState].title) {
-                "Alumnos" -> AlumnosScreen()
+                "Alumnos" -> AlumnosScreen(navController = navController)
                 "Administradores" -> AdminScreen()
-                "Configuracion" -> PerfilAlumno(navController = navController, Alumno = Pedro)
+                "Configuracion" -> AdminScreen()
                 else -> Text("Default Screen")
             }
         }

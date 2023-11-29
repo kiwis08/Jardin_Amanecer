@@ -1,5 +1,8 @@
 package com.cr7.jardinamanecer.ui.screens.admin
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Alumno(
     val id: String,
     val nombre: String,
