@@ -1,5 +1,6 @@
 package com.cr7.jardinamanecer.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -34,33 +37,37 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.cr7.jardinamanecer.R
 import com.cr7.jardinamanecer.navigation.Screens
+import com.cr7.jardinamanecer.ui.screens.admin.AdminSignInViewModel
+import kotlinx.coroutines.launch
+import androidx.lifecycle.viewmodel.compose.viewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun AdminSignIn(navController: NavController) {
-    var email by remember {
-        mutableStateOf("")
-    }
-
-    var password by remember {
-        mutableStateOf("")
-    }
+fun AdminSignIn(navController: NavController, viewModel: AdminSignInViewModel = viewModel()) {
+    val state by viewModel.state
+    val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Surface(
         modifier = Modifier
@@ -177,17 +184,22 @@ fun AdminSignIn(navController: NavController) {
                         {
 
                             OutlinedTextField(
-                                value = email,
-                                onValueChange = { email = it },
+                                value = state.email,
+                                singleLine = true,
+                                onValueChange = viewModel::onEmailChange,
                                 label = { Text("Email") },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     containerColor = Color.White,
-                                    textColor = Color.White,
+                                    textColor = Color.Black,
                                 ),
                                 shape = CircleShape,
                                 modifier = Modifier
                                     .padding(16.dp)
-                                    .width(350.dp)
+                                    .width(350.dp),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                                keyboardActions = KeyboardActions(onDone = {
+                                    keyboardController?.hide()
+                                })
                             )
                         }
                     }
@@ -201,17 +213,22 @@ fun AdminSignIn(navController: NavController) {
                     ) {
 
                         OutlinedTextField(
-                            value = password,
-                            onValueChange = { password = it },
+                            value = state.password,
+                            onValueChange = viewModel::onPasswordChange,
+                            singleLine = true,
                             label = { Text("Password") },
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 containerColor = Color.White,
-                                textColor = Color.White,
+                                textColor = Color.Black,
                             ),
                             shape = CircleShape,
                             modifier = Modifier
                                 .padding(16.dp)
-                                .width(350.dp)
+                                .width(350.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            keyboardActions = KeyboardActions(onDone = {
+                                keyboardController?.hide()
+                            })
 
                         )
                     }
@@ -222,7 +239,21 @@ fun AdminSignIn(navController: NavController) {
 
                         Button(
                             onClick = {
-                                navController.navigate(Screens.AdminHome.route)
+                                viewModel.viewModelScope.launch {
+                                    println("Ingresando...")
+                                    try {
+                                        viewModel.authenticate(state.email, state.password)
+                                        println("Ingresado como administrador")
+                                        println(viewModel.getAdminId())
+                                        navController.navigate(Screens.AdminHome.route)
+                                    } catch (e: Exception) {
+                                        Toast.makeText(
+                                            context,
+                                            "Error: ${e.message}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
                             },
                             colors = ButtonDefaults.elevatedButtonColors(
                                 containerColor = Color(38, 171, 226),
@@ -235,7 +266,7 @@ fun AdminSignIn(navController: NavController) {
                         ) {
                             Text(text = "Ingresar", fontSize = 24.sp)
                         }
-                        }
+                    }
                 }
 
             }

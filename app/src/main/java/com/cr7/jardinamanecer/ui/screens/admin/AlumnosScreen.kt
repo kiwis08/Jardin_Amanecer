@@ -22,6 +22,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,9 +37,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cr7.jardinamanecer.R
+import androidx.lifecycle.viewmodel.compose.viewModel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 data class Alumno(
-    val id: Int,
+    val id: String,
     val nombre: String,
     val edad: Int,
     val Nivel1: Boolean,
@@ -49,31 +54,35 @@ data class Alumno(
 
 
 @Composable
-fun AlumnosScreen(){
+fun AlumnosScreen(viewModel: AdminStudentListViewModel = viewModel()){
+    val studentList by viewModel.studentList.collectAsState(initial = emptyList())
+
+    val students = studentList.map { student ->
+        var dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        var birthDate = LocalDate.parse(student.birthdate, dateFormatter)
+        var age = LocalDate.now().year - birthDate.year
+        if (LocalDate.now().dayOfYear < birthDate.dayOfYear) {
+            age--
+        }
+        Alumno(
+            id = student.id,
+            nombre = student.name,
+            edad = age,
+            Nivel1 = student.cogLevel == 1,
+            Nivel2 = student.cogLevel == 2,
+            Nivel3 = student.cogLevel == 3,
+            Nivel4 = student.cogLevel == 4,
+            imagen = if (student.gender == "male") R.drawable.nino else R.drawable.nina
+        )
+    }
+
+
     Box(modifier = Modifier
         .paint(
             painterResource(id = R.drawable.menuscreen),
             contentScale = ContentScale.FillBounds)
     ) {
-
-
-        //Datos de la base de datos
-        val Prueba = listOf<Alumno>(
-            Alumno(1, "Juan", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino ),
-            Alumno(2, "Maria", 20, false, Nivel2 = false, Nivel3 = true, Nivel4 = true, imagen = R.drawable.nina),
-            Alumno(3, "Jose", 20, false, Nivel2 = true, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino),
-            Alumno(4, "Juan", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = false, imagen = R.drawable.nino),
-            Alumno(2, "Maria", 20, false, Nivel2 = false, Nivel3 = true, Nivel4 = false, imagen = R.drawable.nina),
-            Alumno(3, "Jose", 20, false, Nivel2 = true, Nivel3 = false, Nivel4 = false, imagen = R.drawable.nino),
-            Alumno(4, "Juan", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = false, imagen = R.drawable.nino),
-            Alumno(2, "Maria", 20, false, Nivel2 = false, Nivel3 = true, Nivel4 = false, imagen = R.drawable.nina),
-            Alumno(3, "Jose", 20, false, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino),
-            Alumno(4, "Juan", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = false, imagen = R.drawable.nino),
-            Alumno(2, "Maria", 20, false, Nivel2 = false, Nivel3 = true, Nivel4 = false, imagen = R.drawable.nina),
-            Alumno(3, "Jose", 20, false, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino),
-            Alumno(4, "Juan", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = false, imagen = R.drawable.nino),
-        )
-        TablaAlumnos(data = Prueba)
+        TablaAlumnos(data = students)
 
 
     }
@@ -252,10 +261,10 @@ fun TableCell(Alumno: Alumno) {
 @Composable
 fun TablaPreview() {
     val Prueba = listOf<Alumno>(
-        Alumno(1, "Juan Jose Suarez Mena", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = false, imagen = R.drawable.nino ),
-        Alumno(2, "Maria del Rocio Cavazos Lara", 20, false, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nina),
-        Alumno(3, "Damian Joel Martinez Sosa", 20, false, Nivel2 = true, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino),
-        Alumno(4, "Juan Manuel Garcia Sosa", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino),
+        Alumno("1", "Juan Jose Suarez Mena", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = false, imagen = R.drawable.nino ),
+        Alumno("2", "Maria del Rocio Cavazos Lara", 20, false, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nina),
+        Alumno("3", "Damian Joel Martinez Sosa", 20, false, Nivel2 = true, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino),
+        Alumno("4", "Juan Manuel Garcia Sosa", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino),
     )
     TablaAlumnos(data = Prueba)
 }
