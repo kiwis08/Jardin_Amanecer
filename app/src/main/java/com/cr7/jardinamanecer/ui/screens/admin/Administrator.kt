@@ -1,7 +1,9 @@
 package com.cr7.jardinamanecer.ui.screens.admin
 
 import com.google.firebase.firestore.DocumentId
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Administrator(
     @DocumentId
     val id: String = "",

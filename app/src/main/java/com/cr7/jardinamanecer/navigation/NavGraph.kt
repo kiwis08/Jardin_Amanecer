@@ -10,6 +10,7 @@ import com.cr7.jardinamanecer.ui.screens.AdminSignIn
 import com.cr7.jardinamanecer.ui.screens.menu.GameMenu
 import com.cr7.jardinamanecer.ui.screens.StartScreen
 import com.cr7.jardinamanecer.ui.screens.admin.AdminScreen
+import com.cr7.jardinamanecer.ui.screens.admin.Administrator
 import com.cr7.jardinamanecer.ui.screens.admin.Alumno
 import com.cr7.jardinamanecer.ui.screens.admin.AlumnosScreen
 import com.cr7.jardinamanecer.ui.screens.admin.ConfigScreen
@@ -94,8 +95,10 @@ fun NavGraph (navController: NavHostController, sessionSaved: Boolean) {
         }
 
         //Admin
-        composable(route = Screens.AdminHome.route){
-            HomeScreen(navController = navController)
+        composable(route = Screens.AdminHome.route + "/{admin}"){
+            val adminJson = it.arguments?.getString("admin")
+            val admin = Json.decodeFromString(Administrator.serializer(), adminJson!!)
+            HomeScreen(navController = navController, admin = admin)
         }
         composable(route = Screens.AdminAlumnos.route){
             AlumnosScreen(navController = navController)

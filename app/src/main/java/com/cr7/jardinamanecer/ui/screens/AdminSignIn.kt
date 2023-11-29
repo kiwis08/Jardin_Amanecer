@@ -32,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,6 +62,9 @@ import com.cr7.jardinamanecer.navigation.Screens
 import com.cr7.jardinamanecer.ui.screens.admin.AdminSignInViewModel
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cr7.jardinamanecer.ui.screens.admin.Administrator
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -247,7 +251,11 @@ fun AdminSignIn(navController: NavController, viewModel: AdminSignInViewModel = 
                                         viewModel.authenticate(state.email, state.password)
                                         println("Ingresado como administrador")
                                         println(viewModel.getAdminId())
-                                        navController.navigate(Screens.AdminHome.route)
+                                        val admin = viewModel.getAdmin()
+                                        println(admin?.name)
+                                        val adminJson = Json.encodeToString(admin!!)
+                                        println(adminJson)
+                                        navController.navigate(Screens.AdminHome.route + "/$adminJson")
                                     } catch (e: Exception) {
                                         Toast.makeText(
                                             context,
