@@ -4,6 +4,7 @@ package com.cr7.jardinamanecer.ui.screens.level3
 
 //import androidx.compose.foundation.layout.ColumnScopeInstance.weight
 //import androidx.compose.foundation.layout.RowScopeInstance.weight
+import android.media.MediaPlayer
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -59,40 +62,44 @@ fun ImageDragAndDropColores(navController : NavController) {
     LaunchedEffect(Unit) {
         textToSpeech.value = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                textToSpeech.value?.language = Locale.US
+                textToSpeech.value?.language = Locale("es", "MX")
             }
         }
     }
 
+
+    val mediaPlayer = MediaPlayer.create(LocalContext.current, R.raw.fanfare)
+
     val imageSize = 150.dp
     val dropTargetSize = 150.dp
 
-    // numero 1
-    var imagePosition by remember { mutableStateOf(Offset(170f, 300f)) }
-    val dropTargetPosition = Offset(170f, 1100f)
+    // Rojo 1
+    var imagePosition by remember { mutableStateOf(Offset(2170f, 300f)) }
+    val dropTargetPosition = Offset(170f, 1000f)
 
-// numero 2
-    var imagePosition2 by remember { mutableStateOf(Offset(670f, 300f)) }
-    val dropTargetPosition2 = Offset(670f, 1000f)
+    // Amarillo 1
+    var imagePosition2 by remember { mutableStateOf(Offset(1670f, 300f)) }
+    val dropTargetPosition2 = Offset(670f, 900f)
 
-// numero 3
+    // Verde 1
     var imagePosition3 by remember { mutableStateOf(Offset(1170f, 300f)) }
-    val dropTargetPosition3 = Offset(1170f, 1200f)
+    val dropTargetPosition3 = Offset(1170f, 1000f)
 
-// numero 4
-    var imagePosition4 by remember { mutableStateOf(Offset(1670f, 300f)) }
-    val dropTargetPosition4 = Offset(1670f, 1000f)
+    // Naranja 1
+    var imagePosition4 by remember { mutableStateOf(Offset(170f, 300f)) }
+    val dropTargetPosition4 = Offset(1670f, 900f)
 
-// numero 5
-    var imagePosition5 by remember { mutableStateOf(Offset(2170f, 300f)) }
-    val dropTargetPosition5 = Offset(2170f, 1100f)
+    // Azul 1
+    var imagePosition5 by remember { mutableStateOf(Offset(670f, 300f)) }
+    val dropTargetPosition5 = Offset(2170f, 1000f)
 
 
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color(12, 192, 223))) {
+        .background(Color(84, 0, 191))) {
 
+        //Encabezado
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -126,55 +133,61 @@ fun ImageDragAndDropColores(navController : NavController) {
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition.x.roundToInt(), dropTargetPosition.y.roundToInt()) }
                 .size(dropTargetSize)
-                .background(Color.White),
+                .background(Color.Red,
+                    shape = CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text("Rojo", color = Color.Black, fontSize = 30.sp)
+            Text("Rojo", color = Color.White, fontSize = 30.sp)
         }
 
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition2.x.roundToInt(), dropTargetPosition2.y.roundToInt()) }
                 .size(dropTargetSize)
-                .background(Color.White),
+                .background(Color(235, 198, 9),
+                    shape = CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text("Amarillo", color = Color.Black, fontSize = 30.sp)
+            Text("Amarillo", color = Color.White, fontSize = 30.sp)
         }
 
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition3.x.roundToInt(), dropTargetPosition3.y.roundToInt()) }
                 .size(dropTargetSize)
-                .background(Color.White),
+                .background(Color(111, 176, 0),
+                    shape = CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text("Verde", color = Color.Black, fontSize = 30.sp)
+            Text("Verde", color = Color.White, fontSize = 30.sp)
         }
 
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition4.x.roundToInt(), dropTargetPosition4.y.roundToInt()) }
                 .size(dropTargetSize)
-                .background(Color.White),
-            contentAlignment = Alignment.Center
+                .background(Color(255, 61, 0),
+                    shape = CircleShape),
+            contentAlignment = Alignment.Center,
+
         ) {
-            Text("Morado", color = Color.Black, fontSize = 30.sp)
+            Text("Naranja", color = Color.White, fontSize = 30.sp)
         }
 
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition5.x.roundToInt(), dropTargetPosition5.y.roundToInt()) }
                 .size(dropTargetSize)
-                .background(Color.White),
+                .background(Color.Blue,
+                    shape = CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text("Azul", color = Color.Black, fontSize = 30.sp)
+            Text("Azul", color = Color.White, fontSize = 30.sp)
         }
 
         // Draggable Image
         Image(
-            painter = painterResource(id = R.drawable.rojo),
+            painter = painterResource(id = R.drawable.rojo1),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition.x.roundToInt(), imagePosition.y.roundToInt()) }
@@ -194,7 +207,7 @@ fun ImageDragAndDropColores(navController : NavController) {
                             imagesInPlace[0] = true
                             textToSpeech.value?.speak("Rojo", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
@@ -202,7 +215,7 @@ fun ImageDragAndDropColores(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.amarillo),
+            painter = painterResource(id = R.drawable.amarillo1),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition2.x.roundToInt(), imagePosition2.y.roundToInt()) }
@@ -222,7 +235,7 @@ fun ImageDragAndDropColores(navController : NavController) {
                             imagesInPlace[1] = true
                             textToSpeech.value?.speak("Amarillo", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
@@ -230,7 +243,7 @@ fun ImageDragAndDropColores(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.verde),
+            painter = painterResource(id = R.drawable.verde1),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition3.x.roundToInt(), imagePosition3.y.roundToInt()) }
@@ -250,7 +263,7 @@ fun ImageDragAndDropColores(navController : NavController) {
                             imagesInPlace[2] = true
                             textToSpeech.value?.speak("Verde", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
@@ -258,7 +271,7 @@ fun ImageDragAndDropColores(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.morado),
+            painter = painterResource(id = R.drawable.naranja1),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition4.x.roundToInt(), imagePosition4.y.roundToInt()) }
@@ -276,9 +289,9 @@ fun ImageDragAndDropColores(navController : NavController) {
                         ) {
                             imagePosition4 = dropTargetPosition4
                             imagesInPlace[3] = true
-                            textToSpeech.value?.speak("morado", TextToSpeech.QUEUE_FLUSH, null, null)
+                            textToSpeech.value?.speak("naranja", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
@@ -286,7 +299,7 @@ fun ImageDragAndDropColores(navController : NavController) {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.azul),
+            painter = painterResource(id = R.drawable.azul1),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition5.x.roundToInt(), imagePosition5.y.roundToInt()) }
@@ -306,7 +319,7 @@ fun ImageDragAndDropColores(navController : NavController) {
                             imagesInPlace[4] = true
                             textToSpeech.value?.speak("Azul", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] and imagesInPlace[4]){
-                                Toast.makeText(context, "Ganaste el juego", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true
                             }
                         }
@@ -316,18 +329,18 @@ fun ImageDragAndDropColores(navController : NavController) {
         if (showSuccessMessage) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0x66000000)),
+                    .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "¡Ganaste!",
+                    text = "¡Felicidades!",
+                    fontSize = 64.sp,
                     color = Color.White,
-                    fontSize = 100.sp,
-                    modifier = Modifier.padding(16.dp)
+                    fontWeight = FontWeight.Black
                 )
             }
         }
+
     }
     DisposableEffect(Unit) {
         onDispose {

@@ -1,9 +1,11 @@
 package com.cr7.jardinamanecer.ui.screens.level2.game3
 
+import android.media.MediaPlayer
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -31,16 +33,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.cr7.jardinamanecer.R
+import com.cr7.jardinamanecer.navigation.Screens
 import java.util.Locale
 import kotlin.math.roundToInt
 
-@Preview(widthDp = 900, heightDp = 700)
+
 @Composable
 fun Clothing() {
     val context = LocalContext.current
@@ -50,19 +55,34 @@ fun Clothing() {
     LaunchedEffect(Unit) {
         textToSpeech.value = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                textToSpeech.value?.language = Locale.US
+                textToSpeech.value?.language = Locale("es", "MX")
             }
         }
     }
 
-    val imageSize = 150.dp
-    val dropTargetSize = 150.dp
+    val mediaPlayer = MediaPlayer.create(LocalContext.current, R.raw.fanfare)
 
-    var imagePosition by remember { mutableStateOf(Offset(300f, 300f)) }
-    var imagePosition2 by remember { mutableStateOf(Offset(800f, 450f)) }
-    var imagePosition3 by remember { mutableStateOf(Offset(300f, 800f)) }
-    var imagePosition4 by remember { mutableStateOf(Offset(1500f, 300f)) }
-    val dropTargetPosition = Offset(1500f, 1200f)
+    val imageSize = 150.dp
+    val dropTargetSize = 400.dp
+
+    //Vestido
+    var imagePosition by remember { mutableStateOf(Offset(150f, 200f)) }
+    //Camiseta
+    var imagePosition2 by remember { mutableStateOf(Offset(800f, 350f)) }
+    //Falda
+    var imagePosition3 by remember { mutableStateOf(Offset(200f, 800f)) }
+    //Corbata
+    var imagePosition4 by remember { mutableStateOf(Offset(1300f, 200f)) }
+    //Chamarra
+    var imagePosition5 by remember { mutableStateOf(Offset(1800f, 300f)) }
+    //Gorro
+    var imagePosition7 by remember { mutableStateOf(Offset(800f, 900f)) }
+    //Guantes
+    var imagePosition8 by remember { mutableStateOf(Offset(1400f, 900f)) }
+
+
+    //TARGET - Cesto de ropa
+    val dropTargetPosition = Offset(2100f, 800f)
 
 
     Box(modifier = Modifier
@@ -83,6 +103,9 @@ fun Clothing() {
                     .width(100.dp)
                     .height(100.dp)
                     .padding(1.dp)
+                    .clickable {
+                        navController.navigate(Screens.GameMenu.route)
+                    }
             )
 
             Text(
@@ -98,24 +121,28 @@ fun Clothing() {
         Box(
             modifier = Modifier
                 .offset { IntOffset(dropTargetPosition.x.roundToInt(), dropTargetPosition.y.roundToInt()) }
-                .size(dropTargetSize)
-                .background(Color.White),
+                .size(dropTargetSize),
             contentAlignment = Alignment.Center
         ) {
+
+            //Target - Cesto de ropa
             Image(
                 painter = painterResource(id = R.drawable.bote),
                 contentDescription = "Drop Target",
-                modifier = Modifier.size(150.dp)
+                modifier = Modifier
+                    .size(imageSize)
             )
         }
 
 
+
+        //Vestido
         Image(
             painter = painterResource(id = R.drawable.vestido),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition.x.roundToInt(), imagePosition.y.roundToInt()) }
-                .size(imageSize)
+                .size(300.dp)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition = imagePosition.plus(Offset(dragAmount.x, dragAmount.y))
@@ -130,19 +157,20 @@ fun Clothing() {
                             imagesInPlace[0] = true
                             textToSpeech.value?.speak("vestido", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3]){
-                                Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
                 }
         )
 
+        //Camiseta
         Image(
-            painter = painterResource(id = R.drawable.blusa),
+            painter = painterResource(id = R.drawable.camiseta),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition2.x.roundToInt(), imagePosition2.y.roundToInt()) }
-                .size(imageSize)
+                .size(300.dp)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition2 = imagePosition2.plus(Offset(dragAmount.x, dragAmount.y))
@@ -155,21 +183,22 @@ fun Clothing() {
                         ) {
                             imagePosition2 = dropTargetPosition
                             imagesInPlace[1] = true
-                            textToSpeech.value?.speak("blusa", TextToSpeech.QUEUE_FLUSH, null, null)
+                            textToSpeech.value?.speak("camiseta", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] ){
-                                Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
                 }
         )
 
+        //Falda
         Image(
             painter = painterResource(id = R.drawable.falda),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition3.x.roundToInt(), imagePosition3.y.roundToInt()) }
-                .size(imageSize)
+                .size(300.dp)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition3 = imagePosition3.plus(Offset(dragAmount.x, dragAmount.y))
@@ -184,19 +213,20 @@ fun Clothing() {
                             imagesInPlace[2] = true
                             textToSpeech.value?.speak("falda", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] ){
-                                Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
                 }
         )
 
+        //Corbata
         Image(
             painter = painterResource(id = R.drawable.corbata),
             contentDescription = "Draggable image",
             modifier = Modifier
                 .offset { IntOffset(imagePosition4.x.roundToInt(), imagePosition4.y.roundToInt()) }
-                .size(imageSize)
+                .size(250.dp)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         imagePosition4 = imagePosition4.plus(Offset(dragAmount.x, dragAmount.y))
@@ -211,7 +241,93 @@ fun Clothing() {
                             imagesInPlace[3] = true
                             textToSpeech.value?.speak("corbata", TextToSpeech.QUEUE_FLUSH, null, null)
                             if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] ){
-                                Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
+                                mediaPlayer.start()
+                                showSuccessMessage = true                            }
+                        }
+                    }
+                }
+        )
+
+        //Chamarra
+        Image(
+            painter = painterResource(id = R.drawable.chamarra),
+            contentDescription = "Draggable image",
+            modifier = Modifier
+                .offset { IntOffset(imagePosition5.x.roundToInt(), imagePosition5.y.roundToInt()) }
+                .size(300.dp)
+                .pointerInput(Unit) {
+                    detectDragGestures { change, dragAmount ->
+                        imagePosition5 = imagePosition5.plus(Offset(dragAmount.x, dragAmount.y))
+                        if (isImageInDropTarget(
+                                imagePosition5,
+                                dropTargetPosition,
+                                imageSize,
+                                dropTargetSize
+                            )
+                        ) {
+                            imagePosition5 = dropTargetPosition
+                            imagesInPlace[3] = true
+                            textToSpeech.value?.speak("chamarra", TextToSpeech.QUEUE_FLUSH, null, null)
+                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] ){
+                                mediaPlayer.start()
+                                showSuccessMessage = true                            }
+                        }
+                    }
+                }
+        )
+
+
+
+        //Gorro
+        Image(
+            painter = painterResource(id = R.drawable.gorro),
+            contentDescription = "Draggable image",
+            modifier = Modifier
+                .offset { IntOffset(imagePosition7.x.roundToInt(), imagePosition7.y.roundToInt()) }
+                .size(250.dp)
+                .pointerInput(Unit) {
+                    detectDragGestures { change, dragAmount ->
+                        imagePosition7 = imagePosition7.plus(Offset(dragAmount.x, dragAmount.y))
+                        if (isImageInDropTarget(
+                                imagePosition7,
+                                dropTargetPosition,
+                                imageSize,
+                                dropTargetSize
+                            )
+                        ) {
+                            imagePosition7 = dropTargetPosition
+                            imagesInPlace[3] = true
+                            textToSpeech.value?.speak("gorro", TextToSpeech.QUEUE_FLUSH, null, null)
+                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] ){
+                                mediaPlayer.start()
+                                showSuccessMessage = true                            }
+                        }
+                    }
+                }
+        )
+
+        //Guantes
+        Image(
+            painter = painterResource(id = R.drawable.guantes),
+            contentDescription = "Draggable image",
+            modifier = Modifier
+                .offset { IntOffset(imagePosition8.x.roundToInt(), imagePosition8.y.roundToInt()) }
+                .size(250.dp)
+                .pointerInput(Unit) {
+                    detectDragGestures { change, dragAmount ->
+                        imagePosition8 = imagePosition8.plus(Offset(dragAmount.x, dragAmount.y))
+                        if (isImageInDropTarget(
+                                imagePosition8,
+                                dropTargetPosition,
+                                imageSize,
+                                dropTargetSize
+                            )
+                        ) {
+                            imagePosition8 = dropTargetPosition
+                            imagesInPlace[3] = true
+                            textToSpeech.value?.speak("guantes", TextToSpeech.QUEUE_FLUSH, null, null)
+                            if(imagesInPlace[0] and imagesInPlace[1] and imagesInPlace[2] and imagesInPlace[3] ){
+                                mediaPlayer.start()
                                 showSuccessMessage = true                            }
                         }
                     }
@@ -226,10 +342,9 @@ fun Clothing() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "¡ganaste!",
+                    text = "¡Ganaste!",
                     color = Color.White,
-                    fontSize = 120.sp,
-                    modifier = Modifier.padding(16.dp)
+                    fontWeight = FontWeight.Black
                 )
             }
         }

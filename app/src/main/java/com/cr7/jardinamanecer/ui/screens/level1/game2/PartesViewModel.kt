@@ -22,13 +22,13 @@ class PartesViewModel() : ViewModel()  {
     val imagenes = listOf(
         (R.drawable.hombroyrodilla),
         (R.drawable.narizyoreja),
-        (R.drawable.ojoylabios),
+        (R.drawable.ojosylabios),
         (R.drawable.piesymanos)
     )
 
     val imagenes_ind = listOf(
 
-        (R.drawable.ojo),
+        (R.drawable.ojos),
         (R.drawable.manos),
         (R.drawable.pies),
         (R.drawable.labios),
@@ -50,7 +50,7 @@ class PartesViewModel() : ViewModel()  {
                 (R.drawable.oreja))
 
             2 -> listOf(
-                (R.drawable.ojo),
+                (R.drawable.ojos),
                 (R.drawable.labios))
 
             3 -> listOf(
