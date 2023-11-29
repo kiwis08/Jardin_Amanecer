@@ -19,8 +19,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -39,28 +41,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cr7.jardinamanecer.R
-<<<<<<< Updated upstream
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.cr7.jardinamanecer.navigation.Screens
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-=======
-import com.cr7.jardinamanecer.ui.theme.lexendFamily
->>>>>>> Stashed changes
 
-data class Alumno(
-    val id: String,
-    val nombre: String,
-    val edad: Int,
-    val Nivel1: Boolean,
-    val Nivel2: Boolean,
-    val Nivel3: Boolean,
-    val Nivel4: Boolean,
-    val imagen: Int
-)
 
 
 @Composable
-fun AlumnosScreen(viewModel: AdminStudentListViewModel = viewModel()){
+fun AlumnosScreen(navController: NavController = rememberNavController(), viewModel: AdminStudentListViewModel = viewModel()){
     val studentList by viewModel.studentList.collectAsState(initial = emptyList())
 
     val students = studentList.map { student ->
@@ -89,7 +80,7 @@ fun AlumnosScreen(viewModel: AdminStudentListViewModel = viewModel()){
             contentScale = ContentScale.FillBounds)
 
     ) {
-        TablaAlumnos(data = students)
+        TablaAlumnos(data = students, navController)
 
 
     }
@@ -97,7 +88,7 @@ fun AlumnosScreen(viewModel: AdminStudentListViewModel = viewModel()){
 
 
 @Composable
-fun TablaAlumnos(data: List<Alumno>) {
+fun TablaAlumnos(data: List<Alumno>, navController: NavController) {
     Box(modifier = Modifier
         .fillMaxWidth()
         .fillMaxSize()
@@ -113,7 +104,7 @@ fun TablaAlumnos(data: List<Alumno>) {
                 TableHeader()
             }
             itemsIndexed(data) { _, alumno ->
-                TableCell(alumno)
+                TableCell(alumno, navController)
             }
             }
 
@@ -153,11 +144,11 @@ fun TableHeader() {
 }
 
 @Composable
-fun TableCell(Alumno: Alumno) {
+fun TableCell(Alumno: Alumno, navController: NavController) {
     Box(
         modifier = Modifier
             .width(1500.dp)
-            .height(80.dp)
+            .height(90.dp)
             .background(Color.White, RoundedCornerShape(12.dp))
             .border(1.dp, Color(242, 242, 240), RoundedCornerShape(12.dp))
             .padding(5.dp)
@@ -179,13 +170,25 @@ fun TableCell(Alumno: Alumno) {
 
             Column (modifier = Modifier
                 .weight(1f)) {
+
+
                 //Nombre
-                Text(
-                    text = Alumno.nombre,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
+                TextButton(
+                    onClick = {
+                        try {
+                            navController.navigate(Screens.AdminPerfilAlumno.route)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    },
                     modifier = Modifier.padding(8.dp)
-                )
+                ) {
+                    Text(
+                        text = Alumno.nombre,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
+                }
 
                 //Edad
                 Text(
@@ -264,15 +267,5 @@ fun TableCell(Alumno: Alumno) {
     }
 }
 
-@Preview
-@Composable
-fun TablaPreview() {
-    val Prueba = listOf<Alumno>(
-        Alumno("1", "Juan Jose Suarez Mena", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = false, imagen = R.drawable.nino ),
-        Alumno("2", "Maria del Rocio Cavazos Lara", 20, false, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nina),
-        Alumno("3", "Damian Joel Martinez Sosa", 20, false, Nivel2 = true, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino),
-        Alumno("4", "Juan Manuel Garcia Sosa", 20, true, Nivel2 = false, Nivel3 = false, Nivel4 = true, imagen = R.drawable.nino),
-    )
-    TablaAlumnos(data = Prueba)
-}
+
 

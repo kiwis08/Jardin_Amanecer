@@ -151,7 +151,6 @@ fun TableCell(Admin: Admins) {
             .width(1500.dp)
             .height(80.dp)
             .background(Color.White, RoundedCornerShape(10.dp))
-            .border(1.dp, Color(242, 242, 240), RoundedCornerShape(10.dp))
             .padding(8.dp)
 
     ) {

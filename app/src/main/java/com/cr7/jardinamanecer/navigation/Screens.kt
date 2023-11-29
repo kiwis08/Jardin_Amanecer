@@ -24,4 +24,6 @@ sealed class Screens(val route: String) {
     object AdminAlumnos : Screens("admin_alumnos")
     object AdminAdmins : Screens("admin_admins")
     object AdminConfig : Screens("admin_config")
+    object AdminPerfilAlumno : Screens("admin_perfilAlumno")
+
 }
