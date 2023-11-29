@@ -22,6 +22,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,11 +35,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cr7.jardinamanecer.R
 import okhttp3.internal.wait
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 data class Admins(
-    val id: Int,
+    val id: String,
     val nombre: String,
     val edad: Int,
     val Nivel1: Int,
@@ -49,8 +54,28 @@ data class Admins(
 )
 
 @Composable
-fun AdminScreen(){
+fun AdminScreen(viewModel: AdminsListViewModel = viewModel()){
+    val adminsList by viewModel.adminsList.collectAsState(initial = emptyList())
 
+    val admins = adminsList.map {
+        var dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        var birthDate = LocalDate.parse(it.birthdate, dateFormatter)
+        var age = LocalDate.now().year - birthDate.year
+        if (LocalDate.now().dayOfYear < birthDate.dayOfYear) {
+            age--
+        }
+        Admins(
+            id = it.id,
+            nombre = it.name,
+            edad = age,
+            Nivel1 = it.level1Students,
+            Nivel2 = it.level2Students,
+            Nivel3 = it.level3Students,
+            Nivel4 = it.level4Students,
+            imagen = if (it.gender == "male") R.drawable.adminb else R.drawable.adming,
+            Total = it.level1Students + it.level2Students + it.level3Students + it.level4Students
+        )
+    }
 
     Box(modifier = Modifier
         .paint(
@@ -59,19 +84,7 @@ fun AdminScreen(){
         ) {
 
 
-            //Datos de la base de datos
-            val PruebaAdmin = listOf<Admins>(
-                Admins(1, "Juan", 20, 1, 2, 2, 1, imagen = R.drawable.adminb, Total = Int.MAX_VALUE),
-                Admins(1, "Juan", 20, 3, 2, 2, 1, imagen = R.drawable.adminb, Total = Int.MAX_VALUE),
-                Admins(1, "Marta", 20, 4, 2, 2, 1, imagen = R.drawable.adming, Total = Int.MAX_VALUE),
-                Admins(1, "Juan", 20, 1, 2, 2, 1, imagen = R.drawable.adminb, Total = Int.MAX_VALUE),
-                Admins(1, "Sofia", 20, 1, 3, 2, 1, imagen = R.drawable.adming, Total = Int.MAX_VALUE),
-                Admins(1, "Juan", 20, 1, 2, 2, 1, imagen = R.drawable.adminb, Total = Int.MAX_VALUE),
-                Admins(1, "Juan", 20, 0, 2, 2, 1, imagen = R.drawable.adminb, Total = Int.MAX_VALUE),
-                Admins(1, "Juan", 20, 1, 2, 1, 1, imagen = R.drawable.adminb, Total = Int.MAX_VALUE),
-
-            )
-            TablaAdmins(data = PruebaAdmin)
+            TablaAdmins(data = admins)
 
 
         }
