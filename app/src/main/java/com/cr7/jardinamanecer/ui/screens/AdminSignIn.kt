@@ -50,6 +50,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -222,11 +223,12 @@ fun AdminSignIn(navController: NavController, viewModel: AdminSignInViewModel = 
                             value = state.password,
                             onValueChange = viewModel::onPasswordChange,
                             singleLine = true,
-                            label = { Text("Password") },
+                            label = { Text("Contraseña") },
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 containerColor = Color.White,
                                 textColor = Color.Black,
                             ),
+                            visualTransformation = PasswordVisualTransformation(),
                             shape = CircleShape,
                             modifier = Modifier
                                 .padding(16.dp)

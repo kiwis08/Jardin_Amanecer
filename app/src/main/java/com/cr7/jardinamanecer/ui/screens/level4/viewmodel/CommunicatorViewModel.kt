@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cr7.jardinamanecer.dataStore
 import com.cr7.jardinamanecer.ui.screens.level4.localdatabase.CommunicatorDatabase
 import com.cr7.jardinamanecer.ui.screens.level4.model.CommunicatorCategory
 import com.cr7.jardinamanecer.ui.screens.level4.model.ComunicatorItem
@@ -18,6 +19,7 @@ import com.cr7.jardinamanecer.ui.screens.level4.state.CommunicatorState
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.Locale
